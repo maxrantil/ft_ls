@@ -54,7 +54,7 @@ int main(int argc, const char **argv)
 	{
 		while ((d = readdir(dir)) != NULL)
 		{
-			if (g st == '.')
+			if (d->d_name[0] == '.')
 				continue;
 			printf("%*s ", 25, d->d_name);
 		}
