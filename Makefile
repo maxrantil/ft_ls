@@ -1,7 +1,8 @@
 NAME = ft_ls
 FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 #HEADER_PATH = libft.h
-LIBS = includes/libftprintf.a
+LIBS = libftprintf.a
+INCS = includes/ft_ls.h
 C_FILES = main.c
 O_FILES = $(C_FILES:.c=.o)
 
@@ -19,7 +20,7 @@ $(NAME):
 	@echo "  /**    //**  ***** *** ****** "
 	@echo "  //      //  ///// /// //////  "
 	@echo ""
-	@gcc $(FLAGS) $(C_FILES) -o $(NAME) -I $(LIBS)
+	@gcc $(FLAGS) $(C_FILES) -o $(NAME) -I $(INCS)
 #$(HEADER_PATH)
 	@echo "$(NAME) created"
 	
