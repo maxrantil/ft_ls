@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_strcdup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/12/02 15:00:51 by mrantil           #+#    #+#             */
+/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+char	*ft_strcdup(const char *s1, int c, int n)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	char	*cpy;
+	int		i;
 
-#endif
+	i = 0;
+	while (s1[i] && s1[i] != c)
+	{
+		i++;
+		if (s1[i] == c)
+		{
+			if (n == 0)
+				cpy = ft_strsub(s1, 0, i);
+			else
+				cpy = ft_strsub(s1, 0, i + 1);
+			return (cpy);
+		}
+	}
+	return (NULL);
+}

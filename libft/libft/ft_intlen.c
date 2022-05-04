@@ -1,23 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_intlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/23 11:03:47 by mrantil           #+#    #+#             */
+/*   Updated: 2021/11/26 12:41:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+int	ft_intlen(long nbr)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	int	c;
 
-#endif
+	c = 1;
+	if (nbr < 0)
+	{
+		nbr *= -1;
+		if (nbr == 0)
+			c = 0;
+		c++;
+	}
+	while (nbr > 9)
+	{
+		nbr = nbr / 10;
+		c++;
+	}
+	return (c);
+}

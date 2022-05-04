@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/02 17:07:57 by mrantil           #+#    #+#             */
+/*   Updated: 2021/11/06 20:55:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+int	ft_isalpha(int c)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
-
-#endif
+	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
+	return (0);
+}

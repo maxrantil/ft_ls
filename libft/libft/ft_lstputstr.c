@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_lstputstr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/23 17:07:47 by mrantil           #+#    #+#             */
+/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+void	ft_lstputstr(t_list **alst)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	t_list	*ptr;
 
-#endif
+	if (*alst == NULL)
+		return ;
+	ptr = *alst;
+	while (ptr != NULL)
+	{
+		ft_putendl((char *)ptr->content);
+		ptr = ptr->next;
+	}
+}

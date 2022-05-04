@@ -1,23 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_imax.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2022/01/24 14:11:31 by mrantil           #+#    #+#             */
+/*   Updated: 2022/01/24 14:11:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+int	ft_imax(int a, int b)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
-
-#endif
+	if (a > b)
+		return (a);
+	return (b);
+}

@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/10 11:42:29 by mrantil           #+#    #+#             */
+/*   Updated: 2021/11/18 19:14:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+void	ft_striter(char *s, void (*f)(char *))
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	int	i;
 
-#endif
+	if (!s)
+		return ;
+	if (!f)
+		return ;
+	i = 0;
+	while (s[i])
+		f(&s[i++]);
+}

@@ -1,23 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_lstcount.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/23 13:06:15 by mrantil           #+#    #+#             */
+/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+int	ft_lstcount(t_list *head)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	int		count;
+	t_list	*ptr;
 
-#endif
+	if (head == NULL)
+		return (0);
+	count = 0;
+	ptr = head;
+	while (ptr != NULL)
+	{
+		count++;
+		ptr = ptr->next;
+	}
+	return (count);
+}

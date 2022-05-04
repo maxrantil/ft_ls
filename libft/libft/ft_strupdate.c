@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_strupdate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/12/11 20:24:14 by mrantil           #+#    #+#             */
+/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+char	*ft_strupdate(char *s1, const char *s2)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	char	*ret;
 
-#endif
+	ret = ft_strjoin(s1, s2);
+	if (!ret)
+		return (NULL);
+	ft_strdel(&s1);
+	return (ret);
+}

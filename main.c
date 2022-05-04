@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "includes/ft_ls.h"
 
 void	ft_ls(struct dirent *d, DIR *dir)
 {

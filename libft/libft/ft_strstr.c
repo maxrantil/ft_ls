@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/02 17:17:03 by mrantil           #+#    #+#             */
+/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+char	*ft_strstr(const char *haystack, const char *needle)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	int	i;
+	int	j;
+	int	l;
+	int	x;
 
-#endif
+	j = 0;
+	l = ft_strlen(needle);
+	if (needle[0] == '\0')
+		return ((char *)haystack);
+	while (haystack[j])
+	{
+		i = 0;
+		x = j;
+		while (haystack[x] == needle[i])
+		{
+			i++;
+			x++;
+			if (i == l)
+				return (&((char *)haystack)[j]);
+		}
+		j++;
+	}
+	return (NULL);
+}

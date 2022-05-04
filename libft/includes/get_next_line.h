@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: mrantil <mrantil@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/12/02 15:00:51 by mrantil           #+#    #+#             */
+/*   Updated: 2022/01/24 14:47:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#ifndef FT_LS_H
-# define FT_LS_H
+# include "libft.h"
 
-typedef struct			s_opt
-{
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+# define FD_MAX 8192
+# define BUFF_SIZE 1000
+
+int	get_next_line(const int fd, char **line);
 
 #endif

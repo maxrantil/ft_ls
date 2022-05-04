@@ -1,23 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 17:28:19 by mrantil          ###   ########.fr       */
+/*   Created: 2021/11/15 15:22:07 by mrantil           #+#    #+#             */
+/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/libft.h"
 
-#ifndef FT_LS_H
-# define FT_LS_H
-
-typedef struct			s_opt
+char	*ft_itoa(int nbr)
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
+	char	*s;
+	int		l;
+	long	n;
 
-#endif
+	n = nbr;
+	l = ft_intlen(n);
+	s = (char *)malloc(sizeof(char) * l + 1);
+	if (!s)
+		return (NULL);
+	s[l] = '\0';
+	if (n < 0)
+		n *= -1;
+	while (l--)
+	{
+		s[l] = (n % 10) + 48;
+		n /= 10;
+	}
+	if (nbr < 0)
+		s[0] = '-';
+	return (s);
+}
