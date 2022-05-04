@@ -2,6 +2,7 @@
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 void	ft_ls(struct dirent *d, DIR *dir)
 {
@@ -55,7 +56,7 @@ int main(int argc, const char **argv)
 		{
 			if (d->d_name[0] == '.')
 				continue;
-			printf("%s ", d->d_name);
+			printf("%*s ", 25, d->d_name);
 		}
 		printf("\n");
 	}
