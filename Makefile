@@ -6,15 +6,14 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/08 11:58:36 by mrantil          ###   ########.fr        #
+#    Updated: 2022/05/08 14:04:24 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	ft_ls
 
 CC			=	gcc
-CFLAGS 		= 	-Wall -Wextra -Werror -g -fsanitize=address -O3 $(INC)
-
+CFLAGS 		= 	-Wall -Wextra -Werror -g -fsanitize=address -O3
 #TERMCAPS 	= 	-ltermcap
 
 DIR_MAIN 	= 	./
@@ -30,15 +29,16 @@ INC 		= 	$(patsubst %,$(DIR_INC)/%,$(_INC))
 
 all: libft $(NAME)
 
-$(NAME): $(DIR_OBJS) libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) libft.a
+$(NAME): libft
 
-$(DIR_OBJS):
-	make -C libft
-	cp libft/libft.a .
-	mkdir -p $(DIR_OBJS)
-	$(CC) $(CFLAGS) -c $(_SRC)
-	mv *.o $(DIR_OBJS)
+	$(CC) $(CFLAGS) -o $(NAME) $(_SRC) libft.a
+
+#$(DIR_OBJS):
+#	make -C libft
+#	cp libft/libft.a .
+#	mkdir -p $(DIR_OBJS)
+#	$(CC) $(CFLAGS) $(_SRC) $(INC) libft.a
+#	mv *.o $(DIR_OBJS)
 
 libft:
 	make -C libft

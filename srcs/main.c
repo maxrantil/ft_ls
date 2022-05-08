@@ -11,10 +11,9 @@ void	ft_ls(struct dirent *d, DIR *dir)
 	{
 		if (d->d_name[0] == '.')
 			continue;
-		printf("%s ", d->d_name);
+		ft_printf("%s ", d->d_name);
 	}
-	printf("\n");
-	ft_putstr("show this\n");
+	ft_printf("\n");
 }
 
 int main(int argc, const char **argv)
@@ -38,17 +37,17 @@ int main(int argc, const char **argv)
 				{
 					if (d->d_name[0] == '.')
 						continue;
-					printf("%s\n", d->d_name);
+					ft_printf("%s\n", d->d_name);
 				}
-				printf("\n");
+				ft_printf("\n");
 			}
 			if (argv[1][1] == 'l')
 			{
 				while ((d = readdir(dir)) != NULL)
 				{
-					printf("%s\n", d->d_name);
+					ft_printf("%s\n", d->d_name);
 				}
-				printf("\n");
+				ft_printf("\n");
 			}
 		}
 	}
@@ -58,9 +57,9 @@ int main(int argc, const char **argv)
 		{
 			if (d->d_name[0] == '.')
 				continue;
-			printf("%*s ", 25, d->d_name);
+			ft_printf("%*s ", 25, d->d_name);
 		}
-		printf("\n");
+		ft_printf("\n");
 	}
 	closedir(dir);
 }

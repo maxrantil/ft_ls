@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/08 12:05:40 by mrantil          ###   ########.fr        #
+#    Updated: 2022/05/08 14:02:13 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,12 +35,9 @@ _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c
 				colors.c
 
 DIR_LIBFT	=	libft/
-#SRC_LIBFT	=	$(addprefix $(DIR_LIBFT), $(_SRC_LIBFT))
 
 DIR_PRINTF	=	ft_printf/
-#SRC_PRINTF	=	$(addprefix $(DIR_PRINTF), $(_SRC_PRINTF))
 
-#SRC			=	$(SRC_LIBFT) $(SRC_PRINTF)
 _SRC		=	$(_SRC_LIBFT) $(_SRC_PRINTF)
 
 OBJ_FILES	=	$(_SRC:.c=.o)
@@ -56,7 +53,7 @@ INC			=	$(addprefix $(INC_DIR), $(_INC))
 all: $(NAME)
 
 $(NAME): $(DIR_OBJS) $(OBJS)
-	ar rc $(NAME) $(OBJS) $(INC)
+	ar rc $(NAME) $(OBJS)
 	ranlib $(NAME)
 
 $(DIR_OBJS):
