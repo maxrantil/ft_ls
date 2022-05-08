@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/08 14:02:13 by mrantil          ###   ########.fr        #
+#    Updated: 2022/05/08 14:11:46 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c
 				colors.c
 
 DIR_LIBFT	=	libft/
-
 DIR_PRINTF	=	ft_printf/
 
 _SRC		=	$(_SRC_LIBFT) $(_SRC_PRINTF)

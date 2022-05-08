@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/08 14:04:24 by mrantil          ###   ########.fr        #
+#    Updated: 2022/05/08 23:06:48 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,29 +16,41 @@ CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra -Werror -g -fsanitize=address -O3
 #TERMCAPS 	= 	-ltermcap
 
-DIR_MAIN 	= 	./
-_SRC	 	= 	srcs/main.c
+SOURCES = srcs
+OBJECTS = objs
+INCLUDES = includes
+LIBRARIES = libraries
 
-OBJ_FILES 	= 	$(DIR_OBJS)*.o
+FILES 		= 	\
+				main
+
+DIR_MAIN 	= 	srcs/
+_SRC	 	= 	main.c
+SRC 		= 	$(patsubst %,$(DIR_MAIN)%,$(_SRC))
+
 DIR_OBJS 	= 	objs/
-OBJS 		= 	$(patsubst %,$(DIR_MAIN)/%,$(OBJ_FILES))
+OBJS 		= 	$(patsubst %,$(DIR_MAIN)%,$(DIR_OBJS))
 
-DIR_INC 	=	includes
+DIR_INC 	=	includes/
 _INC 		= 	ft_ls.h
-INC 		= 	$(patsubst %,$(DIR_INC)/%,$(_INC))
+INC 		= 	$(patsubst %,$(DIR_INC)%,$(_INC))
+
+C_PATHS = $(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
+O_PATHS = $(addsuffix .o, $(addprefix $(OBJECTS)/, $(FILES)))
+
 
 all: libft $(NAME)
 
-$(NAME): libft
+$(NAME): $(DIR_OBJS) $(O_PATHS) libft
+	$(CC) $(CFLAGS) -o $@ $(O_PATHS) libft.a
 
-	$(CC) $(CFLAGS) -o $(NAME) $(_SRC) libft.a
+$(DIR_OBJS):
+	make -C libft
+	cp libft/libft.a .
+	mkdir -p $(DIR_OBJS)
 
-#$(DIR_OBJS):
-#	make -C libft
-#	cp libft/libft.a .
-#	mkdir -p $(DIR_OBJS)
-#	$(CC) $(CFLAGS) $(_SRC) $(INC) libft.a
-#	mv *.o $(DIR_OBJS)
+$(O_PATHS): $(OBJECTS)/%.o:$(SOURCES)/%.c $(INC) Makefile
+	$(CC) $(CFLAGS) -c $< -o $@
 
 libft:
 	make -C libft
