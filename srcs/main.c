@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "includes/ft_ls.h"
+#include "../includes/ft_ls.h"
 
 void	ft_ls(struct dirent *d, DIR *dir)
 {
@@ -14,6 +14,7 @@ void	ft_ls(struct dirent *d, DIR *dir)
 		printf("%s ", d->d_name);
 	}
 	printf("\n");
+	ft_putstr("show this\n");
 }
 
 int main(int argc, const char **argv)

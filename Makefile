@@ -6,55 +6,43 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/04 22:16:24 by mrantil          ###   ########.fr        #
+#    Updated: 2022/05/08 11:58:36 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	ft_ls
 
 CC			=	gcc
-CFLAGS 		= 	-Wall -Wextra -Werror -g -fsanitize=address -O3 -I$(INC) -Ilibft/$(DIR_INC)/
+CFLAGS 		= 	-Wall -Wextra -Werror -g -fsanitize=address -O3 $(INC)
 
 #TERMCAPS 	= 	-ltermcap
 
 DIR_MAIN 	= 	./
-_SRC	 	= 	main.c
-#SRC_MAIN 	= 	$(addprefix $(DIR_MAIN), $(_SRC))
+_SRC	 	= 	srcs/main.c
 
-#SRC 		= 	$(SRC_MAIN)
-#_SRC 		= 	$(_SRC_MAIN)
-
-OBJ_FILES 	= 	$(_SRC:.c=.o)
+OBJ_FILES 	= 	$(DIR_OBJS)*.o
 DIR_OBJS 	= 	objs/
-#OBJS 		= 	$(patsubst %, $(DIR_OBJS)%, $(_SRC:.c=.o))
 OBJS 		= 	$(patsubst %,$(DIR_MAIN)/%,$(OBJ_FILES))
-#OBJS 		= 	$(patsubst %,$(DIR_OBJS)/%,$(OBJ_FILES))
 
 DIR_INC 	=	includes
 _INC 		= 	ft_ls.h
 INC 		= 	$(patsubst %,$(DIR_INC)/%,$(_INC))
 
-all: libft $(NAME) 
+all: libft $(NAME)
+
+$(NAME): $(DIR_OBJS) libft
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES) libft.a
+
+$(DIR_OBJS):
+	make -C libft
+	cp libft/libft.a .
+	mkdir -p $(DIR_OBJS)
+	$(CC) $(CFLAGS) -c $(_SRC)
+	mv *.o $(DIR_OBJS)
 
 libft:
 	make -C libft
 	cp libft/libft.a .
-
-$(DIR_OBJS):
-		mkdir -p $(DIR_OBJS)
-
-$(DIR_OBJS)%.o: $(_SRC)%.c
-		$(CC) $(CFLAGS) -o $< -c $@ $(INC)
-
-#$(DIR_OBJS)/%.o: $(_SRC)/%.c 
-#    	$(CC) $(CFLAGS) -c $(INC) -o $@ $<  
-
-#$(DIR_OBJS)/%.o: %.c $(INC)
-#	$(CC) $(CFLAGS) -c -o $@ $< 
-
-$(NAME): $(DIR_OBJS) $(OBJS) libft
-		$(CC) $(CFLAGS) -o $(NAME) $(OBJ_FILES)
-#libft.a
 
 clean:
 	@make -C libft clean
@@ -66,6 +54,7 @@ fclean:
 	@make -C libft fclean
 	@rm -f $(NAME)
 	@rm -rf $(DIR_OBJS)
+	@rm libft.a
 	@echo ft_ls binary removed.
 
 re: fclean all
