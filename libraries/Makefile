@@ -6,11 +6,11 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/08 14:11:46 by mrantil          ###   ########.fr        #
+#    Updated: 2022/05/09 16:09:44 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	libft.a
+NAME		=	libftprintf.a
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -g -O3 -I$(INC_DIR)
@@ -66,12 +66,12 @@ $(DIR_OBJS)%.o: $(DIR_PRINTF)%.c
 
 clean:
 	@rm -f $(OBJS)
-	@echo libft object files removed.
+	@echo libftprintf object files removed.
 
 fclean:
 	@rm -f $(NAME)
 	@rm -rf $(DIR_OBJS)
-	@echo libft.a removed. Object folder removed.
+	@echo libftprintf.a removed. Object folder removed.
 
 re: fclean all
 
