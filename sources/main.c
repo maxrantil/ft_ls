@@ -1,8 +1,16 @@
-#include <sys/types.h>
-#include <dirent.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
+/*   Updated: 2022/07/01 15:09:45 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
 #include "../includes/ft_ls.h"
 
 void	ft_ls(struct dirent *d, DIR *dir)
@@ -57,9 +65,10 @@ int main(int argc, const char **argv)
 		{
 			if (d->d_name[0] == '.')
 				continue;
-			ft_printf("%*s ", 25, d->d_name);
+			ft_printf("%*s ", 20, d->d_name);
 		}
 		ft_printf("\n");
 	}
 	closedir(dir);
+	return (0);
 }
