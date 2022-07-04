@@ -6,9 +6,33 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/05/09 16:09:44 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/04 14:28:33 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+#COLORS
+SHELL := /bin/bash
+GREEN = \033[32m
+GREEN_BACKGROUND = \033[42m
+WHITE_BACKGROUND = \033[47m
+VIOLET_BACKGROUND = \033[0;45m
+YELLOW_BACKGROUND = \033[0;43m
+WHITE = \033[37m
+YELLOW = \033[33m
+BLACK = \033[30m
+VIOLET = \033[35m
+RESET = \033[0m
+RED = \033[31m
+CYAN = \033[36m
+BOLD = \033[1m
+
+#PRINTING TOOLS
+ERASE_LINE = \033[K
+UP = A
+DOWN = B
+RIGHT = C
+LEFT = D
+MOVE = \033[
 
 NAME		=	libftprintf.a
 
@@ -38,6 +62,7 @@ DIR_LIBFT	=	libft/
 DIR_PRINTF	=	ft_printf/
 
 _SRC		=	$(_SRC_LIBFT) $(_SRC_PRINTF)
+SOURCE_COUNT = $(words $(_SRC))
 
 OBJ_FILES	=	$(_SRC:.c=.o)
 
@@ -48,31 +73,52 @@ INC_DIR		=	includes/
 _INC		= 	libft.h ft_printf.h get_next_line.h
 INC			=	$(addprefix $(INC_DIR), $(_INC))
 
+ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(YELLOW)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
 
 all: $(NAME)
 
 $(NAME): $(DIR_OBJS) $(OBJS)
-	ar rc $(NAME) $(OBJS)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJS)
+	@ranlib $(NAME)
+	@printf "Compiled $(BOLD)$(YELLOW)$(NAME)$(RESET)!\n\n"
+	@stty echo
 
 $(DIR_OBJS):
-	mkdir -p $(DIR_OBJS)
+	@stty -echo
+	@mkdir -p $(DIR_OBJS)
+	@printf "$(YELLOW)_________________________________________________________________\n$(RESET)"
+	@printf "$(NAME): $(YELLOW)$(DIR_OBJS) directory was created.$(RESET)\n\n\n"
 
 $(DIR_OBJS)%.o: $(DIR_LIBFT)%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
-
+	@printf "$(MOVE)2$(UP)"
+	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
+	@make pbar_libft
+	
 $(DIR_OBJS)%.o: $(DIR_PRINTF)%.c
-	$(CC) $(CFLAGS) -o $@ -c $<
+	@printf "$(MOVE)2$(UP)"
+	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
+	@make pbar_libft
 
 clean:
-	@rm -f $(OBJS)
-	@echo libftprintf object files removed.
+	@rm -rf $(DIR_OBJS)
+	@printf "$(NAME):	$(RED)$(DIR_OBJS) was deleted$(RESET)\n"
 
 fclean:
 	@rm -f $(NAME)
-	@rm -rf $(DIR_OBJS)
-	@echo libftprintf.a removed. Object folder removed.
+	@printf "$(NAME):	$(RED)binary was deleted$(RESET)\n"
 
 re: fclean all
+
+pbar_libft:
+	$(eval LOADED_COUNT = $(words $(wildcard $(DIR_OBJS)*.o)))
+	@printf "\r$(MOVE)76$(RIGHT)Files compiled [$(BOLD)$(YELLOW)$(LOADED_COUNT)$(RESET) / $(BOLD)$(YELLOW)$(SOURCE_COUNT)$(RESET)]\n"
+	@for ((i = 1; i <= $(LOADED_COUNT) * 100 / $(SOURCE_COUNT); i++)); do\
+		printf "$(YELLOW_BACKGROUND) $(RESET)" ;\
+	done ;
+	@for ((i = 1; i <= 100 - ($(LOADED_COUNT) * 100 / $(SOURCE_COUNT)); i++)); do\
+		printf "$(WHITE_BACKGROUND) $(RESET)" ;\
+	done ;
+	@printf "$(YELLOW_BACKGROUND)$(BOLD)$(WHITE)$(MOVE)55$(LEFT)[$$(($(LOADED_COUNT) * 100 / $(SOURCE_COUNT))).$$(($(LOADED_COUNT) * 1000 / $(SOURCE_COUNT) % 10))%%]$(MOVE)54$(RIGHT)$(RESET)\n"
+
 
 .PHONY: all clean fclean re
