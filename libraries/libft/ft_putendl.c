@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:39:19 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:09:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@ void	ft_putendl(char const *s)
 {
 	if (s == NULL)
 		return ;
-	write(1, s, ft_strlen(s));
-	write(1, "\n", 1);
+	(void)(write(1, s, ft_strlen(s)) + 1);
+	(void)(write(1, "\n", 1) + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:40:57 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:10:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@ void	ft_putstr_fd(char const *s, int fd)
 {
 	if (s == NULL)
 		return ;
-	write(fd, s, ft_strlen(s));
+	(void)(write(fd, s, ft_strlen(s)) + 1);
 }

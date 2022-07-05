@@ -6,15 +6,15 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/01 15:10:53 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:56:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LS_H
-# define FT_LS_H
+#ifndef FTLS_H
+# define FTLS_H
 
-# include "../libraries/includes/libft.h"
-# include "../libraries/includes/ft_printf.h"
+# include "libft.h"
+# include "ft_printf.h"
 # include <sys/types.h>
 # include <dirent.h>
 # include <stdio.h>

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/04 14:26:47 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/05 14:08:11 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,11 @@ RIGHT = C
 LEFT = D
 MOVE = \033[
 	
+#FORBID KEYBOARD INTERACT
+$(shell stty -echo)
+
+MAKEFLAGS += --no-print-directory
+	
 NAME		=	ft_ls
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra -Werror 
@@ -60,17 +65,17 @@ O_PATHS 	= 	$(addsuffix .o, $(addprefix $(OBJECTS)/, $(FILES)))
 
 LIBS		= 	libftprintf.a
 
+HEADERS		=	-I$(INCLUDES)/ -Ilibraries/includes/
+
 ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
 
 all: libft $(NAME)
 
-$(NAME): $(OBJECTS) $(O_PATHS) $(LIBS)
-	@$(CC) $(CFLAGS) -o $@ $(O_PATHS) $(LIBS) $(LEAK_CHECK)
+$(NAME): $(OBJECTS) $(O_PATHS)
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(LEAK_CHECK)
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
-	@stty echo
 
 $(OBJECTS): 
-	@stty -echo
 	@make -C $(LIBRARIES)
 	@mkdir -p $(OBJECTS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
@@ -78,7 +83,7 @@ $(OBJECTS):
 
 $(O_PATHS): $(OBJECTS)/%.o:$(SOURCES)/%.c $(H_PATHS) Makefile
 	@printf "$(MOVE)2$(UP)"
-	@$(CC) $(CFLAGS) -c $< -o $@ $(LEAK_CHECK) $(ASSERT_OBJECT)
+	@$(CC) $(CFLAGS) $(HEADERS) -c $< -o $@ $(LEAK_CHECK) $(ASSERT_OBJECT)
 	@make pbar
 
 libft:
@@ -111,3 +116,6 @@ pbar:
 
 
 .PHONY: all libft clean fclean re
+
+#ALLOW KEYBOARD INTERACT
+$(shell stty echo)

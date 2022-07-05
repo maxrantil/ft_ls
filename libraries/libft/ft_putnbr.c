@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 13:39:51 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 19:35:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/05 13:10:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_putnbr(int n)
 	nbr = (long)n;
 	if (nbr < 0)
 	{
-		write(1, "-", 1);
+		(void)(write(1, "-", 1) + 1);
 		nbr *= -1;
 	}
 	if (nbr > 9)
