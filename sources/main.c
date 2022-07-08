@@ -6,21 +6,50 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/08 06:36:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/08 09:15:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	ft_ls(struct dirent *d, DIR *dir)
+void	lst_noflag(struct dirent *d, DIR *dir)
 {
 	while ((d = readdir(dir)) != NULL)
 	{
 		if (d->d_name[0] == '.')
 			continue;
-		ft_printf("%s ", d->d_name);
+		ft_printf("%-*s ", ft_strlen(d->d_name) + 1, d->d_name);
 	}
 	ft_printf("\n");
+}
+
+void	lst_lflag(struct dirent *d, DIR *dir)
+{
+	struct	stat *buf;
+	
+	buf = malloc(sizeof(struct stat));
+	while ((d = readdir(dir)) != NULL)
+	{
+		if (d->d_name[0] == '.')
+			continue;
+		stat(d->d_name, buf);
+		int size = buf->st_size;
+		printf("%d",size);
+		ft_printf("%s\n ", d->d_name);
+	}
+	free(buf);
+}
+	
+
+DIR*	open_path(DIR *dir, const char *str)
+{
+	dir = opendir(str);
+	if (!dir)
+	{
+		perror("Error");
+		exit(EXIT_FAILURE);
+	}
+	return (dir);
 }
 
 int main(int argc, const char **argv)
@@ -28,45 +57,31 @@ int main(int argc, const char **argv)
 	struct	dirent *d;
 	DIR		*dir;
 
-	dir = opendir(".");
-	if (!dir)
+	if (argc == 1)
 	{
-		perror("Error:");
-		exit(EXIT_FAILURE);
+		dir = open_path(dir, ".");
+		lst_noflag(d, dir);
 	}
-	if (argc > 1)
+	else if (argc == 2)
 	{
 		if (argv[1][0] == '-')
 		{
+			dir = open_path(dir, ".");
 			if (argv[1][1] == 'a')
-			{
-				while ((d = readdir(dir)) != NULL)
-				{
-					if (d->d_name[0] == '.')
-						continue;
-					ft_printf("%s\n", d->d_name);
-				}
-				//ft_printf("\n");
-			}
+				lst_noflag(d, dir);
 			if (argv[1][1] == 'l')
-			{
-				while ((d = readdir(dir)) != NULL)
-				{
-					ft_printf("%s\n", d->d_name);
-				}
-				ft_printf("\n");
-			}
+				lst_lflag(d, dir);
+		}
+		else
+		{
+			dir = open_path(dir, argv[1]);
+			lst_noflag(d, dir);
 		}
 	}
 	else
 	{
-		while ((d = readdir(dir)) != NULL)
-		{
-			if (d->d_name[0] == '.')
-				continue;
-			ft_printf("%*s ", 20, d->d_name);
-		}
-		ft_printf("\n");
+		dir = open_path(dir, argv[2]);
+		lst_noflag(d, dir);
 	}
 	closedir(dir);
 	return (0);
