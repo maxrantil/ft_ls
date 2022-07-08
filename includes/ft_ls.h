@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/08 09:13:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/08 12:38:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include <sys/types.h>
+# include <sys/stat.h>
 # include <dirent.h>
 # include <stdio.h>
+# include <time.h>
 # include <stdlib.h>
 # include <string.h>
 
