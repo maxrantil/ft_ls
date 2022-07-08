@@ -6,12 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/05 13:51:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/08 06:36:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-#include "../includes/ft_ls.h"
+#include "ft_ls.h"
 
 void	ft_ls(struct dirent *d, DIR *dir)
 {
@@ -26,13 +25,13 @@ void	ft_ls(struct dirent *d, DIR *dir)
 
 int main(int argc, const char **argv)
 {
-	struct dirent *d;
-	DIR *dir;
+	struct	dirent *d;
+	DIR		*dir;
 
 	dir = opendir(".");
 	if (!dir)
 	{
-		perror("error, cant read the directory");
+		perror("Error:");
 		exit(EXIT_FAILURE);
 	}
 	if (argc > 1)
@@ -47,7 +46,7 @@ int main(int argc, const char **argv)
 						continue;
 					ft_printf("%s\n", d->d_name);
 				}
-				ft_printf("\n");
+				//ft_printf("\n");
 			}
 			if (argv[1][1] == 'l')
 			{
