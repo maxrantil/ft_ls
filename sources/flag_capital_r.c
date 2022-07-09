@@ -1,36 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ls.h                                            :+:      :+:    :+:   */
+/*   flag_capital_r.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/09 12:52:33 by mrantil          ###   ########.fr       */
+/*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
+/*   Updated: 2022/07/09 12:50:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FTLS_H
-# define FTLS_H
-
-# include "libft.h"
-# include "ft_printf.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <pwd.h>
-# include <grp.h>
-# include <dirent.h>
-# include <stdio.h>
-# include <time.h>
-# include <stdlib.h>
-# include <string.h>
-
-typedef struct s_opt
+void	flag_capital_r()
 {
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
-
-void	flag_l(struct dirent *dp, DIR *dir);
-
-#endif
+	
+}

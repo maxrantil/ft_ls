@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/08 17:35:13 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/09 12:55:37 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,9 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	ft_ls
 
 FILES 		= 	\
-				main
+				main \
+				flag_l \
+				flag_capital_r \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
@@ -104,7 +106,7 @@ fclean: clean
 re: fclean all
 
 pbar:
-	$(eval LOADED_COUNT = $(words $(wildcard $(OBJECTS))))
+	$(eval LOADED_COUNT = $(words $(wildcard $(OBJECTS)/*.o)))
 	@printf "\r$(MOVE)76$(RIGHT)Files compiled [$(BOLD)$(GREEN)$(LOADED_COUNT)$(RESET) / $(BOLD)$(GREEN)$(SOURCE_COUNT)$(RESET)]\n"
 	@for ((i = 1; i <= $(LOADED_COUNT) * 100 / $(SOURCE_COUNT); i++)); do\
 		printf "$(GREEN_BACKGROUND) $(RESET)" ;\
