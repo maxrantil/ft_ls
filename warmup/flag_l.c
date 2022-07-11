@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/11 20:26:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/09 13:05:17 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,23 +76,21 @@ void	print_file_props(struct stat statbuf)
 	print_time(statbuf);
 }
 
-void	flag_l(struct dirent *dirp)
+void	flag_l(struct dirent *dp, DIR *dir)
 {
 	struct	stat statbuf;
 	int		total;
-	DIR		*dir;
 	
-	dir = open_path(".");
 	total = 0;
-	while ((dirp = readdir(dir)) != NULL)
+	while ((dp = readdir(dir)) != NULL)
 	{
-		if (dirp->d_name[0] == '.')
+		if (dp->d_name[0] == '.')
 			continue;
-		if (!stat(dirp->d_name, &statbuf))
+		if (!stat(dp->d_name, &statbuf))
 		{
 			total += statbuf.st_blocks;
 			print_file_props(statbuf);
-			ft_printf("%s\n", dirp->d_name);
+			ft_printf("%s\n", dp->d_name);
 		}
 		else
 		{

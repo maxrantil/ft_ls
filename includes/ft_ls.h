@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/09 12:52:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/11 20:31:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,26 @@ typedef struct s_opt
 	unsigned int		grpname : 1;
 }						t_opt;
 
-void	flag_l(struct dirent *dp, DIR *dir);
+typedef struct s_file
+{
+	int		f_count;
+	int		f_len;
+	int		f_hlinks;
+	int		f_size;
+	char	*f_permissions;
+	char	*f_owner;
+	char	*f_group;
+	char	*f_time;
+}				t_file;
+
+typedef struct s_dir
+{
+	t_file	*file;
+}				t_dir;
+
+DIR*	open_path(const char *str);
+void	flag_l(struct dirent *dirp);
+void	flag_capital_r(char *base_path, const int root);
+
 
 #endif
