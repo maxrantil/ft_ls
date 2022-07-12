@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/04 14:28:33 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/12 21:04:33 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ MOVE = \033[
 NAME		=	libftprintf.a
 
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -g -O3 -I$(INC_DIR)
+CFLAGS		=	-Wall -Wextra -Werror -g -O3 -I$(INC_DIR)
 
 #TERMCAPS	=	-ltermcap
 
@@ -57,11 +57,14 @@ _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c
 				print_null_float_oct.c print_hex_astrix_procent.c float_work.c flags_plus_minus_hash_null.c \
 				flags_proc_zero_space.c width_and_precision.c tools_write_flags.c tools_itoa_b_getit_nullprint.c \
 				colors.c
+				
+_SRC_VEC	=	vec_new.c vec_free.c vec_from.c vec_resize.c
 
 DIR_LIBFT	=	libft/
 DIR_PRINTF	=	ft_printf/
+DIR_VEC		=	vec/
 
-_SRC		=	$(_SRC_LIBFT) $(_SRC_PRINTF)
+_SRC		=	$(_SRC_LIBFT) $(_SRC_PRINTF) $(_SRC_VEC)
 SOURCE_COUNT = $(words $(_SRC))
 
 OBJ_FILES	=	$(_SRC:.c=.o)
@@ -70,7 +73,7 @@ DIR_OBJS	=	objs/
 OBJS		=	$(patsubst %, $(DIR_OBJS)%, $(_SRC:.c=.o))
 
 INC_DIR		=	includes/
-_INC		= 	libft.h ft_printf.h get_next_line.h
+_INC		= 	libft.h ft_printf.h get_next_line.h vec.h
 INC			=	$(addprefix $(INC_DIR), $(_INC))
 
 ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(YELLOW)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
@@ -95,6 +98,11 @@ $(DIR_OBJS)%.o: $(DIR_LIBFT)%.c
 	@make pbar_libft
 	
 $(DIR_OBJS)%.o: $(DIR_PRINTF)%.c
+	@printf "$(MOVE)2$(UP)"
+	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
+	@make pbar_libft
+	
+$(DIR_OBJS)%.o: $(DIR_VEC)%.c
 	@printf "$(MOVE)2$(UP)"
 	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft

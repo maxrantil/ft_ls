@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/12 15:17:24 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/12 18:27:57 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,13 +54,14 @@ LIBRARIES 	= 	libraries
 
 SOURCE_COUNT = $(words $(FILES))
 
-H_FILES 	= 	ft_ls
+H_FILES 	= 	ft_ls \
+				vec
 
 FILES 		= 	\
 				main \
 				flag_l \
 				flag_capital_r \
-				sort \
+				sort
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
