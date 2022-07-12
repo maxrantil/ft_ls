@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/12 12:37:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:29:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ typedef struct s_dir
 DIR*	open_path(const char *str);
 void	flag_l(struct dirent *dirp);
 void	flag_capital_r(char *base_path);
-
+int		ft_qsort(const char **str);
 
 #endif

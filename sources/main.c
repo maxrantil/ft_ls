@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/12 12:37:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:31:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ int main(int argc, const char **argv)
 	{
 		//dir = open_path(dir, argv[2]);
 		lst_noflag(dirp);
+	}
+	else if (argc == 4)
+	{
+		int ret;
+		ret = ft_qsort(argv);
+		return (ret);
 	}
 	else
 	{

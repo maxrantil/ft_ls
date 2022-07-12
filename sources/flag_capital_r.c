@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/12 13:32:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/12 15:16:32 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,5 @@ void flag_capital_r(char *base_path)
     closedir(dir);
 }
 
-//	unsigned short d_reclen;    /* length of this record */
-//  unsigned char  d_type;      /* type of file; not supported by all file system types */
+//	unsigned short d_reclen;    length of this record
+//  unsigned char  d_type;      type of file; not supported by all file system types
