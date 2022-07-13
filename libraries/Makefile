@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/13 09:25:42 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/13 20:10:36 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c
 				colors.c
 				
 _SRC_VEC	=	vec_new.c vec_free.c vec_from.c vec_resize.c vec_clear.c vec_get.c vec_push.c vec_pop.c \
-				vec_sort.c
+				vec_sort.c vec_iter.c
 
 DIR_LIBFT	=	libft/
 DIR_PRINTF	=	ft_printf/

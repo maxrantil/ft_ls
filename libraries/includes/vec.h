@@ -20,6 +20,7 @@ int		vec_clear(t_vec *src);
 void	*vec_get(t_vec *src, size_t index);
 int	 	vec_push(t_vec *src, void *elem);
 int	 	vec_pop(void *dst, t_vec *src);
+void	vec_iter(t_vec *src, void (*f) (void *));
 void	vec_sort(t_vec *src, int (*f)(void *, void *));
 
 #endif
