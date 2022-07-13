@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/12 21:04:33 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/13 09:11:32 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ RIGHT = C
 LEFT = D
 MOVE = \033[
 
-NAME		=	libftprintf.a
+NAME		=	libft.a
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror -g -O3 -I$(INC_DIR)
@@ -58,7 +58,8 @@ _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c
 				flags_proc_zero_space.c width_and_precision.c tools_write_flags.c tools_itoa_b_getit_nullprint.c \
 				colors.c
 				
-_SRC_VEC	=	vec_new.c vec_free.c vec_from.c vec_resize.c
+_SRC_VEC	=	vec_new.c vec_free.c vec_from.c vec_resize.c vec_clear.c vec_get.c vec_push.c vec_pop.c \
+				vec_sort.c
 
 DIR_LIBFT	=	libft/
 DIR_PRINTF	=	ft_printf/

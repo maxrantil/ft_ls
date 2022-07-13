@@ -1,5 +1,7 @@
 #include "../includes/vec.h"
-
+//Create a function vec_resize which will take in a target_size parameter
+//and either shrink (destructively) or grow the vector to the target size,
+//copying the old contents over to the new allocation.
 int		vec_resize(t_vec *src, size_t target_len)
 {
 	t_vec	dst;

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/12 18:27:57 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/13 09:10:21 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,8 +54,7 @@ LIBRARIES 	= 	libraries
 
 SOURCE_COUNT = $(words $(FILES))
 
-H_FILES 	= 	ft_ls \
-				vec
+H_FILES 	= 	ft_ls
 
 FILES 		= 	\
 				main \
@@ -67,7 +66,7 @@ H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
 O_PATHS 	= 	$(addsuffix .o, $(addprefix $(OBJECTS)/, $(FILES)))
 
-LIBS		= 	libftprintf.a
+LIBS		= 	libft.a
 
 HEADERS		=	-I$(INCLUDES)/ -Ilibraries/includes/
 
