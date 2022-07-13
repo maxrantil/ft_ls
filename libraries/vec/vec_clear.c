@@ -1,4 +1,4 @@
-#include "../includes/vec.h"
+#include "vec.h"
 
 int vec_clear(t_vec *src)
 {

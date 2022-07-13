@@ -1,4 +1,4 @@
-#include "../includes/vec.h"
+#include "vec.h"
 //Create a function vec_pop which will remove 
 //the last element from the vector and copy it to dst.
 int vec_pop(void *dst, t_vec *src)

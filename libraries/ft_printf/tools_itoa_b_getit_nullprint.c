@@ -6,11 +6,11 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 15:14:00 by mrantil           #+#    #+#             */
-/*   Updated: 2022/05/04 19:37:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/13 09:28:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/ft_printf.h"
+#include "ft_printf.h"
 
 void	null_print(t_ftprintf *data)
 {

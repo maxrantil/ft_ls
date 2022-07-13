@@ -1,4 +1,4 @@
-#include "../includes/vec.h"
+#include "vec.h"
 //Create a function vec_push which takes in a vector and 
 //a pointer to an element to be pushed to the end of the vector.
 int vec_push(t_vec *dst, void *src)

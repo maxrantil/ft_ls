@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/13 09:11:32 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/13 09:25:42 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,11 @@ DOWN = B
 RIGHT = C
 LEFT = D
 MOVE = \033[
+
+#FORBID KEYBOARD INTERACT
+$(shell stty -echo)
+
+MAKEFLAGS += --no-print-directory
 
 NAME		=	libft.a
 
@@ -77,6 +82,8 @@ INC_DIR		=	includes/
 _INC		= 	libft.h ft_printf.h get_next_line.h vec.h
 INC			=	$(addprefix $(INC_DIR), $(_INC))
 
+HEADERS		=	-I$(INC_DIR)
+
 ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(YELLOW)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
 
 all: $(NAME)
@@ -95,17 +102,17 @@ $(DIR_OBJS):
 
 $(DIR_OBJS)%.o: $(DIR_LIBFT)%.c
 	@printf "$(MOVE)2$(UP)"
-	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft
 	
 $(DIR_OBJS)%.o: $(DIR_PRINTF)%.c
 	@printf "$(MOVE)2$(UP)"
-	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft
 	
 $(DIR_OBJS)%.o: $(DIR_VEC)%.c
 	@printf "$(MOVE)2$(UP)"
-	@$(CC) $(CFLAGS) -o $@ -c $< $(ASSERT_OBJECT)
+	@$(CC) $(CFLAGS) $(HEADERS) -o $@ -c $< $(ASSERT_OBJECT)
 	@make pbar_libft
 
 clean:
@@ -131,3 +138,6 @@ pbar_libft:
 
 
 .PHONY: all clean fclean re
+
+#ALLOW KEYBOARD INTERACT
+$(shell stty echo)
