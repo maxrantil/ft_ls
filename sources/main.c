@@ -1,53 +1,86 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
+/*   Updated: 2022/07/12 15:31:04 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-#define MAX_LENGTH 100
-#define NUM_STRINGS 10
-
-unsigned char values[NUM_STRINGS][MAX_LENGTH] = { {"eeee"},
-										{"dddddddd"},
-										{"cccc"},
-										{"bbbb"},
-										{"aaaa"} };
-
-int int_arr[] = {5, 4, 2, 3, 1};
-
-int char_cmpfunc (void * a, void * b) {
-   return ( *(char *)a - *(char *)b );
-}
-
-int int_cmpfunc (void * a, void * b) {
-   return ( *(int *)a - *(int *)b );
-}
-
-void print_int(void *src)
+void	lst_noflag(struct dirent *dirp)
 {
-    printf("%d ", *(int *)src);
+	DIR		*dir;
+	dir = open_path(".");
+	
+	while ((dirp = readdir(dir)) != NULL)
+	{
+		if (dirp->d_name[0] == '.')
+			continue;
+		ft_printf("%-*s", ft_strlen(dirp->d_name) + 2, dirp->d_name);
+	}
+	ft_printf("\n");
 }
 
-int main () {
-	t_vec arr;
-	int ret;
+DIR*	open_path(const char *str)
+{
+	DIR *dir;
+	
+	dir = opendir(str);
+	if (!dir)
+	{
+		perror("opendir");
+		exit(EXIT_FAILURE);
+	}
+	return (dir);
+}
 
-	ret = vec_from(&arr, int_arr, 5, sizeof(int));
-	if (ret < 0)
-        printf("Error!");
-	printf("Before sorting the list is: \n");
-	vec_iter(&arr, print_int);
+int main(int argc, const char **argv)
+{
+	struct	dirent *dirp;
 
-   /* for(int n = 0 ; n < 5; n++ ) {
-      printf("%d ", int_arr[n]);
-   } */
-
-	vec_sort(&arr, int_cmpfunc);
-
-	printf("\nAfter sorting the list is: \n");
-    vec_iter(&arr, print_int);
-
-   /* for(int n = 0 ; n < 5; n++ ) {   
-      printf("%d ", int_arr[n]);
-   } */
-	vec_free(&arr);
-   return(0);
+	if (argc == 1)
+	{
+		lst_noflag(dirp);
+	}
+	else if (argc == 2)
+	{
+		if (argv[1][0] == '-')
+		{
+			//dir = open_path(dir, ".");
+			if (argv[1][1] == 'a')
+				lst_noflag(dirp);
+			if (argv[1][1] == 'l')
+				flag_l(dirp);
+			if (argv[1][1] == 'R')
+				flag_capital_r(".");
+		}
+		else
+		{
+			//dir = open_path(dir, argv[1]);
+			lst_noflag(dirp);
+		}
+	}
+	else if (argc == 3)
+	{
+		//dir = open_path(dir, argv[2]);
+		lst_noflag(dirp);
+	}
+	else if (argc == 4)
+	{
+		int ret;
+		ret = ft_qsort(argv);
+		return (ret);
+	}
+	else
+	{
+		//dir = NULL;
+		perror("usage: ./ft_ls [-laRt] [FILE]...\n");
+	}
+	//closedir(dir);
+	return (0);
 }
