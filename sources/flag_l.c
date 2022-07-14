@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/11 20:26:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/14 12:32:04 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	print_group(struct stat statbuf)
 	if (grp == NULL)
     	perror("getgrgid");
 	else
-    	ft_printf(" %s", grp->gr_name);
+    	ft_printf(" %-*s", 9, grp->gr_name);
 }
 
 void	print_time(struct stat statbuf)
@@ -63,7 +63,7 @@ void	print_time(struct stat statbuf)
 
 void	print_size(struct stat statbuf)
 {
-	ft_printf(" %i", statbuf.st_size);
+	ft_printf(" %-*i", 6, statbuf.st_size);
 }
 
 void	print_file_props(struct stat statbuf)
@@ -101,4 +101,5 @@ void	flag_l(struct dirent *dirp)
 		}	
 	}
 	ft_printf("total: %d\n", total/2);
+	closedir(dir);
 }

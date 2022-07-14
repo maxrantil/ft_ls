@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/12 15:31:04 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/14 13:40:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,47 @@ void	lst_noflag(struct dirent *dirp)
 		ft_printf("%-*s", ft_strlen(dirp->d_name) + 2, dirp->d_name);
 	}
 	ft_printf("\n");
+	closedir(dir);
+}
+
+int cmpfunc_str(void *a, void *b)
+{
+	//return (ft_tolower(*(char *)a) - ft_tolower(*(char *)b)); 
+	if (ft_strcmp((char *)a, (char *)b))
+		return (*(char *)a);
+	else
+		return (*(char *)b);
+}
+
+void print_str(void *src)
+{
+	ft_printf("%-*s ", ft_strlen((char *)src) + 1, (char *)src);
+}
+
+void	noflag(struct dirent *dirp)
+{
+	t_vec	noflag;
+	DIR		*dir;
+	int		ret;
+	
+	dir = open_path(".");
+	vec_new(&noflag, 20, sizeof(dirp->d_name));
+	while ((dirp = readdir(dir)) != NULL)
+	{
+		if (dirp->d_name[0] == '.')
+			continue ;
+		ret = vec_push(&noflag, dirp->d_name);
+		if (ret < 0)
+		{
+			perror("vec_push");
+			exit(EXIT_FAILURE);
+		}
+	}
+	vec_sort(&noflag, cmpfunc_str);
+	vec_iter(&noflag, print_str);
+	ft_printf("\n");
+	vec_free(&noflag);
+	closedir(dir);
 }
 
 DIR*	open_path(const char *str)
@@ -45,13 +86,12 @@ int main(int argc, const char **argv)
 
 	if (argc == 1)
 	{
-		lst_noflag(dirp);
+		noflag(dirp);
 	}
 	else if (argc == 2)
 	{
 		if (argv[1][0] == '-')
 		{
-			//dir = open_path(dir, ".");
 			if (argv[1][1] == 'a')
 				lst_noflag(dirp);
 			if (argv[1][1] == 'l')
@@ -61,13 +101,11 @@ int main(int argc, const char **argv)
 		}
 		else
 		{
-			//dir = open_path(dir, argv[1]);
 			lst_noflag(dirp);
 		}
 	}
 	else if (argc == 3)
 	{
-		//dir = open_path(dir, argv[2]);
 		lst_noflag(dirp);
 	}
 	else if (argc == 4)
@@ -78,9 +116,7 @@ int main(int argc, const char **argv)
 	}
 	else
 	{
-		//dir = NULL;
 		perror("usage: ./ft_ls [-laRt] [FILE]...\n");
 	}
-	//closedir(dir);
 	return (0);
 }
