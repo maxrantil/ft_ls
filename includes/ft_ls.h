@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/15 09:29:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:18:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@
 # include <stdlib.h>
 # include <string.h>
 
-typedef struct s_opt
-{
-	unsigned int		dir : 1;
-	unsigned int		grpname : 1;
-}						t_opt;
-
 typedef struct s_file
 {
 	int		f_count;
@@ -47,11 +41,18 @@ typedef struct s_file
 typedef struct s_dir
 {
 	t_file	*file;
+	char	*base_path;
 }				t_dir;
 
-DIR*	open_path(const char *str);
+void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp);
-void	flag_capital_r(char *base_path);
-//int		ft_qsort(const char **str);
+void	flag_recurse(char *base_path);
+
+/*
+**	Tools
+*/
+DIR*	open_path(const char *str);
+int		cmpfunc_str(void *a, void *b);
+void	print_str(void *src);
 
 #endif

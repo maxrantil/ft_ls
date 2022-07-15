@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_capital_r.c                                   :+:      :+:    :+:   */
+/*   flag_recurse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/12 15:16:32 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/15 15:18:26 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void flag_capital_r(char *base_path)
+void flag_recurse(char *base_path)
 {
 	struct	dirent *dirp;
     char	path[1000];
@@ -32,7 +32,7 @@ void flag_capital_r(char *base_path)
             ft_strcpy(path, base_path);
             ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
-            flag_capital_r(path);
+            flag_recurse(path);
         }
     }
     closedir(dir);
