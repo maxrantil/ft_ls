@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/15 15:17:56 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/15 21:57:43 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,12 +37,12 @@ MOVE = \033[
 #FORBID KEYBOARD INTERACT
 $(shell stty -echo)
 
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS	+= --no-print-directory
 	
 NAME		=	ft_ls
 CC			=	gcc
-CFLAGS 		= 	-Wall -Wextra -Werror 
-CFLAGS		+=	-O3 -flto
+CFLAGS 		= 	-Wall -Wextra -Werror
+CFLAGS		+=	-O3 -flto -Wunreachable-code -Wpedantic -Wtype-limits
 LEAK_CHECK	=	-g -fsanitize=address
 
 #TERMCAPS 	= 	-ltermcap

@@ -20,8 +20,8 @@ int cmpfunc_str(void *a, void *b)
 	ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
 	while (*(char *)a && *(char *)b && !ret)
 	{
-		a++;
-		b++;
+		((*(char *)&a)++);
+		((*(char *)&b)++);
 		ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
 	}
 	return (ret);

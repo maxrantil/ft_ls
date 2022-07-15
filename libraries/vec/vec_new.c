@@ -20,5 +20,5 @@ int vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 			exit(EXIT_FAILURE);
 		}
 	}
-	return (1);
+	return (dst->alloc_size);
 }

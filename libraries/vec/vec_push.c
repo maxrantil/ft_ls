@@ -1,6 +1,6 @@
 #include "vec.h"
-//Create a function vec_push which takes in a vector and 
-//a pointer to an element to be pushed to the end of the vector.
+//Create a function which takes in a vector and a pointer
+//to an element to be pushed to the end of the vector.
 int vec_push(t_vec *dst, void *src)
 {
 	if (!dst || !src)
@@ -12,5 +12,5 @@ int vec_push(t_vec *dst, void *src)
 			return (-1);
 	ft_memcpy(&dst->memory[dst->elem_size * dst->len], src, dst->elem_size);
 	dst->len++;
-	return (1);
+	return (dst->alloc_size);
 }
