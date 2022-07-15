@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/14 14:47:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/15 10:12:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void print_str(void *src)
 void	noflag(struct dirent *dirp, const char *path)
 {
 	t_vec	noflag;
-	DIR		*dir;
+	DIR		*dp;
 	int		ret;
 	
-	dir = open_path(path);
+	dp = open_path(path);
 	vec_new(&noflag, 20, sizeof(dirp->d_name));
-	while ((dirp = readdir(dir)) != NULL)
+	while ((dirp = readdir(dp)) != NULL)
 	{
 		if (dirp->d_name[0] == '.')
 			continue ;
@@ -54,38 +54,64 @@ void	noflag(struct dirent *dirp, const char *path)
 	vec_iter(&noflag, print_str);
 	ft_printf("\n");
 	vec_free(&noflag);
-	closedir(dir);
+	closedir(dp);
 }
 
 DIR*	open_path(const char *str)
 {
-	DIR *dir;
+	DIR *dp;
 	
-	dir = opendir(str);
-	if (!dir)
+	dp = opendir(str);
+	if (!dp)
 	{
-		perror("opendir");
+		perror("open_path");
 		exit(EXIT_FAILURE);
 	}
-	return (dir);
+	return (dp);
+}
+
+void	usage(int status)
+{
+	if (status != EXIT_SUCCESS)
+	{
+		ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
+		ft_printf("\
+	List information about the FILEs (the current directory by default).\n\
+	Sort entries alphabetically if not -t is specified.\n");
+		ft_printf("\
+	-a	do not ignore entries starting with .\n\
+	-l	use a long listing format\n\
+	-r	reverse order while sorting\n\
+	-R	list subdirectories recursively\n\
+	-t	sort by modification time, newest first\n");
+	}
+	exit(status);
 }
 
 int main(int argc, const char **argv)
 {
-	struct	dirent *dirp;
-
+	struct	dirent	*dirp;
+	char			*p;
+	
 	if (argc == 1)
 		noflag(dirp, ".");
 	else if (argc == 2)
 	{
 		if (argv[1][0] == '-')
 		{
-			if (argv[1][1] == 'a')
-				lst_noflag(dirp);
-			if (argv[1][1] == 'l')
-				flag_l(dirp);
-			if (argv[1][1] == 'R')
-				flag_capital_r(".");
+			p = (char*)(argv[1] + 1);
+			while (*p)
+			{
+				if (*p == 'a')
+					noflag(dirp, ".");
+				else if (*p == 'l')
+					flag_l(dirp);
+				else if (*p == 'R')
+					flag_capital_r(".");
+				else
+					usage(EXIT_FAILURE);
+				p++;	
+			}
 		}
 		else
 			noflag(dirp, argv[1]);

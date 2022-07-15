@@ -13,12 +13,14 @@ unsigned char values[NUM_STRINGS][MAX_LENGTH] = { {"eeee"},
 
 int int_arr[] = {5, 4, 2, 3, 1};
 
-int char_cmpfunc (void * a, void * b) {
-   return ( *(char *)a - *(char *)b );
+int char_cmpfunc (void * a, void * b)
+{
+   return (*(char *)a - *(char *)b);
 }
 
-int int_cmpfunc (void * a, void * b) {
-   return ( *(int *)a - *(int *)b );
+int int_cmpfunc (void * a, void * b)
+{
+   return (*(int *)a - *(int *)b);
 }
 
 void print_int(void *src)
