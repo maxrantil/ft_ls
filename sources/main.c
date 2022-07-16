@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/15 15:18:10 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 06:53:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int argc, const char **argv)
 	{
 		if (argv[1][0] == '-')
 		{
-			p = (char*)(argv[1] + 1);
+			p = (char *)(argv[1] + 1);
 			while (*p)
 			{
 				if (*p == 'a')
@@ -49,7 +49,7 @@ int main(int argc, const char **argv)
 				else if (*p == 'l')
 					flag_l(dirp);
 				else if (*p == 'R')
-					flag_recurse(".");
+					flag_recurse(".", 0);
 				else
 					usage(EXIT_FAILURE);
 				p++;	
@@ -59,6 +59,6 @@ int main(int argc, const char **argv)
 			noflag(dirp, argv[1]);
 	}
 	else
-		perror("usage: ./ft_ls [-laRt] [FILE]...\n");
+		usage(EXIT_FAILURE);
 	return (0);
 }

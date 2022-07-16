@@ -6,36 +6,36 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/15 15:18:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 08:20:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void flag_recurse(char *base_path)
+void flag_recurse(char *name, int indent)
 {
-	struct	dirent *dirp;
-    char	path[1000];
-	DIR		*dir;
+    struct dirent *dirp;
+    DIR *dp;
+	char path[1024];
 
-    dir = opendir(base_path);
-	if (!dir)
-        return;
-    while ((dirp = readdir(dir)) != NULL)
-    {
-        if (ft_strcmp(dirp->d_name, ".") != 0 && ft_strcmp(dirp->d_name, "..") != 0 && dirp->d_name[0] != '.')
-        {
-			if (dirp->d_type == DT_DIR)
-            	ft_printf("\n\n%s/%s:\n", base_path, dirp->d_name);
-			else
-            	ft_printf("%s\t", dirp->d_name);
-            ft_strcpy(path, base_path);
-            ft_strcat(path, "/");
-            ft_strcat(path, dirp->d_name);
-            flag_recurse(path);
+    if (!(dp = opendir(name)))
+        return ;
+    while ((dirp = readdir(dp)) != NULL)
+	{
+        if (dirp->d_type == DT_DIR)
+		{
+            if (!strcmp(dirp->d_name, ".") || !strcmp(dirp->d_name, ".."))
+                continue;
+            printf("%s/%s", name, dirp->d_name);
+            printf("%*s[%s]\n", indent, "", dirp->d_name);
+            flag_recurse(path, indent + 2);
+        }
+		else
+		{
+            printf("%*s- %s\n", indent, "", dirp->d_name);
         }
     }
-    closedir(dir);
+    closedir(dp);
 }
 
 //	unsigned short d_reclen;    length of this record
