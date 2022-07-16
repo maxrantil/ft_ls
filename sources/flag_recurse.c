@@ -6,36 +6,38 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/15 15:18:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 09:27:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void flag_recurse(char *base_path)
+void flag_recurse(char *base_path, int indent)
 {
-	struct	dirent *dirp;
-    char	path[1000];
-	DIR		*dir;
+    struct	dirent *dirp;
+	char 	path[1024];
+    DIR		*dp;
 
-    dir = opendir(base_path);
-	if (!dir)
-        return;
-    while ((dirp = readdir(dir)) != NULL)
-    {
-        if (ft_strcmp(dirp->d_name, ".") != 0 && ft_strcmp(dirp->d_name, "..") != 0 && dirp->d_name[0] != '.')
-        {
-			if (dirp->d_type == DT_DIR)
-            	ft_printf("\n\n%s/%s:\n", base_path, dirp->d_name);
-			else
-            	ft_printf("%s\t", dirp->d_name);
-            ft_strcpy(path, base_path);
+    if (!(dp = opendir(base_path)))
+        return ;
+    while ((dirp = readdir(dp)) != NULL)
+	{
+        if (dirp->d_type == DT_DIR)
+		{
+            if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden maps dont show
+                continue;
+			ft_strcpy(path, base_path);
             ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
-            flag_recurse(path);
+            printf("\n\n%*s%d[%s]\n", indent, "", indent, path);
+            flag_recurse(path, indent + 1);
+        }
+		else
+		{
+            printf("%*s%d-%-*s", indent, "", indent, 15, dirp->d_name);
         }
     }
-    closedir(dir);
+    closedir(dp);
 }
 
 //	unsigned short d_reclen;    length of this record

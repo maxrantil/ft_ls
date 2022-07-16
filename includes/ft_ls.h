@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/15 15:18:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 08:34:14 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_dir
 
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp);
-void	flag_recurse(char *base_path);
+void	flag_recurse(char *base_path, int indent);
 
 /*
 **	Tools

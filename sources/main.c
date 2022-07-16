@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/15 15:18:10 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 08:34:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int main(int argc, const char **argv)
 				else if (*p == 'l')
 					flag_l(dirp);
 				else if (*p == 'R')
-					flag_recurse(".");
+					flag_recurse(".", 0);
 				else
 					usage(EXIT_FAILURE);
 				p++;	
