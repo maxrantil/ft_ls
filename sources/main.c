@@ -41,7 +41,7 @@ int main(int argc, const char **argv)
 	{
 		if (argv[1][0] == '-')
 		{
-			p = (char*)(argv[1] + 1);
+			p = (char *)(argv[1] + 1);
 			while (*p)
 			{
 				if (*p == 'a')
@@ -59,6 +59,6 @@ int main(int argc, const char **argv)
 			noflag(dirp, argv[1]);
 	}
 	else
-		perror("usage: ./ft_ls [-laRt] [FILE]...\n");
+		usage(EXIT_FAILURE);
 	return (0);
 }
