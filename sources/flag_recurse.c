@@ -6,33 +6,35 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/16 07:00:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 09:27:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void flag_recurse(char *name, int indent)
+void flag_recurse(char *base_path, int indent)
 {
-    struct dirent *dirp;
-    DIR *dp;
-	char path[1024];
+    struct	dirent *dirp;
+	char 	path[1024];
+    DIR		*dp;
 
-    if (!(dp = opendir(name)))
+    if (!(dp = opendir(base_path)))
         return ;
     while ((dirp = readdir(dp)) != NULL)
 	{
         if (dirp->d_type == DT_DIR)
 		{
-            if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0)
+            if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden maps dont show
                 continue;
-            snprintf(path, sizeof(path), "%s/%s", name, dirp->d_name);
-            printf("%*s[%s]\n", indent, "", dirp->d_name);
-            flag_recurse(path, indent + 2);
+			ft_strcpy(path, base_path);
+            ft_strcat(path, "/");
+            ft_strcat(path, dirp->d_name);
+            printf("\n\n%*s%d[%s]\n", indent, "", indent, path);
+            flag_recurse(path, indent + 1);
         }
 		else
 		{
-            printf("%*s- %s\n", indent, "", dirp->d_name);
+            printf("%*s%d-%-*s", indent, "", indent, 15, dirp->d_name);
         }
     }
     closedir(dp);
