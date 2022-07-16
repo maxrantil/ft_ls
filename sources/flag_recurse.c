@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/16 08:20:24 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 07:00:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void flag_recurse(char *name, int indent)
 	{
         if (dirp->d_type == DT_DIR)
 		{
-            if (!strcmp(dirp->d_name, ".") || !strcmp(dirp->d_name, ".."))
+            if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0)
                 continue;
-            printf("%s/%s", name, dirp->d_name);
+            snprintf(path, sizeof(path), "%s/%s", name, dirp->d_name);
             printf("%*s[%s]\n", indent, "", dirp->d_name);
             flag_recurse(path, indent + 2);
         }
