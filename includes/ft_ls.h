@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/16 08:34:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:52:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_file
 	char	*f_permissions;
 	char	*f_owner;
 	char	*f_group;
-	char	*f_time;
+	char	*f_mtime;
 }				t_file;
 
 typedef struct s_dir
@@ -44,9 +44,17 @@ typedef struct s_dir
 	char	*base_path;
 }				t_dir;
 
+typedef struct s_utils
+{
+	t_dir	*dir;
+	int		dir_count;
+	int		file_count;
+}				t_utils;
+
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp);
 void	flag_recurse(char *base_path, int indent);
+int		window_size(void);
 
 /*
 **	Tools

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/16 08:34:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/17 12:54:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ int main(int argc, const char **argv)
 	}
 	else
 		perror("usage: ./ft_ls [-laRt] [FILE]...\n");
+	window_size();
 	return (0);
 }
