@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/07/15 21:57:43 by mrantil          ###   ########.fr        #
+#    Updated: 2022/07/17 12:53:03 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ FILES 		= 	main \
 				flag_recurse \
 				noflag \
 				tools \
-				
+				window_size \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))

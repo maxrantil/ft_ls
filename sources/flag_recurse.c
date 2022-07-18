@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/16 09:27:37 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/16 19:22:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,12 @@
 void flag_recurse(char *base_path, int indent)
 {
     struct	dirent *dirp;
+	t_utils	utils;
 	char 	path[1024];
     DIR		*dp;
 
+	utils.dir_count = 0;
+	utils.file_count = 0;
     if (!(dp = opendir(base_path)))
         return ;
     while ((dirp = readdir(dp)) != NULL)
@@ -29,15 +32,25 @@ void flag_recurse(char *base_path, int indent)
 			ft_strcpy(path, base_path);
             ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
-            printf("\n\n%*s%d[%s]\n", indent, "", indent, path);
+			utils.dir_count++;
+            ft_printf("\n\n%*s%d%s\n", indent, "", indent, path);
             flag_recurse(path, indent + 1);
         }
 		else
 		{
-            printf("%*s%d-%-*s", indent, "", indent, 15, dirp->d_name);
+			utils.file_count++;
+            ft_printf("%*s%d%-*s", indent, "", indent, 15, dirp->d_name);
         }
     }
-    closedir(dp);
+	ft_printf("\n\n{gre}dir_count = %d{nor}\n", utils.dir_count);
+	ft_printf("\n\n{blu}file_count = %d{nor}\n", utils.file_count);
+	/* utils.dir = (t_dir *)malloc(sizeof(t_dir) * utils.dir_count);
+	if (!utils.dir)
+	{
+		perror("utils.dir");
+		exit(1);
+	} */
+    closedir(dp);	//read them all into a vec and then print them out into structure after
 }
 
 //	unsigned short d_reclen;    length of this record
