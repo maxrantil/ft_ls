@@ -18,7 +18,7 @@ int cmpfunc_str(void *a, void *b)
 	int	ret;
 	
 	ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
-	while (*(char *)a && *(char *)b && !ret)
+	while (!ret && *(char *)a && *(char *)b)
 	{
 		((*(char *)&a)++);
 		((*(char *)&b)++);
@@ -29,5 +29,5 @@ int cmpfunc_str(void *a, void *b)
 
 void print_str(void *src)
 {
-	ft_printf("%-*s ", ft_strlen((char *)src) + 1, (char *)src);
+	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }
