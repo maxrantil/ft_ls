@@ -153,6 +153,7 @@ static int	dopath(Myfunc* func)
 		/* append name after "/" */
 		strcpy(&fullpath[n], dirp->d_name); 
 		/* recursive */
+		printf("%s\t", dirp->d_name);	
 		if ((ret = dopath(func)) != 0)
 			break; /* time to leave */
 	}
@@ -182,6 +183,7 @@ static int	myfunc(const char *pathname, const struct stat *statptr, int type)
 		break;
 	case FTW_D:
 		ndir++;
+		printf("\n\n%s\n", pathname);
 		break;
 	case FTW_DNR:
 		perror("can't read directory");
