@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/16 19:22:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/07/22 10:45:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void flag_recurse(char *base_path, int indent)
         }
     }
 	ft_printf("\n\n{gre}dir_count = %d{nor}\n", utils.dir_count);
-	ft_printf("\n\n{blu}file_count = %d{nor}\n", utils.file_count);
+	ft_printf("{blu}file_count = %d{nor}\n\n", utils.file_count);
 	/* utils.dir = (t_dir *)malloc(sizeof(t_dir) * utils.dir_count);
 	if (!utils.dir)
 	{

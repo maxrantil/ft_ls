@@ -10,96 +10,47 @@
 #include <limits.h>
 #include <errno.h>
 
-/* If PATH_MAX is indeterminate, no guarantee this is adequate */
-#define PATH_MAX_GUESS 1024
-
-char *path_alloc(size_t *sizep) /* also return allocated size, if nonnull */
-{
-	char	*ptr;
-	size_t size;
-
-	size = PATH_MAX_GUESS;	/* it’s indeterminate */
-	if ((ptr = malloc(size)) == NULL)
-	{
-		perror("malloc error for pathname");
-		exit(1);
-	}
-	if (sizep != NULL)
-		*sizep = size;
-	return(ptr);
-}
-
 /* function type that is called for each filename */
 typedef int Myfunc(const char *, const struct stat *, int);
 
-static Myfunc	myfunc;
-static int		myftw(char *, Myfunc *);
-static int		dopath(Myfunc *);
-
-static long nreg, ndir, nblk, nchr, nfifo, nslink, nsock, ntot;
-
-int main(int argc, char *argv[])
-{
-	int	ret;
-
-	if (argc != 2)
-	{
-		printf("usage: ftw <starting-pathname>");
-		exit(1);
-	}
-	ret = myftw(argv[1], myfunc);	/* does it all */
-	ntot = nreg + ndir + nblk + nchr + nfifo + nslink + nsock;
-	if (ntot == 0)
-		ntot = 1;	/* avoid divide by 0; print 0 for all counts */
-	printf("regular files	=	%7ld, %5.2f %%\n", nreg, nreg*100.0/ntot);
-	printf("directories	=	%7ld, %5.2f %%\n", ndir, ndir*100.0/ntot);
-	printf("block special	=	%7ld, %5.2f %%\n", nblk, nblk*100.0/ntot);
-	printf("char special	=	%7ld, %5.2f %%\n", nchr, nchr*100.0/ntot);
-	printf("FIFOs		=	%7ld, %5.2f %%\n", nfifo, nfifo*100.0/ntot);
-	printf("symbolic links	=	%7ld, %5.2f %%\n", nslink, nslink*100.0/ntot);
-	printf("sockets		=	%7ld, %5.2f %%\n", nsock, nsock*100.0/ntot);
-	exit(ret);
-}
-
-/*
-* Descend through the hierarchy, starting at "pathname".
-* The caller’s func() is called for every file.
-*/
-
-/* file other than directory */
-#define FTW_F 1
-
-/* directory */
-#define FTW_D 2
-
-/* directory that can’t be read */
-#define FTW_DNR 3
-
-/* file that we can’t stat */
-#define FTW_NS 4
-
+static long nreg, ndir, ntot;
 /* contains full pathname for every file */
 static char *fullpath;
 static size_t pathlen;
+/* file other than directory */
+#define FTW_F 1
+/* directory */
+#define FTW_D 2
+/* directory that can’t be read */
+#define FTW_DNR 3
+/* file that we can’t stat */
+#define FTW_NS 4
 
-/* we return whatever func() returns */
-static int	myftw(char *pathname, Myfunc *func)
+static int	myfunc(const char *pathname, const struct stat *statptr, int type)
 {
-	/* malloc PATH_MAX+1 bytes */
-	/* (Figure 2.16) */
-	fullpath = path_alloc(&pathlen);
-	
-	if (pathlen <= strlen(pathname))
-	{
-		pathlen = strlen(pathname) * 2;
-		if ((fullpath = realloc(fullpath, pathlen)) == NULL)
-		{
-			perror("realloc failed");
-			exit(1);
+	switch (type) {
+	case FTW_F:
+		
+		switch (statptr->st_mode & S_IFMT)	{
+		case S_IFREG:	nreg++;		break;
+		case S_IFDIR:	/* directories should have type = FTW_D */
+			perror("S_IFDIR");
 		}
+		break;
+	case FTW_D:
+		ndir++;
+		printf("\n\n%s\n", pathname);
+		break;
+	case FTW_DNR:
+		perror("can't read directory");
+		break;
+	case FTW_NS:
+		perror("stat error for");
+		break;
+	default:
+		perror("unknown typ for pathname");
 	}
-	strcpy(fullpath, pathname);
-	return(dopath(func));
+	return(0);
 }
 
 /*
@@ -147,13 +98,13 @@ static int	dopath(Myfunc* func)
 		return(func(fullpath, &statbuf, FTW_DNR));
 	while ((dirp = readdir(dp)) != NULL)
 	{
-		/* ignore dot and dot-dot */
-		if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0)
+		/* ignore dot and dot-dot and hidden files */
+		if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.')
 			continue;
 		/* append name after "/" */
 		strcpy(&fullpath[n], dirp->d_name); 
+		//printf("%s\t", dirp->d_name);
 		/* recursive */
-		printf("%s\t", dirp->d_name);	
 		if ((ret = dopath(func)) != 0)
 			break; /* time to leave */
 	}
@@ -166,33 +117,56 @@ static int	dopath(Myfunc* func)
 	return(ret);
 }
 
-static int	myfunc(const char *pathname, const struct stat *statptr, int type)
+static char *path_alloc(size_t *sizep) /* also return allocated size, if nonnull */
 {
-	switch (type) {
-	case FTW_F:
-		switch (statptr->st_mode & S_IFMT)	{
-		case S_IFREG:	nreg++;		break;
-		case S_IFBLK:	nblk++;		break;
-		case S_IFCHR:	nchr++;		break;
-		case S_IFIFO:	nfifo++;	break;
-		case S_IFLNK:	nslink++;	break;
-		case S_IFSOCK:	nsock++;	break;
-		case S_IFDIR:	/* directories should have type = FTW_D */
-			perror("S_IFDIR");
-		}
-		break;
-	case FTW_D:
-		ndir++;
-		printf("\n\n%s\n", pathname);
-		break;
-	case FTW_DNR:
-		perror("can't read directory");
-		break;
-	case FTW_NS:
-		perror("stat error for");
-		break;
-	default:
-		perror("unknown typ for pathname");
+	char	*ptr;
+
+	if ((ptr = malloc(PATH_MAX)) == NULL)
+	{
+		perror("malloc error for pathname");
+		exit(1);
 	}
-	return(0);
+	if (sizep != NULL)
+		*sizep = PATH_MAX;
+	return(ptr);
+}
+
+/*
+* Descend through the hierarchy, starting at "pathname".
+* The caller’s func() is called for every file.
+*/
+
+/* we return whatever func() returns */
+static int	myftw(char *pathname, Myfunc *func)
+{
+	fullpath = path_alloc(&pathlen);
+	if (pathlen <= strlen(pathname))
+	{
+		pathlen = strlen(pathname) * 2;
+		if ((fullpath = realloc(fullpath, pathlen)) == NULL)
+		{
+			perror("realloc failed");
+			exit(1);
+		}
+	}
+	strcpy(fullpath, pathname);
+	return(dopath(func));
+}
+
+int main(int argc, char *argv[])
+{
+	int	ret;
+
+	if (argc != 2)
+	{
+		printf("usage: ftw <starting-pathname>");
+		exit(1);
+	}
+	ret = myftw(argv[1], myfunc);	/* does it all */
+	ntot = nreg + ndir;
+	if (ntot == 0)
+		ntot = 1;	/* avoid divide by 0; print 0 for all counts */
+	printf("\n\nregular files	=	%7ld, %5.2f %%\n", nreg, nreg*100.0/ntot);
+	printf("directories	=	%7ld, %5.2f %%\n", ndir, ndir*100.0/ntot);
+	exit(ret);
 }
