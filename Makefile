@@ -33,12 +33,12 @@ DOWN = B
 RIGHT = C
 LEFT = D
 MOVE = \033[
-	
+
 #FORBID KEYBOARD INTERACT
 $(shell stty -echo)
 
 MAKEFLAGS	+= --no-print-directory
-	
+
 NAME		=	ft_ls
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra -Werror
@@ -47,21 +47,21 @@ LEAK_CHECK	=	-g -fsanitize=address
 
 #TERMCAPS 	= 	-ltermcap
 
-SOURCES 	= 	sources
-OBJECTS 	= 	objects
+SOURCES 	= 	srcs
+OBJECTS 	= 	objs
 INCLUDES	= 	includes
-LIBRARIES 	= 	libraries
+LIBRARIES 	= 	libft
 
 SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	ft_ls
 
 FILES 		= 	main \
-				flag_l \
-				flag_recurse \
-				noflag \
-				tools \
-				window_size \
+			flag_l \
+			flag_recurse \
+			noflag \
+			tools \
+			window_size \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
@@ -69,7 +69,7 @@ O_PATHS 	= 	$(addsuffix .o, $(addprefix $(OBJECTS)/, $(FILES)))
 
 LIBS		= 	libft.a
 
-HEADERS		=	-I$(INCLUDES)/ -Ilibraries/includes/
+HEADERS		=	-I$(INCLUDES)/ -Ilibft/includes/
 
 ASSERT_OBJECT = && printf "$(ERASE_LINE)" && printf "$@ $(GREEN)$(BOLD) ✔$(RESET)" || printf "$@ $(RED)$(BOLD)✘$(RESET)\n"
 
@@ -79,7 +79,7 @@ $(NAME): $(OBJECTS) $(O_PATHS)
 	@$(CC) $(CFLAGS) $(HEADERS) -o $@ $(O_PATHS) $(LIBS) $(LEAK_CHECK)
 	@printf "Compiled $(BOLD)$(GREEN)$(NAME)$(RESET)!\n\n"
 
-$(OBJECTS): 
+$(OBJECTS):
 	@make -C $(LIBRARIES)
 	@mkdir -p $(OBJECTS)
 	@printf "$(GREEN)_________________________________________________________________\n$(RESET)"
