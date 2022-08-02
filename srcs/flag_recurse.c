@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/01 12:26:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/02 10:46:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void flag_recurse(char *base_path, int indent)
 	{
         if (dirp->d_type == DT_DIR)
 		{
-            if (strcmp(dirp->d_name, ".") == 0 || strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden maps dont show
-                continue;
+            if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden maps dont show
+				continue;
 			ft_strcpy(path, base_path);
             ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
@@ -42,8 +42,10 @@ void flag_recurse(char *base_path, int indent)
             ft_printf("%*s%d%-*s", indent, "", indent, 15, dirp->d_name);
         }
     }
-	ft_printf("\n\n{gre}dir_count = %d{nor}\n", utils.dir_count);
-	ft_printf("{blu}file_count = %d{nor}\n\n", utils.file_count);
+	if (utils.dir_count > 0)
+		ft_printf("\n\n{gre}dir_count = %d{nor}\n", utils.dir_count);
+	if (utils.file_count > 0)
+		ft_printf("{blu}file_count = %d{nor}\n\n", utils.file_count);
 	/* utils.dir = (t_dir *)malloc(sizeof(t_dir) * utils.dir_count);
 	if (!utils.dir)
 	{
