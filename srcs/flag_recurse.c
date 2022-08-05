@@ -31,10 +31,6 @@ static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 			vec_push(vec, &path);
             get_dirs_recurse(vec, dirp, path);
         }
-		/* else
-		{
-            ft_printf("%*s%d%-*s", indent, "", indent, 15, dirp->d_name);
-        } */
     }
 	if (closedir(dp) < 0)
 	{
@@ -46,6 +42,30 @@ static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 //	unsigned short d_reclen;    length of this record
 //  unsigned char  d_type;      type of file; not supported by all file system types
 
+void open_dir(void *src)
+{
+	struct dirent	*dirp;	//makes leaks because we loose the old?
+	DIR				*dp;
+	t_vec			v_files;
+
+	vec_new(&v_files, 1, sizeof(t_vec));
+    if (!(dp = opendir((char *)src)))
+    {
+		perror("can't open dir");
+		exit(1);
+	}
+	printf("%s:\n", (char *)src);
+    while ((dirp = readdir(dp)) != NULL)
+	{
+		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+				continue;
+		//printf("%s\t", dirp->d_name);
+		vec_push(&v_files, dirp->d_name);
+    }
+	vec_sort(&v_files, &cmpfunc_str);
+	vec_iter(&v_files, print_str);
+	printf("\n\n");
+}
 
 void flag_recurse(struct dirent	*dirp, char *base_path)
 {
@@ -55,6 +75,7 @@ void flag_recurse(struct dirent	*dirp, char *base_path)
 	vec_push(&vec, base_path);
 	get_dirs_recurse(&vec, dirp, base_path);
 	vec_sort(&vec, &cmpfunc_str);
-	vec_iter(&vec, print_str);
+	//vec_iter(&vec, print_str);
+	vec_iter(&vec, open_dir);
 	vec_free(&vec);
 }

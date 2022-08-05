@@ -34,5 +34,5 @@ int cmpfunc_str(void *a, void *b)
 
 void print_str(void *src)
 {
-    printf("%s:\n", (char *)src);
+    printf("%s\t", (char *)src);
 }
