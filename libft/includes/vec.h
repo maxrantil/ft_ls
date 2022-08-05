@@ -2,7 +2,7 @@
 # define VEC_H
 
 # include "libft.h"
-# include "../../includes/ft_ls.h"
+# include <stdio.h>
 
 typedef struct s_vec
 {

@@ -27,7 +27,12 @@ int cmpfunc_str(void *a, void *b)
 	return (ret);
 }
 
-void print_str(void *src)
+/* void print_str(void *src)
 {
 	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
+} */
+
+void print_str(void *src)
+{
+    printf("%s\n", (char *)src);
 }

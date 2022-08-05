@@ -12,32 +12,40 @@
 
 #include "ft_ls.h"
 
-void flag_recurse(t_vec *vec, char *base_path)
+void flag_recurse(char *base_path, int indent)
 {
     struct	dirent *dirp;
+	t_utils	utils;
 	char 	path[1024];
     DIR		*dp;
 
+	//utils.dir_count = 0;
+	//utils.file_count = 0;
     if (!(dp = opendir(base_path)))
         return ;
     while ((dirp = readdir(dp)) != NULL)
 	{
         if (dirp->d_type == DT_DIR)
 		{
-            if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+            if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden maps dont show
 				continue;
 			ft_strcpy(path, base_path);
             ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
-			vec_push(vec, &path);
-            //ft_printf("\n\n%s%s\n", path, ":");
-            flag_recurse(vec, path);
+			//utils.dir_count++;
+            ft_printf("\n\n%*s%d%s\n", indent, "", indent, path);
+            flag_recurse(path, indent + 1);
         }
-		/* else
+		else
 		{
+			//utils.file_count++;
             ft_printf("%*s%d%-*s", indent, "", indent, 15, dirp->d_name);
-        } */
+        }
     }
+	/* if (utils.dir_count > 0)
+		ft_printf("\n\n{gre}dir_count = %d{nor}\n", utils.dir_count);
+	if (utils.file_count > 0)
+		ft_printf("{blu}file_count = %d{nor}\n\n", utils.file_count); */
 	/* utils.dir = (t_dir *)malloc(sizeof(t_dir) * utils.dir_count);
 	if (!utils.dir)
 	{

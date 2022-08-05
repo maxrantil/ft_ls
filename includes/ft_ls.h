@@ -26,7 +26,7 @@
 # include <stdlib.h>
 # include <string.h>
 
-typedef struct s_file
+/* typedef struct s_file
 {
 	int		f_count;
 	int		f_len;
@@ -49,11 +49,11 @@ typedef struct s_utils
 	t_dir	*dir;
 	int		dir_count;
 	int		file_count;
-}				t_utils;
+}				t_utils; */
 
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp);
-void	flag_recurse(char *base_path, int indent);
+void	flag_recurse(t_vec *vec, char *base_path);
 int		window_size(void);
 
 /*

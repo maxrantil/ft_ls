@@ -14,19 +14,16 @@
 
 void	usage(int status)
 {
-	if (status != EXIT_SUCCESS)
-	{
-		ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
-		ft_printf("\
+	ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
+	ft_printf("\
 	List information about the FILEs (the current directory by default).\n\
 	Sort entries alphabetically if not -t is specified.\n");
-		ft_printf("\
+	ft_printf("\
 	-a	do not ignore entries starting with .\n\
 	-l	use a long listing format\n\
 	-r	reverse order while sorting\n\
 	-R	list subdirectories recursively\n\
 	-t	sort by modification time, newest first\n");
-	}
 	exit(status);
 }
 
@@ -34,7 +31,9 @@ int main(int argc, const char **argv)
 {
 	struct	dirent	*dirp;
 	char			*p;
-	
+	t_vec			vec;
+
+	vec_new(&vec, 1, sizeof(char *));
 	if (argc == 1)
 		noflag(dirp, ".");
 	else if (argc == 2)
@@ -49,9 +48,14 @@ int main(int argc, const char **argv)
 				else if (*p == 'l')
 					flag_l(dirp);
 				else if (*p == 'R')
-					flag_recurse(".", 0);
+				{
+					flag_recurse(&vec, ".");
+					vec_sort(&vec, &cmpfunc_str);
+					//vec_iter(&vec, print_str);
+					vec_free(&vec);
+				}
 				else
-					usage(EXIT_FAILURE);
+					usage(1);
 				p++;	
 			}
 		}
@@ -59,6 +63,6 @@ int main(int argc, const char **argv)
 			noflag(dirp, argv[1]);
 	}
 	else
-		usage(EXIT_FAILURE);
+		usage(1);
 	return (0);
 }

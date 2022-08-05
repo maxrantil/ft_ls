@@ -57,11 +57,11 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	ft_ls
 
 FILES 		= 	main \
-			flag_l \
-			flag_recurse \
-			noflag \
-			tools \
-			window_size \
+				flag_l \
+				flag_recurse \
+				noflag \
+				tools \
+				window_size \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
