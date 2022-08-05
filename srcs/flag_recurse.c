@@ -58,12 +58,12 @@ void open_dir(void *src)
     while ((dirp = readdir(dp)) != NULL)
 	{
 		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
-				continue;
-		//printf("%s\t", dirp->d_name);
+				continue; 
 		vec_push(&v_files, dirp->d_name);
     }
 	vec_sort(&v_files, &cmpfunc_str);
 	vec_iter(&v_files, print_str);
+	vec_free(&v_files);
 	printf("\n\n");
 }
 
@@ -75,7 +75,6 @@ void flag_recurse(struct dirent	*dirp, char *base_path)
 	vec_push(&vec, base_path);
 	get_dirs_recurse(&vec, dirp, base_path);
 	vec_sort(&vec, &cmpfunc_str);
-	//vec_iter(&vec, print_str);
 	vec_iter(&vec, open_dir);
 	vec_free(&vec);
 }
