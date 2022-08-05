@@ -31,9 +31,7 @@ int main(int argc, const char **argv)
 {
 	struct	dirent	*dirp;
 	char			*p;
-	t_vec			vec;
 
-	vec_new(&vec, 1, sizeof(char *));
 	if (argc == 1)
 		noflag(dirp, ".");
 	else if (argc == 2)
@@ -48,12 +46,7 @@ int main(int argc, const char **argv)
 				else if (*p == 'l')
 					flag_l(dirp);
 				else if (*p == 'R')
-				{
-					flag_recurse(&vec, ".");
-					vec_sort(&vec, &cmpfunc_str);
-					//vec_iter(&vec, print_str);
-					vec_free(&vec);
-				}
+					flag_recurse(dirp, ".");
 				else
 					usage(1);
 				p++;	

@@ -8,7 +8,7 @@ DIR*	open_path(const char *str)
 	if (!dp)
 	{
 		perror("open_path");
-		exit(EXIT_FAILURE);
+		exit(1);
 	}
 	return (dp);
 }
@@ -34,5 +34,5 @@ int cmpfunc_str(void *a, void *b)
 
 void print_str(void *src)
 {
-    printf("%s\n", (char *)src);
+    printf("%s:\n", (char *)src);
 }

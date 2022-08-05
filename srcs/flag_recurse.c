@@ -12,9 +12,8 @@
 
 #include "ft_ls.h"
 
-void flag_recurse(t_vec *vec, char *base_path)
+static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 {
-    struct	dirent *dirp;
 	char 	path[1024];
     DIR		*dp;
 
@@ -30,22 +29,32 @@ void flag_recurse(t_vec *vec, char *base_path)
             ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
 			vec_push(vec, &path);
-            //ft_printf("\n\n%s%s\n", path, ":");
-            flag_recurse(vec, path);
+            get_dirs_recurse(vec, dirp, path);
         }
 		/* else
 		{
             ft_printf("%*s%d%-*s", indent, "", indent, 15, dirp->d_name);
         } */
     }
-	/* utils.dir = (t_dir *)malloc(sizeof(t_dir) * utils.dir_count);
-	if (!utils.dir)
+	if (closedir(dp) < 0)
 	{
-		perror("utils.dir");
+		perror("can't close directory");
 		exit(1);
-	} */
-    closedir(dp);	//read them all into a vec and then print them out into structure after
+	}
 }
 
 //	unsigned short d_reclen;    length of this record
 //  unsigned char  d_type;      type of file; not supported by all file system types
+
+
+void flag_recurse(struct dirent	*dirp, char *base_path)
+{
+	t_vec			vec;
+
+	vec_new(&vec, 1, sizeof(t_vec));
+	vec_push(&vec, base_path);
+	get_dirs_recurse(&vec, dirp, base_path);
+	vec_sort(&vec, &cmpfunc_str);
+	vec_iter(&vec, print_str);
+	vec_free(&vec);
+}

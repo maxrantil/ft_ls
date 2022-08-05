@@ -53,7 +53,7 @@ typedef struct s_utils
 
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp);
-void	flag_recurse(t_vec *vec, char *base_path);
+void	flag_recurse(struct dirent	*dirp, char *base_path);
 int		window_size(void);
 
 /*
