@@ -43,7 +43,8 @@ NAME		=	ft_ls
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra -Werror
 CFLAGS		+=	-O3 -flto -Wunreachable-code -Wpedantic -Wtype-limits
-LEAK_CHECK	=	-g -fsanitize=address
+LEAK_CHECK	=	-g
+LEAK_CHECK	+=	-fsanitize=address
 
 #TERMCAPS 	= 	-ltermcap
 
