@@ -46,7 +46,7 @@ CFLAGS		+=	-O3 -flto -Wunreachable-code -Wpedantic -Wtype-limits
 LEAK_CHECK	=	-g
 LEAK_CHECK	+=	-fsanitize=address
 
-#TERMCAPS 	= 	-ltermcap
+TERMCAPS 	= 	-ltermcap
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs

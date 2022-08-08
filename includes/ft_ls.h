@@ -18,6 +18,7 @@
 # include "vec.h"
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/ioctl.h>
 # include <pwd.h>
 # include <grp.h>
 # include <dirent.h>
@@ -54,7 +55,7 @@ typedef struct s_utils
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp);
 void	flag_recurse(struct dirent	*dirp, char *base_path);
-int		window_size(void);
+size_t	window_size(void);
 
 /*
 **	Tools

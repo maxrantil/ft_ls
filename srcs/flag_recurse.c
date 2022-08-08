@@ -44,12 +44,12 @@ static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 
 void print_files(void *src)
 {
-	struct dirent	*dirp;	//makes leaks because we loose the old?
+	struct dirent	*dirp;
 	DIR				*dp;
 	t_vec			v_files;
-	//unsigned short	len;
+	unsigned short	len;
 
-	//len = 0; 
+	len = 0; 
 	vec_new(&v_files, 1, sizeof(t_vec));
 	dp = open_path((const char *)src);
 	printf("%s:\n", (char *)src);
@@ -58,13 +58,15 @@ void print_files(void *src)
 		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue; 
 		vec_push(&v_files, dirp->d_name);
-	//	if (dirp->d_reclen > len)
-	//		len = dirp->d_reclen;
+		if (ft_strlen(dirp->d_name) > len)
+			len = ft_strlen(dirp->d_name);
     }
 	vec_sort(&v_files, &cmpfunc_str);
+	//printf("\nmax strlen = %d", len);
 	vec_iter(&v_files, print_str);
 	vec_free(&v_files);
-	//printf("\nmax strlen = %d", len);
+	free(dirp);
+	free(dp);
 	printf("\n\n");
 }
 

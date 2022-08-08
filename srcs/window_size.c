@@ -1,7 +1,6 @@
 #include "ft_ls.h"
-#include <sys/ioctl.h>
 
-int	window_size(void)
+size_t	window_size(void)
 {
 	struct winsize	size;
 	int	fd;
@@ -9,6 +8,6 @@ int	window_size(void)
 	fd = STDIN_FILENO;
 	if (ioctl(fd, TIOCGWINSZ, (char *)&size) < 0)
 		perror("TIOCGWINSZ");
-	ft_printf("%d: rows, %d: colums\n", size.ws_row, size.ws_col);
-	return (1);
+	//ft_printf("%d: rows, %d: colums\n", size.ws_row, size.ws_col);
+	return (size.ws_col);
 }
