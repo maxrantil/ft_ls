@@ -44,7 +44,7 @@ int main(int argc, const char **argv)
 				if (*p == 'a')
 					noflag(dirp, ".");
 				else if (*p == 'l')
-					flag_l(dirp);
+					flag_l(dirp, ".");
 				else if (*p == 'R')
 					flag_recurse(dirp, ".");
 				else

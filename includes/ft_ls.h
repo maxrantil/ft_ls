@@ -53,7 +53,7 @@ typedef struct s_utils
 }				t_utils; */
 
 void	noflag(struct dirent *dirp, const char *path);
-void	flag_l(struct dirent *dirp);
+void	flag_l(struct dirent *dirp, char *path);
 void	flag_recurse(struct dirent	*dirp, char *base_path);
 size_t	window_size(void);
 
@@ -63,5 +63,7 @@ size_t	window_size(void);
 DIR*	open_path(const char *str);
 int		cmpfunc_str(void *a, void *b);
 void	print_str(void *src);
+void	print_stat(void *src);
+void	print_file_props(struct stat statbuf);
 
 #endif

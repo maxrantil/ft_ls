@@ -47,3 +47,19 @@ void print_str(void *src)
 	else
     	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }
+
+void print_stat(void *src)
+{
+	struct	stat statbuf;
+	
+	if (!stat((char *)src, &statbuf))
+	{
+		print_file_props(statbuf);
+		ft_printf("%s\n", (char *)src);
+	}
+	else
+	{
+		perror("stat");
+		exit(1);
+	}	
+}

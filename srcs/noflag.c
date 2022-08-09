@@ -23,5 +23,9 @@ void	noflag(struct dirent *dirp, const char *path)
 	vec_iter(&noflag, print_str);
 	ft_printf("\n");
 	vec_free(&noflag);
-	closedir(dp);
+	if (closedir(dp) < 0)
+	{
+		perror("can't close directory");
+		exit(1);
+	}
 }

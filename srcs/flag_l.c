@@ -55,7 +55,7 @@ void	print_group(struct stat statbuf)
 
 void	print_time(struct stat statbuf)
 {
-	char	mtime[16];
+	char	mtime[26];
 	
 	ft_strcpy(mtime, ctime(&statbuf.st_mtime));
 	ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
@@ -76,30 +76,40 @@ void	print_file_props(struct stat statbuf)
 	print_time(statbuf);
 }
 
-void	flag_l(struct dirent *dirp)
+void	flag_l(struct dirent *dirp, char *path)
 {
 	struct	stat statbuf;
+	t_vec	v_files;
 	int		total;
 	DIR		*dp;
 	
-	dp = open_path(".");
+	vec_new(&v_files, 1, sizeof(t_vec));
+	dp = open_path(path);
 	total = 0;
 	while ((dirp = readdir(dp)) != NULL)
 	{
-		if (dirp->d_name[0] == '.')
+		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue;
 		if (!stat(dirp->d_name, &statbuf))
 		{
 			total += statbuf.st_blocks;
-			print_file_props(statbuf);
-			ft_printf("%s\n", dirp->d_name);
+			vec_push(&v_files, dirp->d_name);
+			//print_file_props(statbuf);
+			//ft_printf("%s\n", dirp->d_name);
 		}
 		else
 		{
 			perror("stat");
-			exit(EXIT_FAILURE);
+			exit(1);
 		}	
 	}
 	ft_printf("total: %d\n", total/2);
-	closedir(dp);
+	vec_sort(&v_files, &cmpfunc_str);
+	vec_iter(&v_files, print_stat);
+	vec_free(&v_files);
+	if (closedir(dp) < 0)
+	{
+		perror("can't close directory");
+		exit(1);
+	}
 }
