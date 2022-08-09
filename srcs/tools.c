@@ -17,6 +17,11 @@ int cmpfunc_str(void *a, void *b)
 {
 	int	ret;
 	
+	//need to sort correct when _ or other spcial chars is involved
+	/* while (!ft_isalpha(*(char *)a))
+		((*(char *)a)++);
+	while (!ft_isalpha(*(char *)b))
+		((*(char *)b)++); */
 	ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
 	while (!ret && *(char *)a && *(char *)b)
 	{
@@ -27,24 +32,18 @@ int cmpfunc_str(void *a, void *b)
 	return (ret);
 }
 
-/* void print_str(void *src)
-{
-	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
-} */
-
 void print_str(void *src)
 {
 	static size_t	len_count;
-	//static size_t	item_count;
 	size_t			win_size;
 
 	win_size = window_size();
-	len_count = len_count + 32;
+	len_count += ft_strlen((char *)src) + 2;
 	if (len_count > win_size)
 	{
 		ft_putchar('\n');
 		len_count = 0;
 	}
 	else
-    	ft_printf("%-*s", 32, (char *)src);
+    	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }

@@ -57,6 +57,5 @@ int main(int argc, const char **argv)
 	}
 	else
 		usage(1);
-	//free(dirp);
 	return (0);
 }
