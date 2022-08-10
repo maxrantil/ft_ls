@@ -39,7 +39,7 @@ void	print_owner(struct stat statbuf)
 	if (pwd == NULL)
     	perror("getpwuid");
 	else
-    	ft_printf(" %s", pwd->pw_name);
+    	ft_printf(" %s\t", pwd->pw_name);
 }
 
 void	print_group(struct stat statbuf)
@@ -50,20 +50,22 @@ void	print_group(struct stat statbuf)
 	if (grp == NULL)
     	perror("getgrgid");
 	else
-    	ft_printf(" %-*s", 9, grp->gr_name);
+    	ft_printf(" %-s\t", grp->gr_name);
 }
 
 void	print_time(struct stat statbuf)
 {
-	char	mtime[26];
+	char	*mtime;
 	
+	mtime = ft_memalloc(ft_strlen(ctime(&statbuf.st_mtime)));
 	ft_strcpy(mtime, ctime(&statbuf.st_mtime));
 	ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
+	free(mtime);
 }
 
 void	print_size(struct stat statbuf)
 {
-	ft_printf(" %-*i", 6, statbuf.st_size);
+	ft_printf(" %-i\t", statbuf.st_size);
 }
 
 void	print_file_props(struct stat statbuf)
@@ -78,10 +80,10 @@ void	print_file_props(struct stat statbuf)
 
 void	flag_l(struct dirent *dirp, char *path)
 {
-	struct	stat statbuf;
-	t_vec	v_files;
-	int		total;
-	DIR		*dp;
+	struct stat	statbuf;
+	t_vec		v_files;
+	int			total;
+	DIR			*dp;
 	
 	vec_new(&v_files, 1, sizeof(t_vec));
 	dp = open_path(path);
@@ -94,8 +96,6 @@ void	flag_l(struct dirent *dirp, char *path)
 		{
 			total += statbuf.st_blocks;
 			vec_push(&v_files, dirp->d_name);
-			//print_file_props(statbuf);
-			//ft_printf("%s\n", dirp->d_name);
 		}
 		else
 		{

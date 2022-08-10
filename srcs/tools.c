@@ -52,14 +52,15 @@ void print_stat(void *src)
 {
 	struct	stat statbuf;
 	
-	if (!stat((char *)src, &statbuf))
+	//printf("KOLLA Har: %s\n", (char *)src);
+	if (!stat((const char *)src, &statbuf))
 	{
 		print_file_props(statbuf);
 		ft_printf("%s\n", (char *)src);
 	}
 	else
 	{
-		perror("stat");
+		perror("stat in print_stat");
 		exit(1);
-	}	
+	}
 }

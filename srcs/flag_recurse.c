@@ -46,17 +46,24 @@ void print_files(void *src)
 	DIR				*dp;
 	t_vec			v_files;
 
-	vec_new(&v_files, 1, sizeof(t_vec));
+	vec_new(&v_files, 1, 1048);
 	dp = open_path((const char *)src);
 	printf("%s:\n", (char *)src);
+	char *joini = ft_strjoin((char *)src, "/");
     while ((dirp = readdir(dp)) != NULL)
 	{
 		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue; 
-		vec_push(&v_files, dirp->d_name);
+		char *print = ft_strjoin(joini, dirp->d_name);
+		//ft_printf("loooook: %s\n", print);
+		//vec_push(&v_files, dirp->d_name);
+		vec_push(&v_files, print);
+		free(print);
     }
-	vec_sort(&v_files, &cmpfunc_str);
-	vec_iter(&v_files, print_str);
+	free(joini);
+	vec_sort(&v_files, cmpfunc_str);
+	//vec_iter(&v_files, print_str);
+	vec_iter(&v_files, print_stat);
 	vec_free(&v_files);
 	free(dirp);
 	free(dp);
