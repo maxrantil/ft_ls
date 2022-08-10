@@ -40,7 +40,7 @@ static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 }
 
 //  unsigned char  d_type;      type of file; not supported by all file system types
-void print_files(void *src)
+static void print_files(void *src)
 {
 	struct dirent	*dirp;
 	DIR				*dp;
@@ -51,17 +51,41 @@ void print_files(void *src)
 	vec_new(&v_files, 1, 256 * file_count);
 	dp = open_path((const char *)src);
 	printf("%s:\n", (char *)src);
-	char *joini = ft_strjoin((char *)src, "/");
+    while ((dirp = readdir(dp)) != NULL)
+	{
+		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+			continue;
+ 		vec_push(&v_files, dirp->d_name);
+    }
+	vec_sort(&v_files, cmpfunc_str);
+	vec_iter(&v_files, print_str);
+	vec_free(&v_files);
+	free(dirp);
+	free(dp);
+	printf("\n\n");
+}
+
+/* static void print_files_with_stat(void *src)
+{
+	struct dirent	*dirp;
+	DIR				*dp;
+	t_vec			v_files;
+	size_t			file_count;
+
+	file_count = count_files((char *)src);
+	vec_new(&v_files, 1, 256 * file_count);
+	dp = open_path((const char *)src);
+	printf("%s:\n", (char *)src);
+	ft_strcat((char *)src, "/");
     while ((dirp = readdir(dp)) != NULL)
 	{
 		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue; 
-		char *print = ft_strjoin(joini, dirp->d_name);
+		char *print = ft_strjoin((char *)src, dirp->d_name);
  		//vec_push(&v_files, dirp->d_name);
 		vec_push(&v_files, print);
 		free(print);
     }
-	free(joini);
 	vec_sort(&v_files, cmpfunc_str);
 	//vec_iter(&v_files, print_str);
 	vec_iter(&v_files, print_stat);
@@ -69,7 +93,7 @@ void print_files(void *src)
 	free(dirp);
 	free(dp);
 	printf("\n\n");
-}
+} */
 
 void flag_recurse(struct dirent	*dirp, char *base_path)
 {
