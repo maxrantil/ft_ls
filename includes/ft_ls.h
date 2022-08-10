@@ -65,5 +65,6 @@ int		cmpfunc_str(void *a, void *b);
 void	print_str(void *src);
 void	print_stat(void *src);
 void	print_file_props(struct stat statbuf);
+size_t	count_files(char *dir_name);
 
 #endif

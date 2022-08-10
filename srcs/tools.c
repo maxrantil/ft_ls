@@ -48,19 +48,49 @@ void print_str(void *src)
     	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }
 
+static char* print_no_path(char *s)
+{
+	size_t	len;
+
+	len = ft_strlen(s);
+	while (s[len] != '/')
+		len--;
+	return (&s[++len]);
+}
+
 void print_stat(void *src)
 {
-	struct	stat statbuf;
+	struct stat	statbuf;
+	char		*no_path;			
 	
-	//printf("KOLLA Har: %s\n", (char *)src);
 	if (!stat((const char *)src, &statbuf))
 	{
 		print_file_props(statbuf);
-		ft_printf("%s\n", (char *)src);
+		no_path = print_no_path((char *)src);
+		ft_printf("%s\n", no_path);
 	}
 	else
 	{
 		perror("stat in print_stat");
 		exit(1);
 	}
+}
+
+size_t count_files(char *dir_name)
+{
+	struct dirent	*dirp;
+	DIR				*dp;
+	size_t			file_count;
+
+	file_count = 0;
+	dp = open_path(dir_name);
+	while ((dirp = readdir(dp)) != NULL)
+	{
+		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0)
+			continue ;
+		++file_count;
+	}
+	free(dirp);
+	free(dp);
+	return (file_count);
 }

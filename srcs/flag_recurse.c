@@ -45,8 +45,10 @@ void print_files(void *src)
 	struct dirent	*dirp;
 	DIR				*dp;
 	t_vec			v_files;
+	size_t			file_count;
 
-	vec_new(&v_files, 1, 1048);
+	file_count = count_files((char *)src);
+	vec_new(&v_files, 1, 256 * file_count);
 	dp = open_path((const char *)src);
 	printf("%s:\n", (char *)src);
 	char *joini = ft_strjoin((char *)src, "/");
@@ -55,8 +57,7 @@ void print_files(void *src)
 		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue; 
 		char *print = ft_strjoin(joini, dirp->d_name);
-		//ft_printf("loooook: %s\n", print);
-		//vec_push(&v_files, dirp->d_name);
+ 		//vec_push(&v_files, dirp->d_name);
 		vec_push(&v_files, print);
 		free(print);
     }
