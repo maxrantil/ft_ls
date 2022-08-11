@@ -26,7 +26,7 @@ static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
             if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 				continue;
 			ft_strcpy(path, base_path);
-            ft_strcat(path, "/");
+			ft_strcat(path, "/");
             ft_strcat(path, dirp->d_name);
 			vec_push(vec, &path);
             get_dirs_recurse(vec, dirp, path);
@@ -82,12 +82,10 @@ static void print_files(void *src)
 		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue; 
 		char *print = ft_strjoin((char *)src, dirp->d_name);
- 		//vec_push(&v_files, dirp->d_name);
 		vec_push(&v_files, print);
 		free(print);
     }
 	vec_sort(&v_files, cmpfunc_str);
-	//vec_iter(&v_files, print_str);
 	vec_iter(&v_files, print_stat);
 	vec_free(&v_files);
 	free(dirp);

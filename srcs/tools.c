@@ -48,7 +48,7 @@ void print_str(void *src)
     	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }
 
-static char* print_no_path(char *s)
+/* static char* print_no_path(char *s)
 {
 	size_t	len;
 
@@ -56,18 +56,19 @@ static char* print_no_path(char *s)
 	while (s[len] != '/')
 		len--;
 	return (&s[++len]);
-}
+} */
 
 void print_stat(void *src)
 {
 	struct stat	statbuf;
-	char		*no_path;			
+	//char		*no_path;			
 	
 	if (!stat((const char *)src, &statbuf))
 	{
 		print_file_props(statbuf);
-		no_path = print_no_path((char *)src);
-		ft_printf("%s\n", no_path);
+	//	no_path = print_no_path((char *)src);
+	//	ft_printf("%s\n", no_path);
+		ft_printf("%s\n", (char *)src);
 	}
 	else
 	{
