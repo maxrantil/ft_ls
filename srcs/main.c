@@ -31,7 +31,19 @@ int main(int argc, const char **argv)
 {
 	struct	dirent	*dirp;
 	char			*p;
-
+	int				i;
+	int				j;
+	char			str_flags[MAX_FLAGS];
+	unsigned int	bit_flags[MAX_FLAGS];
+ 
+	i = 0;
+	int k = 0;
+	int l = 0;
+	j = 0;
+	int check = 0;
+	ft_memset(bit_flags, 0, MAX_FLAGS * sizeof(bit_flags[0]));
+	ft_bzero(str_flags, MAX_FLAGS);
+	printf("%s\n", str_flags);
 	if (argc == 1)
 		noflag(dirp, ".");
 	else if (argc == 2)
@@ -39,17 +51,52 @@ int main(int argc, const char **argv)
 		if (argv[1][0] == '-')
 		{
 			p = (char *)(argv[1] + 1);
-			while (*p)
+			int n = ft_strlen(p);
+			while (LS_FLAGS[k])
 			{
-				if (*p == 'a')
+				if (LS_FLAGS[k] == *p && bit_flags[j] == 0 && j != MAX_FLAGS - 1)
+				{
+					//printf("WORLD ");
+					while (i < n)
+					{
+						j = 0;
+						while (j < n)
+						{
+							if (p[i] == p[j] && i != j)
+							{
+								check++;
+								if (check > 1)
+								{
+									check = 0;
+									break ;
+								}
+							}
+							j++;
+						}
+						if (j == n)
+						{
+							bit_flags[j] ^= 1 << i;
+							str_flags[l++] = p[i];
+						}
+						i++;
+					}
+					/* {
+						bit_flags[j] ^= 1 << i;
+						str_flags[j++] = *p++;
+						i = 0;
+						continue ;	
+					} */
+				}
+				k++;
+				/* if (*p == 'a')
 					noflag(dirp, ".");
 				else if (*p == 'l')
 					flag_l(dirp, ".");
 				else if (*p == 'R')
 					flag_recurse(dirp, ".");
 				else
-					usage(1);
-				p++;	
+					usage(1); */
+				//p++;	
 			}
 		}
 		else
@@ -57,5 +104,6 @@ int main(int argc, const char **argv)
 	}
 	else
 		usage(1);
+	printf("%s\n", str_flags);
 	return (0);
 }
