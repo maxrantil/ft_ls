@@ -27,23 +27,45 @@ void	usage(int status)
 	exit(status);
 }
 
+static char	*get_flags(char *str)
+{
+	static int	int_flags[MAX_FLAGS]; //static for if there is many argv starting with dash
+	char		*ret_str;
+	int			i;
+	int			j;
+	int			k;
+	int			n;
+	
+	ret_str = (char *)ft_strnew(MAX_FLAGS);
+	n = ft_strlen(str);
+	i = 0;
+	k = 0;
+	while (i < n)
+	{
+		j = 0;
+		while (j <= MAX_FLAGS)
+		{
+			if (LS_FLAGS[j] == str[i])
+				break ;
+			if (j == MAX_FLAGS)
+				usage(1);
+			j++;
+		}
+		if (!int_flags[j])
+		{
+			int_flags[j] = 1;
+			ret_str[k++] = str[i];
+		}
+		i++;
+	}
+	return (ret_str);
+}
+
 int main(int argc, const char **argv)
 {
 	struct	dirent	*dirp;
 	char			*p;
-	int				i;
-	int				j;
-	char			str_flags[MAX_FLAGS];
-	unsigned int	bit_flags[MAX_FLAGS];
- 
-	i = 0;
-	int k = 0;
-	int l = 0;
-	j = 0;
-	int check = 0;
-	ft_memset(bit_flags, 0, MAX_FLAGS * sizeof(bit_flags[0]));
-	ft_bzero(str_flags, MAX_FLAGS);
-	printf("%s\n", str_flags);
+
 	if (argc == 1)
 		noflag(dirp, ".");
 	else if (argc == 2)
@@ -51,43 +73,7 @@ int main(int argc, const char **argv)
 		if (argv[1][0] == '-')
 		{
 			p = (char *)(argv[1] + 1);
-			int n = ft_strlen(p);
-			while (LS_FLAGS[k])
-			{
-				if (LS_FLAGS[k] == *p && bit_flags[j] == 0 && j != MAX_FLAGS - 1)
-				{
-					//printf("WORLD ");
-					while (i < n)
-					{
-						j = 0;
-						while (j < n)
-						{
-							if (p[i] == p[j] && i != j)
-							{
-								check++;
-								if (check > 1)
-								{
-									check = 0;
-									break ;
-								}
-							}
-							j++;
-						}
-						if (j == n)
-						{
-							bit_flags[j] ^= 1 << i;
-							str_flags[l++] = p[i];
-						}
-						i++;
-					}
-					/* {
-						bit_flags[j] ^= 1 << i;
-						str_flags[j++] = *p++;
-						i = 0;
-						continue ;	
-					} */
-				}
-				k++;
+			p = get_flags(p);
 				/* if (*p == 'a')
 					noflag(dirp, ".");
 				else if (*p == 'l')
@@ -97,13 +83,13 @@ int main(int argc, const char **argv)
 				else
 					usage(1); */
 				//p++;	
-			}
+				printf("%s\n", p);
+				free(p);
 		}
 		else
 			noflag(dirp, argv[1]);
 	}
 	else
 		usage(1);
-	printf("%s\n", str_flags);
 	return (0);
 }
