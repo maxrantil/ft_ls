@@ -27,43 +27,8 @@
 # include <stdlib.h>
 # include <string.h>
 
-/* typedef struct s_file
-{
-	int		f_count;
-	int		f_len;
-	int		f_hlinks;
-	int		f_size;
-	char	*f_permissions;
-	char	*f_owner;
-	char	*f_group;
-	char	*f_mtime;
-}				t_file;
-
-typedef struct s_dir
-{
-	t_file	*file;
-	char	*base_path;
-}				t_dir;
-
-typedef struct s_utils
-{
-	t_dir	*dir;
-	int		dir_count;
-	int		file_count;
-}				t_utils; */
-
-# define LS_FLAGS = "alrRt"
-
-# define UPPER_R_L
-
-typedef enum	e_flags
-{
-	A = 1,
-	L = 2,
-	R = 4,
-	UPPER_R = 8,
-	T = 16
-}	t_flags;
+# define LS_FLAGS "alrRt"
+# define MAX_FLAGS 5
 
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp, char *path);
