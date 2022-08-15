@@ -82,8 +82,8 @@ void	flag_l(struct dirent *dirp, char *path)
 {
 	struct stat	statbuf;
 	t_vec		v_files;
-	int			total;
 	DIR			*dp;
+	int			total;
 	size_t		file_count;
 
 	file_count = count_files(path);

@@ -1,7 +1,11 @@
 #include "vec.h"
-//Create a function vec_sort which takes in a function f determining order and 
-//equality of the two elements passed as parameters and thus sorting
-//the array accordingly from the smallest to the largest element.
+
+/*
+// Create a function which takes in a function f determining order and 
+// equality of the two elements passed as parameters and thus sorting
+// the array accordingly from the smallest to the largest element.
+*/
+
 static void memswap8(unsigned char *a, unsigned char *b)
 {
 	if (a == b)

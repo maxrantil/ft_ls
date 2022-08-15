@@ -46,17 +46,17 @@ void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
 	unsigned char		*d;
 	const unsigned char	*s;
-	unsigned int		blocks;
+	unsigned int		block;
 	unsigned int		rest;
 
 	if (n == 0 || dst == src)
 		return (dst);
 	d = (unsigned char *)dst;
 	s = (const unsigned char *)src;
-	blocks = n / sizeof(long);
+	block = n / sizeof(long);
 	rest = n % sizeof(long);
-	if (blocks)
-		cpy_blocks(&d, &s, blocks);
+	if (block)
+		cpy_blocks(&d, &s, block);
 	cpy_rest(&d, &s, rest);
 	return (dst);
 }

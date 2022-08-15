@@ -1,6 +1,10 @@
 #include "vec.h"
-//Create a function which takes in a vector and a pointer
-//to an element to be pushed to the end of the vector.
+
+/*
+// Create a function which takes in a vector and a pointer
+// to an element to be pushed to the end of the vector.
+*/
+
 int vec_push(t_vec *dst, void *src)
 {
 	if (!dst || !src)

@@ -36,7 +36,7 @@ static char	*get_flags(char *str)
 	int			k;
 	int			n;
 	
-	ret_str = (char *)ft_strnew(MAX_FLAGS);
+	ret_str = ft_strnew(MAX_FLAGS);
 	n = ft_strlen(str);
 	i = 0;
 	k = 0;
@@ -63,33 +63,32 @@ static char	*get_flags(char *str)
 
 int main(int argc, const char **argv)
 {
-	struct	dirent	*dirp;
-	char			*p;
+	//struct	dirent	*dirp;
+	t_vec			v_flags;
+	t_vec			v_paths;
+	char			*ptr;
+	char			*hold_flags;
+	int				i;
 
-	if (argc == 1)
-		noflag(dirp, ".");
-	else if (argc == 2)
+	i = 0;
+	vec_new(&v_flags, 1, sizeof(v_flags));
+	vec_new(&v_paths, 1, sizeof(v_paths));
+	while (++i < argc)
 	{
-		if (argv[1][0] == '-')
+		ptr = (char *)argv[i];
+		if (argv[i][0] == '-')
 		{
-			p = (char *)(argv[1] + 1);
-			p = get_flags(p);
-				/* if (*p == 'a')
-					noflag(dirp, ".");
-				else if (*p == 'l')
-					flag_l(dirp, ".");
-				else if (*p == 'R')
-					flag_recurse(dirp, ".");
-				else
-					usage(1); */
-				//p++;	
-				printf("%s\n", p);
-				free(p);
+			ptr++;
+			hold_flags = get_flags(ptr);
+			vec_push(&v_flags, hold_flags);
+			free(hold_flags);
 		}
 		else
-			noflag(dirp, argv[1]);
+			vec_push(&v_paths, ptr);
 	}
-	else
-		usage(1);
+	vec_iter(&v_flags, print_str);
+	vec_free(&v_flags);
+	vec_iter(&v_paths, print_str);
+	vec_free(&v_paths);
 	return (0);
 }
