@@ -16,19 +16,28 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "vec.h"
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <sys/ioctl.h>
-# include <pwd.h>
-# include <grp.h>
 # include <dirent.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/ioctl.h>
 # include <stdio.h>
-# include <time.h>
+# include <stdint.h>
 # include <stdlib.h>
 # include <string.h>
+# include <time.h>
+# include <pwd.h>
+# include <grp.h>
 
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
+
+typedef struct s_ls
+{
+	struct	dirent	*dirp;
+	t_vec			v_flags;
+	t_vec			v_paths;
+	uint8_t			bit_flags;
+}					t_ls;
 
 void	noflag(struct dirent *dirp, const char *path);
 void	flag_l(struct dirent *dirp, char *path);

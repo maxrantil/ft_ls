@@ -61,18 +61,38 @@ static char	*get_flags(char *str)
 	return (ret_str);
 }
 
+void	turn_on_bits(void *c)
+{
+	t_ls	*utils;
+
+	utils->bit_flags = 0;
+	while (*(char *)c)
+	{
+		if (*(char *)c == 'a')
+			utils->bit_flags |= 1;
+		if (*(char *)c == 'l')
+			utils->bit_flags |= 2;
+		if (*(char *)c == 'r')
+			utils->bit_flags |= 4;
+		if (*(char *)c == 'R')
+			utils->bit_flags |= 8;
+		if (*(char *)c == 't')
+			utils->bit_flags |= 16;
+		((*(char *)&c)++);
+	//ft_printf("\n%b\n",utils->bit_flags);
+	}
+}
+
 int main(int argc, const char **argv)
 {
-	//struct	dirent	*dirp;
-	t_vec			v_flags;
-	t_vec			v_paths;
-	char			*ptr;
-	char			*hold_flags;
-	int				i;
+	t_ls	utils;
+	char	*ptr;
+	char	*hold_flags;
+	int		i;
 
+	vec_new(&utils.v_flags, 1, MAX_FLAGS);
+	vec_new(&utils.v_paths, 1, 256 * (argc - 1));
 	i = 0;
-	vec_new(&v_flags, 1, sizeof(v_flags));
-	vec_new(&v_paths, 1, sizeof(v_paths));
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
@@ -80,15 +100,18 @@ int main(int argc, const char **argv)
 		{
 			ptr++;
 			hold_flags = get_flags(ptr);
-			vec_push(&v_flags, hold_flags);
+			vec_push(&utils.v_flags, hold_flags);
 			free(hold_flags);
 		}
 		else
-			vec_push(&v_paths, ptr);
+			vec_push(&utils.v_paths, ptr);
 	}
-	vec_iter(&v_flags, print_str);
-	vec_free(&v_flags);
-	vec_iter(&v_paths, print_str);
-	vec_free(&v_paths);
+	vec_iter(&utils.v_flags, &turn_on_bits);
+	ft_printf("\n%b\n", utils.bit_flags);
+	ft_printf("\n%d\n", utils.bit_flags);
+	ft_printf("\n%s\n", utils.v_flags.memory);
+	vec_free(&utils.v_flags);
+	vec_iter(&utils.v_paths, print_str);
+	vec_free(&utils.v_paths);
 	return (0);
 }
