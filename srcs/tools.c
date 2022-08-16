@@ -22,8 +22,9 @@ DIR*	open_path(const char *str)
 	dp = opendir(str);
 	if (!dp)
 	{
-		perror("open_path");
-		exit(1);
+		ft_printf("ft_ls: cannot access '%s': ", str);
+		perror("");
+		return NULL;
 	}
 	return (dp);
 }

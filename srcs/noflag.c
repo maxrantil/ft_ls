@@ -6,6 +6,8 @@ void	noflag(struct dirent *dirp, const char *path)
 	DIR		*dp;
 	
 	dp = open_path(path);
+	if (!dp)
+		return ;
 	vec_new(&noflag, 20, sizeof(dirp->d_name));
 	while ((dirp = readdir(dp)) != NULL)
 	{
