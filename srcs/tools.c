@@ -1,5 +1,20 @@
 #include "ft_ls.h"
 
+void	usage(int status)
+{
+	ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
+	ft_printf("\
+	List information about the FILEs (the current directory by default).\n\
+	Sort entries alphabetically if not -t is specified.\n");
+	ft_printf("\
+	-a	do not ignore entries starting with .\n\
+	-l	use a long listing format\n\
+	-r	reverse order while sorting\n\
+	-R	list subdirectories recursively\n\
+	-t	sort by modification time, newest first\n");
+	exit(status);
+}
+
 DIR*	open_path(const char *str)
 {
 	DIR *dp;
@@ -11,70 +26,6 @@ DIR*	open_path(const char *str)
 		exit(1);
 	}
 	return (dp);
-}
-
-int cmpfunc_str(void *a, void *b)
-{
-	int	ret;
-	
-	//need to sort correct when _ or other spcial chars is involved
-	/* while (!ft_isalpha(*(char *)a))
-		((*(char *)a)++);
-	while (!ft_isalpha(*(char *)b))
-		((*(char *)b)++); */
-	ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
-	while (!ret && *(char *)a && *(char *)b)
-	{
-		((*(char *)&a)++);
-		((*(char *)&b)++);
-		ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
-	}
-	return (ret);
-}
-
-void print_str(void *src)
-{
-	static size_t	len_count;
-	size_t			win_size;
-
-	win_size = window_size();
-	len_count += ft_strlen((char *)src) + 2;
-	if (len_count > win_size)
-	{
-		ft_putchar('\n');
-		len_count = 0;
-	}
-	else
-    	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
-}
-
-/* static char* print_no_path(char *s)
-{
-	size_t	len;
-
-	len = ft_strlen(s);
-	while (s[len] != '/')
-		len--;
-	return (&s[++len]);
-} */
-
-void print_stat(void *src)
-{
-	struct stat	statbuf;
-	//char		*no_path;			
-	
-	if (!stat((const char *)src, &statbuf))
-	{
-		print_file_props(statbuf);
-	//	no_path = print_no_path((char *)src);
-	//	ft_printf("%s\n", no_path);
-		ft_printf("%s\n", (char *)src);
-	}
-	else
-	{
-		perror("stat in print_stat");
-		exit(1);
-	}
 }
 
 size_t count_files(char *dir_name)
@@ -94,4 +45,15 @@ size_t count_files(char *dir_name)
 	free(dirp);
 	free(dp);
 	return (file_count);
+}
+
+size_t	window_size(void)
+{
+	struct winsize	size;
+	int	fd;
+
+	fd = STDIN_FILENO;
+	if (ioctl(fd, TIOCGWINSZ, (char *)&size) < 0)
+		perror("TIOCGWINSZ");
+	return (size.ws_col);
 }

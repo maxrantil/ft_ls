@@ -14,7 +14,7 @@
 
 static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 {
-	char 	path[1024];
+	char 	path[MAX_PATH];
     DIR		*dp;
 
     if (!(dp = opendir(base_path)))
@@ -48,7 +48,7 @@ static void print_files(void *src)
 	size_t			file_count;
 
 	file_count = count_files((char *)src);
-	vec_new(&v_files, 1, 256 * file_count);
+	vec_new(&v_files, 1, MAX_FILE * file_count);
 	dp = open_path((const char *)src);
 	printf("%s:\n", (char *)src);
     while ((dirp = readdir(dp)) != NULL)

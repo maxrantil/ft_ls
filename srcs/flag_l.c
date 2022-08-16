@@ -87,7 +87,7 @@ void	flag_l(struct dirent *dirp, char *path)
 	size_t		file_count;
 
 	file_count = count_files(path);
-	vec_new(&v_files, 1, 256 * file_count);
+	vec_new(&v_files, 1, MAX_FILE * file_count);
 	dp = open_path(path);
 	total = 0;
 	while ((dirp = readdir(dp)) != NULL)

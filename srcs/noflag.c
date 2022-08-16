@@ -4,7 +4,6 @@ void	noflag(struct dirent *dirp, const char *path)
 {
 	t_vec	noflag;
 	DIR		*dp;
-	int		ret;
 	
 	dp = open_path(path);
 	vec_new(&noflag, 20, sizeof(dirp->d_name));
@@ -12,11 +11,10 @@ void	noflag(struct dirent *dirp, const char *path)
 	{
 		if (dirp->d_name[0] == '.')
 			continue ;
-		ret = vec_push(&noflag, dirp->d_name);
-		if (ret < 0)
+		if (vec_push(&noflag, dirp->d_name) < 0)
 		{
 			perror("vec_push");
-			exit(EXIT_FAILURE);
+			exit(1);
 		}
 	}
 	vec_sort(&noflag, cmpfunc_str);

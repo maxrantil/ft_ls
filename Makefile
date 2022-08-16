@@ -62,7 +62,8 @@ FILES 		= 	main \
 				flag_recurse \
 				noflag \
 				tools \
-				window_size \
+				vec_tools \
+				work_data \
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))
