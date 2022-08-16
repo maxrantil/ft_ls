@@ -60,7 +60,7 @@ H_FILES 	= 	ft_ls
 FILES 		= 	main \
 				flag_l \
 				flag_recurse \
-				noflag \
+				flag_null \
 				tools \
 				vec_tools \
 				work_data \

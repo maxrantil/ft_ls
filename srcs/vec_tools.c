@@ -31,8 +31,7 @@ void print_str(void *src)
 		ft_putchar('\n');
 		len_count = 0;
 	}
-	else
-    	ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
+    ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }
 
 /* static char* print_no_path(char *s)

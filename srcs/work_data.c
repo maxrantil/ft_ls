@@ -23,14 +23,8 @@ static void	turn_on_flag_bits(t_ls *utils)
 
 static void	exec_flags(t_ls *utils)
 {
-	size_t i;
-
-	i = 0;
-	if (utils->bit_flags == NULL_FLAG)
-	{
-		while (i < utils->v_paths.len)
-			noflag(utils->dirp, (char *)vec_get(&utils->v_paths, i++));
-	}
+	if (utils->bit_flags == NULL_FLAG || !utils->bit_flags ^ 1)
+		exec_flag_null(utils);
 	else
 		ft_printf("%b\n", utils->bit_flags);
 }

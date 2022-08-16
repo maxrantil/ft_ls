@@ -48,13 +48,15 @@ size_t count_files(char *dir_name)
 	return (file_count);
 }
 
+/*
+//	
+*/
+
 size_t	window_size(void)
 {
 	struct winsize	size;
-	int	fd;
 
-	fd = STDIN_FILENO;
-	if (ioctl(fd, TIOCGWINSZ, (char *)&size) < 0)
+	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
 		perror("TIOCGWINSZ");
 	return (size.ws_col);
 }

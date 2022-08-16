@@ -52,7 +52,7 @@ typedef struct s_ls
 }					t_ls;
 
 void	work_data(t_ls *utils);
-void	noflag(struct dirent *dirp, const char *path);
+void	exec_flag_null(t_ls *utils);
 void	flag_l(struct dirent *dirp, char *path);
 void	flag_recurse(struct dirent	*dirp, char *base_path);
 size_t	window_size(void);
