@@ -34,9 +34,7 @@
 typedef struct s_ls
 {
 	struct	dirent	*dirp;
-	t_vec			v_flags;
 	t_vec			v_paths;
-	uint8_t			bit_flags;
 }					t_ls;
 
 void	noflag(struct dirent *dirp, const char *path);
