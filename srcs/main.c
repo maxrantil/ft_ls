@@ -74,6 +74,7 @@ static void	get_data(t_ls *utils, const char **argv, int argc)
 		else
 			vec_push(&utils->v_paths, ptr);
 	}
+	utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_paths.len);
 }
 
 int main(int argc, const char **argv)

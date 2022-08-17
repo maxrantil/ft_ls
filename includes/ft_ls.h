@@ -47,13 +47,14 @@ typedef struct s_ls
 {
 	struct	dirent	*dirp;
 	t_vec			v_paths;
+	DIR				**dp;
 	char			*flags;
 	uint8_t			bit_flags;
 }					t_ls;
 
 void	work_data(t_ls *utils);
 void	exec_flag_null(t_ls *utils);
-void	flag_l(struct dirent *dirp, char *path);
+void	exec_flag_l(t_ls *utils);
 void	flag_recurse(struct dirent	*dirp, char *base_path);
 size_t	window_size(void);
 
