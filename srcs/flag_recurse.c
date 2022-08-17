@@ -39,8 +39,7 @@ static void get_dirs_recurse(t_vec *vec, struct dirent	*dirp, char *base_path)
 	}
 }
 
-//  unsigned char  d_type;      type of file; not supported by all file system types
-static void print_files(void *src)
+static void flag_recurse(void *src)
 {
 	struct dirent	*dirp;
 	DIR				*dp;
@@ -48,7 +47,7 @@ static void print_files(void *src)
 	size_t			file_count;
 
 	file_count = count_files((char *)src);
-	vec_new(&v_files, 1, MAX_FILE * file_count);
+	vec_new(&v_files, 1, MAX_FILENAME * file_count);
 	dp = open_path((const char *)src);
 	printf("%s:\n", (char *)src);
     while ((dirp = readdir(dp)) != NULL)
@@ -93,7 +92,7 @@ static void print_files(void *src)
 	printf("\n\n");
 } */
 
-void flag_recurse(struct dirent	*dirp, char *base_path)
+void exec_flag_recurse(struct dirent *dirp, char *base_path)
 {
 	t_vec			vec;
 
@@ -101,6 +100,6 @@ void flag_recurse(struct dirent	*dirp, char *base_path)
 	vec_push(&vec, base_path);
 	get_dirs_recurse(&vec, dirp, base_path);
 	vec_sort(&vec, &cmpfunc_str);
-	vec_iter(&vec, print_files);
+	vec_iter(&vec, flag_recurse);
 	vec_free(&vec);
 }

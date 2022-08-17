@@ -49,14 +49,40 @@ size_t count_files(char *dir_name)
 }
 
 /*
-//	
+// BONUS		
 */
 
-size_t	window_size(void)
+static size_t	window_size(void)
 {
 	struct winsize	size;
 
 	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
 		perror("TIOCGWINSZ");
 	return (size.ws_col);
+}
+
+void	print_files(t_ls *utils, t_vec *v_files, size_t i)
+{	
+	size_t	len_count;
+	size_t	win_size;
+
+	len_count = 0;
+	win_size = window_size();
+	if (utils->v_paths.len > 1)
+		ft_printf("%s:\n", (char *)vec_get(&utils->v_paths, i));
+	for (size_t x = 0; x < v_files->len; x++)
+	{
+		char *file = (char *)vec_get(v_files, x);
+		len_count += ft_strlen(file) + 2;
+		if (len_count > win_size)
+		{
+			write(1, "\n", 1);
+			len_count = 0;
+		} 
+    	ft_printf("%-*s", ft_strlen(file) + 2, file);
+	}
+	if (i != utils->v_paths.len - 1)
+		write(1, "\n\n", 2);
+	else
+		write(1, "\n", 1);
 }

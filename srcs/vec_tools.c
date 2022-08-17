@@ -21,7 +21,7 @@ int cmpfunc_str(void *a, void *b)
 
 void print_str(void *src)
 {
-	static size_t	len_count;
+	/* static size_t	len_count;
 	size_t			win_size;
 
 	win_size = window_size();
@@ -30,7 +30,7 @@ void print_str(void *src)
 	{
 		ft_putchar('\n');
 		len_count = 0;
-	}
+	} */
     ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
 }
 

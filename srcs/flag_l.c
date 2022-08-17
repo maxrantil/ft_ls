@@ -89,7 +89,7 @@ void	flag_l(t_ls *utils, char *path, size_t i)
 	if (!utils->dp[i])
 		return ;
 	file_count = count_files(path);
-	vec_new(&v_files, 1, MAX_FILE * file_count);
+	vec_new(&v_files, 1, MAX_FILENAME * file_count);
 	total = 0;
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
@@ -104,11 +104,12 @@ void	flag_l(t_ls *utils, char *path, size_t i)
 	}
 	ft_printf("total: %d\n", total/2);
 	vec_sort(&v_files, &cmpfunc_str);
-	if (utils->v_paths.len != 1)
+	/* if (utils->v_paths.len != 1)
 		ft_printf("%s: \n", (char *)vec_get(&utils->v_paths, i));
 	vec_iter(&v_files, print_stat);
 	if (i != utils->v_paths.len)
-		write(1, "\n", 1);
+		write(1, "\n", 1); */
+	print_files(utils, &v_files, i);
 	vec_free(&v_files);
 	if (closedir(utils->dp[i]) < 0)
 	{
