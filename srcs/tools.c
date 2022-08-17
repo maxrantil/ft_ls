@@ -15,36 +15,39 @@ void	usage(int status)
 	exit(status);
 }
 
-DIR*	open_path(const char *str)
+DIR		*open_path(t_ls *utils, size_t i)
 {
-	DIR *dp;
-	
-	dp = opendir(str);
-	if (!dp)
+	const char	*path;
+
+	if (i == 9999)
 	{
-		ft_printf("ft_ls: cannot access '%s': ", str);
-		perror("");
-		return NULL;
+		path = ".";
+		i = 0;
 	}
-	return (dp);
+	else
+		path = (const char *)vec_get(&utils->v_paths, i);
+	utils->dp[i] = opendir(path);
+	if (!utils->dp[i])
+	{
+		ft_printf("ft_ls: cannot access '%s': ", path);
+		perror("");
+		//--utils->v_paths.len; //this will give some extra \n without this but with it it will fuck the paths up, need another solution
+	}
+	return (utils->dp[i]);
 }
 
-size_t count_files(char *dir_name)
+size_t count_files(t_ls *utils, size_t i)
 {
-	struct dirent	*dirp;
-	DIR				*dp;
 	size_t			file_count;
 
 	file_count = 0;
-	dp = open_path(dir_name);
-	while ((dirp = readdir(dp)) != NULL)
+	//utils->dp[i] = open_path(utils, i);
+	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0)
+		if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0)
 			continue ;
 		++file_count;
 	}
-	free(dirp);
-	free(dp);
 	return (file_count);
 }
 
@@ -81,8 +84,32 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 		} 
     	ft_printf("%-*s", ft_strlen(file) + 2, file);
 	}
+	if (utils->v_paths.len != 0 && i != (utils->v_paths.len - 1))
+		write(1, "\n\n", 2);
+	else
+		write(1, "\n", 1);
+}
+
+void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i)
+{
+	if (utils->v_paths.len > 1)
+		ft_printf("%s:\n", (char *)vec_get(&utils->v_paths, i));
+	for (size_t x = 0; x < v_files->len; x++)
+	{
+		if (!stat((const char *)vec_get(v_files, x), &statbuf))
+		{
+			print_file_props(statbuf);
+ 		   	ft_printf("%s\n", (char *)vec_get(v_files, x));
+		}
+		else
+		{
+			perror("stat in print_files_with_stat()");
+			exit(1);
+		}
+	}
 	if (i != utils->v_paths.len - 1)
 		write(1, "\n\n", 2);
 	else
 		write(1, "\n", 1);
+//	free(&statbuf);
 }

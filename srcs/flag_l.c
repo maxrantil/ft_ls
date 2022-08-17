@@ -78,18 +78,15 @@ void	print_file_props(struct stat statbuf)
 	print_time(statbuf);
 }
 
-void	flag_l(t_ls *utils, char *path, size_t i)
+static void	flag_l(t_ls *utils, size_t i)
 {
 	struct stat	statbuf;
 	t_vec		v_files;
 	int			total;
-	size_t		file_count;
+//	size_t		file_count;
 
-	utils->dp[i] = open_path(path);
-	if (!utils->dp[i])
-		return ;
-	file_count = count_files(path);
-	vec_new(&v_files, 1, MAX_FILENAME * file_count);
+	//file_count = count_files(utils, i);
+	vec_new(&v_files, 1, MAX_FILENAME);// * file_count); // do i need file_count?
 	total = 0;
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
@@ -104,12 +101,7 @@ void	flag_l(t_ls *utils, char *path, size_t i)
 	}
 	ft_printf("total: %d\n", total/2);
 	vec_sort(&v_files, &cmpfunc_str);
-	/* if (utils->v_paths.len != 1)
-		ft_printf("%s: \n", (char *)vec_get(&utils->v_paths, i));
-	vec_iter(&v_files, print_stat);
-	if (i != utils->v_paths.len)
-		write(1, "\n", 1); */
-	print_files(utils, &v_files, i);
+	print_files_with_stat(statbuf, utils, &v_files, i);
 	vec_free(&v_files);
 	if (closedir(utils->dp[i]) < 0)
 	{
@@ -121,15 +113,28 @@ void	flag_l(t_ls *utils, char *path, size_t i)
 void	exec_flag_l(t_ls *utils)
 {
 	size_t i;
+	size_t j;
 
 	i = 0;
+	j = 0;
 	if (!utils->v_paths.len)
-		flag_l(utils, ".", i);
+		flag_l(utils, i);
 	else
 		vec_sort(&utils->v_paths, cmpfunc_str);
 	while (i < utils->v_paths.len)
 	{
-		flag_l(utils, (char *)vec_get(&utils->v_paths, i), i);
+		while (j < utils->v_paths.len)
+		{
+			utils->dp[j] = open_path(utils, j);
+			j++;
+		}
+		if (utils->dp[i])
+			flag_l(utils, i);
 		i++;
 	}
 }
+	/* while (i < utils->v_paths.len)
+	{
+		flag_l(utils, (char *)vec_get(&utils->v_paths, i), i);
+		i++;
+	} */

@@ -35,6 +35,7 @@ void	work_data(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
 	check_flags(utils);
+
 	ft_strdel(&flags);
 	vec_free(&utils->v_paths);
 	int i = utils->v_paths.len; // lean up this into another function?? or place it right after it is beeing used

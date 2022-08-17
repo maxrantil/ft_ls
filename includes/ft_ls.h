@@ -54,16 +54,18 @@ typedef struct s_ls
 void	work_data(t_ls *utils, char *flags);
 void	exec_flag_null(t_ls *utils);
 void	exec_flag_l(t_ls *utils);
-void	exec_flag_recurse(struct dirent	*dirp, char *base_path);
+void	exec_flag_recurse(t_ls *utils, char *base_path);
 
 /*
 **	Tools
 */
 
-DIR*	open_path(const char *str);
+DIR*	open_path(t_ls *utils, size_t j);
+DIR*	open_path_rec(const char *src);
 void	usage(int status);
-size_t	count_files(char *dir_name);
+size_t	count_files(t_ls *utils, size_t i);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
+void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i);
 
 /*
 **	Vec Tools

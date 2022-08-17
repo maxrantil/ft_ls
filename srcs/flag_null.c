@@ -7,6 +7,7 @@ static void	flag_null(t_ls *utils, size_t i)
 	vec_new(&v_files, 20, MAX_FILENAME);
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
+		ft_printf("HEJ");
 		if (utils->bit_flags ^ A && utils->dirp->d_name[0] == '.')
 			continue ;
 		if (vec_push(&v_files, utils->dirp->d_name) < 0)
@@ -28,18 +29,19 @@ static void	flag_null(t_ls *utils, size_t i)
 void	exec_flag_null(t_ls *utils)
 {
 	size_t i;
+	size_t j;
 
 	i = 0;
+	j = 0;
 	if (!utils->v_paths.len)
 		flag_null(utils, i);
 	else
 		vec_sort(&utils->v_paths, cmpfunc_str);
-	size_t j = 0;
 	while (i < utils->v_paths.len)
 	{
 		while (j < utils->v_paths.len)
 		{
-			utils->dp[j] = open_path((char *)vec_get(&utils->v_paths, j));
+			utils->dp[j] = open_path(utils, j);
 			j++;
 		}
 		if (utils->dp[i])
