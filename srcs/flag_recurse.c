@@ -28,7 +28,7 @@ static void get_dirs_recurse(t_ls *utils, t_vec *vec, char *base_path, size_t i)
 			ft_strcpy(path, base_path);
 			ft_strcat(path, "/");
             ft_strcat(path, utils->dirp->d_name);
-			if (vec_push(vec, &path) < 0)
+			if (vec_push(vec, path) < 0)
 			{
 				perror("vec_push, flag_l");
 				exit(1);
@@ -85,26 +85,26 @@ void	flag_recurse(t_ls *utils)
 	//j = 0;
 	vec_new(&vec, 0, MAX_PATH);
 	//vec_push(&vec, vec_get(&utils->v_paths, i));
-	if (!utils->v_paths.len)
+	//if (!utils->v_paths.len)
 		vec_push(&vec, ".");
-	else
-		vec_push(&vec, (char *)vec_get(&vec, i));
-	while (i < vec.len)
-	{
+	//else
+		//vec_push(&vec, (char *)vec_get(&vec, i));
+	//while (i < vec.len)
+	//{
 	/* 	while (j < vec.len)
 		{
 			utils->dp[j] = open_path(utils, 9999);
 			j++;
 		}
-	 */	if (utils->dp[i])
-		{
+	 */	//if (utils->dp[i])
+		//{
 			get_dirs_recurse(utils, &vec, ".", i);
 			vec_sort(&vec, &cmpfunc_str);
 			//vec_iter(&vec, print_str_vec);
 			exec_flag_recurse(utils, vec, i);
-		}
-	}
-	vec_free(&vec);
+		//}
+	//}
+	//vec_free(&vec);
 }
 
 /* void	pre_flag_recurse(t_ls *utils)

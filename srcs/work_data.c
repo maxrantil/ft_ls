@@ -27,7 +27,7 @@ static void	malloc_directory_ptr(t_ls *utils)
 	if (!utils->v_paths.len)
 	{
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * 1);
-		utils->dp[0] = open_path(utils, 9999);
+		//utils->dp[0] = open_path(utils, 9999);
 	}
 	else
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_paths.len);
