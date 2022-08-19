@@ -15,10 +15,11 @@
 static void get_dirs_recurse(t_ls *utils, t_vec *vec, char *base_path, size_t i)
 {
 	char 	path[MAX_PATH];
+	DIR		*dp;
 
-    if (!(utils->dp[i] = opendir(base_path)))
+    if (!(dp = opendir(base_path)))
         return ;
-    while ((utils->dirp = readdir(utils->dp[i])) != NULL)
+    while ((utils->dirp = readdir(dp)) != NULL)
 	{
         if (utils->dirp->d_type == DT_DIR)
 		{
@@ -27,93 +28,105 @@ static void get_dirs_recurse(t_ls *utils, t_vec *vec, char *base_path, size_t i)
 			ft_strcpy(path, base_path);
 			ft_strcat(path, "/");
             ft_strcat(path, utils->dirp->d_name);
-			vec_push(vec, &path);
-            get_dirs_recurse(utils, vec, path, i++);
+			if (vec_push(vec, &path) < 0)
+			{
+				perror("vec_push, flag_l");
+				exit(1);
+			}
+            get_dirs_recurse(utils, vec, path, i);
         }
     }
-	if (closedir(utils->dp[i]) < 0)
+	if (closedir(dp) < 0)
 	{
 		perror("can't close directory");
 		exit(1);
 	}
 }
 
-static void flag_recurse(t_ls *utils, size_t i)
+static void exec_flag_recurse(t_ls *utils, t_vec vec, size_t i)
 {
 	t_vec	v_files;
-	char	*file;
-	size_t	file_count;
+	DIR		*dp;
+	char	*path;
  
-	//dp = open_path_rec((const char *)src);
-	file = (char *)vec_get(&utils->v_paths, i);
-	file_count = count_files(utils, i);
-	vec_new(&v_files, 1, MAX_FILENAME * file_count);
-	printf("%s:\n", file);
-    while ((utils->dirp = readdir(utils->dp[i])) != NULL)
+	path = (char *)vec_get(&vec, i);
+	vec_new(&v_files, 0, MAX_FILENAME);
+    dp = opendir(path);
+	ft_printf("%s:\n", path);
+	path = ft_strupdate(path, "/");
+    while ((utils->dirp = readdir(dp)) != NULL)
 	{
 		if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue;
- 		vec_push(&v_files, utils->dirp->d_name);
+		char *joini = ft_strjoin(path, utils->dirp->d_name);
+ 		vec_push(&v_files, joini);
+		free(joini);
     }
+	free(path);
 	vec_sort(&v_files, cmpfunc_str);
-	//vec_iter(&v_files, print_str);
 	print_files(utils, &v_files, i);
 	vec_free(&v_files);
+	free(dp);
 	printf("\n\n");
 }
 
-/* static void print_files_with_stat(void *src)
+void print_str_vec(void *src)
 {
-	struct dirent	*dirp;
-	DIR				*dp;
-	t_vec			v_files;
-	size_t			file_count;
+    ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
+}
 
-	file_count = count_files((char *)src);
-	vec_new(&v_files, 1, 256 * file_count);
-	dp = open_path((const char *)src);
-	printf("%s:\n", (char *)src);
-	ft_strcat((char *)src, "/");
-    while ((dirp = readdir(dp)) != NULL)
-	{
-		if (ft_strcmp(dirp->d_name, ".") == 0 || ft_strcmp(dirp->d_name, "..") == 0 || dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
-			continue; 
-		char *print = ft_strjoin((char *)src, dirp->d_name);
-		vec_push(&v_files, print);
-		free(print);
-    }
-	vec_sort(&v_files, cmpfunc_str);
-	vec_iter(&v_files, print_stat);
-	vec_free(&v_files);
-	free(dirp);
-	free(dp);
-	printf("\n\n");
-} */
-
-void exec_flag_recurse(t_ls *utils, char *base_path)
+void	flag_recurse(t_ls *utils)
 {
 	t_vec	vec;
 	size_t	i;
-	size_t	j;
+	//size_t	j;
+
+	i = 0;
+	//j = 0;
+	vec_new(&vec, 0, MAX_PATH);
+	//vec_push(&vec, vec_get(&utils->v_paths, i));
+	if (!utils->v_paths.len)
+		vec_push(&vec, ".");
+	else
+		vec_push(&vec, (char *)vec_get(&vec, i));
+	while (i < vec.len)
+	{
+	/* 	while (j < vec.len)
+		{
+			utils->dp[j] = open_path(utils, 9999);
+			j++;
+		}
+	 */	if (utils->dp[i])
+		{
+			get_dirs_recurse(utils, &vec, ".", i);
+			vec_sort(&vec, &cmpfunc_str);
+			//vec_iter(&vec, print_str_vec);
+			exec_flag_recurse(utils, vec, i);
+		}
+	}
+	vec_free(&vec);
+}
+
+/* void	pre_flag_recurse(t_ls *utils)
+{
+	size_t i;
+	size_t j;
 
 	i = 0;
 	j = 0;
-	vec_new(&vec, 1, sizeof(t_vec));
-	vec_push(&vec, base_path);
-	//vec_iter(&vec, flag_recurse);
-	while (i < vec.len)
+	if (!utils->v_paths.len)
+		flag_recurse(utils);
+	else
+		vec_sort(&utils->v_paths, cmpfunc_str);
+	while (i < utils->v_paths.len)
 	{
-		while (j < vec.len)
+		while (j < utils->v_paths.len)
 		{
 			utils->dp[j] = open_path(utils, j);
 			j++;
 		}
 		if (utils->dp[i])
-		{
-			get_dirs_recurse(utils, &vec, base_path, i);
-			vec_sort(&vec, &cmpfunc_str);
-			flag_recurse(utils, i);
-		}
+			flag_recurse(utils);
+		i++;
 	}
-	vec_free(&vec);
-}
+} */

@@ -12,87 +12,7 @@
 
 #include "ft_ls.h"
 
-void	print_permissions(struct stat statbuf)
-{
-	ft_printf( (S_ISDIR(statbuf.st_mode)) ? "d" : "-");
-    ft_printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
-    ft_printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
-    ft_printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
-    ft_printf( (statbuf.st_mode & S_IRGRP) ? "r" : "-");
-    ft_printf( (statbuf.st_mode & S_IWGRP) ? "w" : "-");
-    ft_printf( (statbuf.st_mode & S_IXGRP) ? "x" : "-");
-    ft_printf( (statbuf.st_mode & S_IROTH) ? "r" : "-");
-    ft_printf( (statbuf.st_mode & S_IWOTH) ? "w" : "-");
-    ft_printf( (statbuf.st_mode & S_IXOTH) ? "x" : "-");	
-}
-
-void	print_nbr_hlinks(struct stat statbuf)
-{
-	ft_printf(" %i", statbuf.st_nlink);
-}
-
-void	print_owner(struct stat statbuf)
-{
-	struct passwd *pwd;
-	
-	pwd = getpwuid(statbuf.st_uid);
-	if (pwd == NULL)
-    	perror("getpwuid");
-	else
-    	ft_printf(" %s\t", pwd->pw_name);
-}
-
-void	print_group(struct stat statbuf)
-{
-	struct group *grp;
-	
-	grp = getgrgid(statbuf.st_gid);
-	if (grp == NULL)
-    	perror("getgrgid");
-	else
-    	ft_printf(" %-s\t", grp->gr_name);
-}
-
-void	print_time(struct stat statbuf)
-{
-	char	*mtime;
-	
-	mtime = ft_memalloc(ft_strlen(ctime(&statbuf.st_mtime)));
-	ft_strcpy(mtime, ctime(&statbuf.st_mtime));
-	ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
-	free(mtime);
-}
-
-void	print_size(struct stat statbuf)
-{
-	ft_printf(" %-i\t", statbuf.st_size);
-}
-
-void	print_file_props(struct stat statbuf)
-{		
-    print_permissions(statbuf);
-	print_nbr_hlinks(statbuf);
-	print_owner(statbuf);
-	print_group(statbuf);
-	print_size(statbuf);
-	print_time(statbuf);
-}
-
-static char	*put_path_infront_of_file(t_ls *utils, size_t i)
-{
-	char	*file_with_path;
-
-	if (utils->v_paths.len)
-	{
-		file_with_path = ft_strjoin((char *)vec_get(&utils->v_paths, i), "/");
-		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
-		return (file_with_path);
-	}
-	else
-		return (utils->dirp->d_name);
-}
-
-static void	flag_l(t_ls *utils, size_t i)
+static void	exec_flag_l(t_ls *utils, size_t i)
 {
 	struct stat	statbuf;
 	t_vec		v_files;
@@ -103,9 +23,9 @@ static void	flag_l(t_ls *utils, size_t i)
 	total = 0;
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		file = put_path_infront_of_file(utils, i); 
-		if (utils->bit_flags ^ A && utils->dirp->d_name[0] == '.')
+		if ((utils->bit_flags & A) == 0 && utils->dirp->d_name[0] == '.')
 			continue ;
+		file = put_path_infront_of_file(utils, i); 
 		if (!stat(file, &statbuf))
 		{
 			total += statbuf.st_blocks;
@@ -135,7 +55,7 @@ static void	flag_l(t_ls *utils, size_t i)
 	}
 }
 
-void	exec_flag_l(t_ls *utils)
+void	flag_l(t_ls *utils)
 {
 	size_t i;
 	size_t j;
@@ -143,7 +63,7 @@ void	exec_flag_l(t_ls *utils)
 	i = 0;
 	j = 0;
 	if (!utils->v_paths.len)
-		flag_l(utils, i);
+		exec_flag_l(utils, i);
 	else
 		vec_sort(&utils->v_paths, cmpfunc_str);
 	while (i < utils->v_paths.len)
@@ -154,7 +74,7 @@ void	exec_flag_l(t_ls *utils)
 			j++;
 		}
 		if (utils->dp[i])
-			flag_l(utils, i);
+			exec_flag_l(utils, i);
 		i++;
 	}
 }

@@ -62,6 +62,7 @@ FILES 		= 	main \
 				flag_recurse \
 				flag_null \
 				tools \
+				print_file_props \
 				vec_tools \
 				work_data \
 

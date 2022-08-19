@@ -49,20 +49,21 @@ typedef struct s_ls
 	t_vec			v_paths;
 	DIR				**dp;
 	uint8_t			bit_flags;
-	int				error_count;
+	int				opendir_error_count;
 }					t_ls;
 
 void	work_data(t_ls *utils, char *flags);
-void	exec_flag_null(t_ls *utils);
-void	exec_flag_l(t_ls *utils);
-void	exec_flag_recurse(t_ls *utils, char *base_path);
+void	print_file_props(struct stat statbuf);
+void	flag_null(t_ls *utils);
+void	flag_l(t_ls *utils);
+void	flag_recurse(t_ls *utils);
 
 /*
 **	Tools
 */
 
+char	*put_path_infront_of_file(t_ls *utils, size_t i);
 DIR*	open_path(t_ls *utils, size_t j);
-DIR*	open_path_rec(const char *src);
 void	usage(int status);
 size_t	count_files(t_ls *utils, size_t i);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);

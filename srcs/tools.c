@@ -1,5 +1,18 @@
 #include "ft_ls.h"
 
+char	*put_path_infront_of_file(t_ls *utils, size_t i)
+{
+	char	*file_with_path;
+
+	if (utils->v_paths.len)
+	{
+		file_with_path = ft_strjoin((char *)vec_get(&utils->v_paths, i), "/");
+		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
+		return (file_with_path);
+	}
+	return (utils->dirp->d_name);
+}
+
 void	usage(int status)
 {
 	ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
@@ -17,38 +30,23 @@ void	usage(int status)
 
 DIR		*open_path(t_ls *utils, size_t i)
 {
-	const char	*path;
+	char	path[MAX_PATH];
 
-	if (i == 9999)
+	if (i == 9999) // this is my drunken solution, might need to think it over again
 	{
-		path = ".";
+		ft_strcpy(path, ".");; //is this okey??? or do i need to malloc for it?
 		i = 0;
 	}
 	else
-		path = (const char *)vec_get(&utils->v_paths, i);
+		ft_strcpy(path, (const char *)vec_get(&utils->v_paths, i));
 	utils->dp[i] = opendir(path);
 	if (!utils->dp[i])
 	{
 		ft_printf("ft_ls: cannot access '%s': ", path);
 		perror("");
-		++utils->error_count;
+		++utils->opendir_error_count;
 	}
 	return (utils->dp[i]);
-}
-
-size_t count_files(t_ls *utils, size_t i)
-{
-	size_t			file_count;
-
-	file_count = 0;
-	//utils->dp[i] = open_path(utils, i);
-	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
-	{
-		if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0)
-			continue ;
-		++file_count;
-	}
-	return (file_count);
 }
 
 static size_t	window_size(void)
@@ -80,7 +78,7 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 		} 
     	ft_printf("%-*s", ft_strlen(file) + 2, file);
 	}
-	if (utils->v_paths.len != 0 && i != utils->error_count - utils->v_paths.len - 1) // fix this later
+	if (utils->v_paths.len != 0 && i != utils->opendir_error_count - utils->v_paths.len - 1) // fix this later
 		write(1, "\n\n", 2);
 	else
 		write(1, "\n", 1);
@@ -117,6 +115,6 @@ void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, siz
 			exit(1);
 		}
 	}
-	if (utils->v_paths.len != 0 && i != utils->error_count - utils->v_paths.len - 1)
+	if (utils->v_paths.len != 0 && i != utils->opendir_error_count - utils->v_paths.len - 1)
 		write(1, "\n", 1);
 }

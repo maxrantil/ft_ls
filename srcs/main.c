@@ -12,17 +12,6 @@
 
 #include "ft_ls.h"
 
-static void	malloc_directory_ptr(t_ls *utils)
-{
-	if (!utils->v_paths.len)
-	{
-		utils->dp = (DIR **)malloc(sizeof(DIR *) * 1);
-		utils->dp[0] = open_path(utils, 9999);
-	}
-	else
-		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_paths.len);
-}
-
 static char	*get_flags(char *str)
 {
 	static int	int_flags[MAX_FLAGS];
@@ -84,9 +73,9 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 
 static void	init_ls(t_ls *utils)
 {
-	vec_new(&utils->v_paths, 1, MAX_PATH);
+	vec_new(&utils->v_paths, 0, MAX_PATH);
 	utils->bit_flags = 0;
-	utils->error_count = 0;
+	utils->opendir_error_count = 0;
 
 }
 
@@ -97,7 +86,6 @@ int main(int argc, const char **argv)
 
 	init_ls(&utils);
 	flags = get_data(&utils, argv, argc);
-	malloc_directory_ptr(&utils);
 	work_data(&utils, flags);
 	return (0);
 }

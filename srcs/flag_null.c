@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-static void	flag_null(t_ls *utils, size_t i)
+static void	exec_flag_null(t_ls *utils, size_t i)
 {
 	t_vec	v_files;
 	
@@ -25,7 +25,7 @@ static void	flag_null(t_ls *utils, size_t i)
 	}
 }
 
-void	exec_flag_null(t_ls *utils)
+void	flag_null(t_ls *utils)
 {
 	size_t i;
 	size_t j;
@@ -33,7 +33,7 @@ void	exec_flag_null(t_ls *utils)
 	i = 0;
 	j = 0;
 	if (!utils->v_paths.len)
-		flag_null(utils, i);
+		exec_flag_null(utils, i);
 	else
 		vec_sort(&utils->v_paths, cmpfunc_str);
 	while (i < utils->v_paths.len)
@@ -44,7 +44,7 @@ void	exec_flag_null(t_ls *utils)
 			j++;
 		}
 		if (utils->dp[i])
-			flag_null(utils, i);
+			exec_flag_null(utils, i);
 		i++;
 	}
 }
