@@ -78,26 +78,51 @@ void	print_file_props(struct stat statbuf)
 	print_time(statbuf);
 }
 
+static char	*put_path_infront_of_file(t_ls *utils, size_t i)
+{
+	char	*file_with_path;
+
+	if (utils->v_paths.len)
+	{
+		file_with_path = ft_strjoin((char *)vec_get(&utils->v_paths, i), "/");
+		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
+		return (file_with_path);
+	}
+	else
+		return (utils->dirp->d_name);
+}
+
 static void	flag_l(t_ls *utils, size_t i)
 {
 	struct stat	statbuf;
 	t_vec		v_files;
+	char		*file;
 	int			total;
-//	size_t		file_count;
 
-	//file_count = count_files(utils, i);
-	vec_new(&v_files, 1, MAX_FILENAME);// * file_count); // do i need file_count?
+	vec_new(&v_files, 0, MAX_FILENAME);
 	total = 0;
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		//if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || 
-		if ((utils->dirp->d_name[0] == '.' && (utils->bit_flags & A) == 0))
-			continue;
-		if (!stat(utils->dirp->d_name, &statbuf))
+		file = put_path_infront_of_file(utils, i); 
+		if (utils->bit_flags ^ A && utils->dirp->d_name[0] == '.')
+			continue ;
+		if (!stat(file, &statbuf))
 		{
 			total += statbuf.st_blocks;
-			vec_push(&v_files, utils->dirp->d_name);
+			if (vec_push(&v_files, file) < 0)
+			{
+				perror("vec_push, flag_l");
+				exit(1);
+			}
 		}
+		else
+		{
+			ft_printf("'%s' is not in: ", file);
+			perror("stat in flag_l");
+			exit(1);
+		}
+		if (utils->v_paths.len)
+			ft_strdel(&file);
 	}
 	ft_printf("total: %d\n", total/2);
 	vec_sort(&v_files, &cmpfunc_str);
@@ -133,8 +158,3 @@ void	exec_flag_l(t_ls *utils)
 		i++;
 	}
 }
-	/* while (i < utils->v_paths.len)
-	{
-		flag_l(utils, (char *)vec_get(&utils->v_paths, i), i);
-		i++;
-	} */

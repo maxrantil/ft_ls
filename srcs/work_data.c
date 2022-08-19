@@ -25,11 +25,13 @@ static void	check_flags(t_ls *utils)
 {
 	if (utils->bit_flags == NULL_FLAG || (utils->bit_flags ^ A) == 0)
 		exec_flag_null(utils);
-	else if ((utils->bit_flags & L) != 0 || ((utils->bit_flags ^ (L + A)) == 0))
+	else if((utils->bit_flags & L) != 0 || ((utils->bit_flags ^ (L + A)) == 0))
 		exec_flag_l(utils);
 	else
 		ft_printf("%b\n", utils->bit_flags);
 }
+
+//utils->bit_flags ^ (L | A | R) == 0
 
 void	work_data(t_ls *utils, char *flags)
 {

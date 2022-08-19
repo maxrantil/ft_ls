@@ -86,6 +86,7 @@ static void	init_ls(t_ls *utils)
 {
 	vec_new(&utils->v_paths, 1, MAX_PATH);
 	utils->bit_flags = 0;
+	utils->error_count = 0;
 
 }
 

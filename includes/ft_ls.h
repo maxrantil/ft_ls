@@ -49,6 +49,7 @@ typedef struct s_ls
 	t_vec			v_paths;
 	DIR				**dp;
 	uint8_t			bit_flags;
+	int				error_count;
 }					t_ls;
 
 void	work_data(t_ls *utils, char *flags);

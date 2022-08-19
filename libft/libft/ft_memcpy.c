@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,57 +7,23 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:10:27 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:27:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2021/11/22 19:32:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void	cpy_rest(unsigned char **dst,
-		const unsigned char **src, size_t n)
-{
-	unsigned int	block;
-	unsigned int	rest;
-
-	block = n / sizeof(int);
-	rest = n % sizeof(int);
-	if (block)
-		*(*(unsigned int **)dst)++ = *(*(const unsigned int **)src)++;
-	if (rest / sizeof(short))
-		*(*(unsigned short **)dst)++ = *(*(const unsigned short **)src)++;
-	if (n % sizeof(short))
-		*(*dst)++ = *(*src)++;
-}
-
-static void	cpy_blocks(unsigned char **dst,
-		const unsigned char **src, size_t n)
-{
-	unsigned long		*d;
-	const unsigned long	*s;
-
-	d = (unsigned long *)*dst;
-	s = (const unsigned long *)*src;
-	*dst += n * sizeof(long);
-	*src += n * sizeof(long);
-	while (n--)
-		*d++ = *s++;
-}
-
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	unsigned int		block;
-	unsigned int		rest;
+	int	i;
 
-	if (n == 0 || dst == src)
-		return (dst);
-	d = (unsigned char *)dst;
-	s = (const unsigned char *)src;
-	block = n / sizeof(long);
-	rest = n % sizeof(long);
-	if (block)
-		cpy_blocks(&d, &s, block);
-	cpy_rest(&d, &s, rest);
+	i = 0;
+	if (dst == NULL && src == NULL)
+		return (NULL);
+	while (n--)
+	{
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		i++;
+	}
 	return (dst);
 }

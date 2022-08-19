@@ -4,10 +4,9 @@ static void	flag_null(t_ls *utils, size_t i)
 {
 	t_vec	v_files;
 	
-	vec_new(&v_files, 20, MAX_FILENAME);
+	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		ft_printf("HEJ");
 		if (utils->bit_flags ^ A && utils->dirp->d_name[0] == '.')
 			continue ;
 		if (vec_push(&v_files, utils->dirp->d_name) < 0)
