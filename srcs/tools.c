@@ -69,6 +69,7 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
 	size_t	len_count;
 	size_t	win_size;
+	char	*file;
 
 	len_count = 0;
 	win_size = window_size();
@@ -77,7 +78,10 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_paths, i));
 	for (size_t x = 0; x < v_files->len; x++)
 	{
-		char *file = no_path((char *)vec_get(v_files, x));
+		if ((utils->bit_flags ^ NULL_FLAG) == 0)
+			file = (char *)vec_get(v_files, x);
+		else
+			file = no_path((char *)vec_get(v_files, x));
 		len_count += ft_strlen(file) + 5;
 		if (len_count >= win_size)
 		{

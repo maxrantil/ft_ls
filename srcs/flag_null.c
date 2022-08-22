@@ -18,11 +18,11 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 	vec_sort(&v_files, cmpfunc_str);
 	print_files(utils, &v_files, i);
 	vec_free(&v_files);
-	if (closedir(utils->dp[i]) < 0)
+	/* if (closedir(utils->dp[i]) < 0)
 	{
 		perror("can't close directory");
 		exit(1);
-	}
+	} */
 }
 
 void	flag_null(t_ls *utils)

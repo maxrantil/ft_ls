@@ -24,7 +24,7 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 
 static void	malloc_directory_ptr(t_ls *utils)
 {
-	if (!utils->v_paths.len && (utils->bit_flags & CAPITAL_R) == 0)
+	if (!utils->v_paths.len)
 	{
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * 1);
 		utils->dp[0] = opendir(".");
@@ -50,7 +50,11 @@ void	work_data(t_ls *utils, char *flags)
 	exec_flags(utils);
 
 	vec_free(&utils->v_paths);
-	int i = utils->v_paths.len; // lean up this into another function?? or place it right after it is beeing used
+	ssize_t i = utils->v_paths.len; // lean up this into another function?? or place it right after it is beeing used
 	while (i >= 0)
-		free(&utils->dp[i--]);
+	{
+		free(utils->dp[i]);
+		i--;
+	}
+	free(utils->dp);
 }

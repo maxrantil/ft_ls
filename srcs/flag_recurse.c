@@ -74,47 +74,60 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 		write(1, "\n", 1);
 	
 	vec_free(&v_files);
-	free(dp);
-//	ft_printf("\n\n");
+	closedir(dp);
+	//free(dp);
 }
-
-void print_str_vec(void *src)
-{
-    ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
-}
-
-//void	flag_recurse(t_ls *utils)
-//{
-	//t_vec	v_rec_path;
-	//size_t	i;
-	//size_t	j;
-
-	//i = 0;
-	//j = 0;
-	//vec_new(&v_rec_path, 0, MAX_PATH);
-	//vec_push(&v_rec_path, vec_get(&utils->v_paths, i));
-	//if (!utils->v_paths.len)
-	//else
-		//vec_push(&v_rec_path, (char *)vec_get(&v_rec_path, i));
-	//while (i < v_rec_path.len)
-	//{
-	/* 	while (j < v_rec_path.len)
-		{
-			utils->dp[j] = open_path(utils, 9999);
-			j++;
-		}
-	 */	//if (utils->dp[i])
-		//{
-	//		get_dirs_recurse(utils, &v_rec_path, ".", i);
-	//		vec_sort(&v_rec_path, &cmpfunc_str);
-			//vec_iter(&v_rec_path, print_str_vec);
-	//		exec_flag_recurse(utils, v_rec_path, i);
-		//}
-	//}
-	//vec_free(&v_rec_path);
-//}
 
 void	flag_recurse(t_ls *utils)
+{
+	t_vec	v_rec_path;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	vec_new(&v_rec_path, 0, MAX_PATH);
+	if (!utils->v_paths.len)
+	{
+		vec_push(&v_rec_path, ".");
+		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
+		vec_sort(&v_rec_path, cmpfunc_str);
+		while (i < v_rec_path.len)
+		{
+			exec_flag_recurse(utils, v_rec_path, i);
+			i++;
+		}
+	}
+	else
+	{
+		vec_sort(&utils->v_paths, &cmpfunc_str);
+	}
+	while (i < utils->v_paths.len)
+	{
+		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
+		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
+		vec_sort(&v_rec_path, &cmpfunc_str);
+	 	while (j < utils->v_paths.len)
+		{
+			utils->dp[j] = open_path(utils, j);
+			j++;
+		}
+	 	if (utils->dp[i])
+		{
+			while (k < v_rec_path.len)
+			{
+				exec_flag_recurse(utils, v_rec_path, k);
+				k++;
+			}
+		}
+		i++;
+	}
+	vec_free(&v_rec_path);
+}
+
+/* void	flag_recurse(t_ls *utils)
 {
 	t_vec	v_rec_path;
 	size_t	i;
@@ -149,4 +162,4 @@ void	flag_recurse(t_ls *utils)
 		i++;
 	}
 	vec_free(&v_rec_path);
-}
+} */
