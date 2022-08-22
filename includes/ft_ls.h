@@ -45,7 +45,8 @@ typedef enum e_flags
 
 typedef struct s_ls
 {
-	struct	dirent	*dirp;
+	struct dirent	*dirp;
+	struct stat		statbuf;
 	t_vec			v_paths;
 	DIR				**dp;
 	uint8_t			bit_flags;

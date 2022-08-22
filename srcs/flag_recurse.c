@@ -12,6 +12,13 @@
 
 #include "ft_ls.h"
 
+int	is_bit_set(unsigned int value, unsigned int bitindex)
+{
+	if (bitindex & (1 << value))
+		return (1);
+	return (0);
+}
+
 static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 {
 	char 	path[MAX_PATH];
@@ -21,10 +28,13 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
         return ;
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-        if (utils->dirp->d_type == DT_DIR)
+		stat(base_path, &utils->statbuf); //READ ABOUT STAT TOMORROW
+        if (S_ISDIR(utils->statbuf.st_mode))
 		{
-            if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+            //if (utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+			if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 				continue;
+			//if (utils->dirp->d_name[0] == '.')
 			ft_strcpy(path, base_path);
 			ft_strcat(path, "/");
             ft_strcat(path, utils->dirp->d_name);
@@ -60,7 +70,7 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	vec_new(&v_files, 0, MAX_FILENAME);
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-		if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+		if (is_bit_set(A, utils->bit_flags) && (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.')) //hidden folders dont show(no -a flag)
 			continue;
 		file_with_path = ft_strjoin(path, utils->dirp->d_name);
  		vec_push(&v_files, file_with_path);
@@ -76,7 +86,6 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	
 	vec_free(&v_files);
 	closedir(dp);
-	//free(dp);
 }
 
 void	flag_recurse(t_ls *utils)
@@ -89,7 +98,7 @@ void	flag_recurse(t_ls *utils)
 	i = 0;
 	j = 0;
 	k = 0;
-	vec_new(&v_rec_path, 0, MAX_PATH);
+	vec_new(&v_rec_path, 0, MAX_PATH );
 	if (!utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, ".");
