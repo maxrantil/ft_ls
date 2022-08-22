@@ -45,15 +45,20 @@ static void	exec_flags(t_ls *utils)
 
 void	work_data(t_ls *utils, char *flags)
 {
+	ssize_t i;
+
 	turn_on_bit_flags(utils, flags);
 	malloc_directory_ptr(utils);
 	exec_flags(utils);
-
 	vec_free(&utils->v_paths);
-	ssize_t i = utils->v_paths.len; // lean up this into another function?? or place it right after it is beeing used
+	i = utils->v_paths.len; // lean up this into another function?? or place it right after it is beeing used
 	while (i >= 0)
 	{
-		free(utils->dp[i]);
+		if (closedir(utils->dp[i]) < 0)
+		{
+			perror("can't close directory");
+			exit(1);
+		}
 		i--;
 	}
 	free(utils->dp);

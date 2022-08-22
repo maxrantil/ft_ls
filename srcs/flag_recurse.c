@@ -48,6 +48,7 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	t_vec	v_files;
 	DIR		*dp;
 	char	path[MAX_PATH];
+	char	*file_with_path;
  
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
     dp = opendir(path);
@@ -61,9 +62,9 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	{
 		if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue;
-		char *joini = ft_strjoin(path, utils->dirp->d_name);
- 		vec_push(&v_files, joini);
-		free(joini);
+		file_with_path = ft_strjoin(path, utils->dirp->d_name);
+ 		vec_push(&v_files, file_with_path);
+		free(file_with_path);
     }
 	vec_sort(&v_files, cmpfunc_str);
 	print_files(utils, &v_files, i);
@@ -92,7 +93,7 @@ void	flag_recurse(t_ls *utils)
 	if (!utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, ".");
-		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
+		get_dirs_recurse(utils, &v_rec_path, ".", i);
 		vec_sort(&v_rec_path, cmpfunc_str);
 		while (i < v_rec_path.len)
 		{
@@ -104,7 +105,7 @@ void	flag_recurse(t_ls *utils)
 	{
 		vec_sort(&utils->v_paths, &cmpfunc_str);
 	}
-	while (i < utils->v_paths.len)
+	while (i < utils->v_paths.len) //i think the leak is here somewhere? if v_path.len > 1 then there is a leak.
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
