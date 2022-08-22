@@ -51,7 +51,10 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
  
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
     dp = opendir(path);
-	ft_printf("%s:\n", path);
+	if (v_rec_path.len - i - 1 != 0) // fix this later
+		ft_printf("%s:\n", path);
+	else
+		ft_printf("\n%s:\n", path);
 	ft_strcat(path, "/");
 	vec_new(&v_files, 0, MAX_FILENAME);
     while ((utils->dirp = readdir(dp)) != NULL)
@@ -135,6 +138,7 @@ void	flag_recurse(t_ls *utils)
 		vec_sort(&utils->v_paths, cmpfunc_str);
 	while (i < utils->v_paths.len)
 	{
+		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
 		vec_sort(&v_rec_path, cmpfunc_str);
 		while (j < v_rec_path.len)

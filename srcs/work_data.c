@@ -24,10 +24,10 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 
 static void	malloc_directory_ptr(t_ls *utils)
 {
-	if (!utils->v_paths.len)
+	if (!utils->v_paths.len && (utils->bit_flags & CAPITAL_R) == 0)
 	{
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * 1);
-		//utils->dp[0] = opendir(".");
+		utils->dp[0] = opendir(".");
 	}
 	else
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_paths.len);
