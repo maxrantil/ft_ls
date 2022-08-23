@@ -70,14 +70,13 @@ size_t	count_files(t_ls *utils, size_t i);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
 void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i);
 char	*no_path(char *file_with_path);
+void	print_file_props(struct stat statbuf);
 
 /*
 **	Vec Tools
 */
 
-int		cmpfunc_str(void *a, void *b);
+void	sort_it(t_vec *vec_to_sort, unsigned int bit_str);
 void	print_str(void *src);
-void	print_stat(void *src);
-void	print_file_props(struct stat statbuf);
 
 #endif

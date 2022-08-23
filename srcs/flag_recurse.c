@@ -12,12 +12,12 @@
 
 #include "ft_ls.h"
 
-int	is_bit_set(unsigned int value, unsigned int bitindex)
+/* int	is_bit_set(unsigned int value, unsigned int bitindex)
 {
 	if (bitindex & (1 << value))
 		return (1);
 	return (0);
-}
+} */
 
 static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 {
@@ -78,7 +78,7 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 		}
 		free(file_with_path);
     }
-	vec_sort(&v_files, cmpfunc_str);
+	sort_it(&v_files, utils->bit_flags);
 	print_files(utils, &v_files, i);
 
 	if (v_rec_path.len != 0 && i != v_rec_path.len  - 1) // fix this later
@@ -105,7 +105,7 @@ void	flag_recurse(t_ls *utils)
 	{
 		vec_push(&v_rec_path, ".");
 		get_dirs_recurse(utils, &v_rec_path, ".", i);
-		vec_sort(&v_rec_path, cmpfunc_str);
+		sort_it(&v_rec_path, utils->bit_flags);
 		while (i < v_rec_path.len)
 		{
 			exec_flag_recurse(utils, v_rec_path, i);
@@ -114,14 +114,13 @@ void	flag_recurse(t_ls *utils)
 	}
 	else
 	{
-		vec_sort(&utils->v_paths, &cmpfunc_str);
+		sort_it(&utils->v_paths, utils->bit_flags);
 	}
 	while (i < utils->v_paths.len) //i think the leak is here somewhere? if v_path.len > 1 then there is a leak.
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
-		vec_sort(&v_rec_path, &cmpfunc_str);
-		//printf("SER DU?\n");
+		sort_it(&v_rec_path, utils->bit_flags);
 	 	while (j < utils->v_paths.len)
 		{
 			utils->dp[j] = open_path(utils, j);
@@ -139,40 +138,3 @@ void	flag_recurse(t_ls *utils)
 	}
 	vec_free(&v_rec_path);
 }
-
-/* void	flag_recurse(t_ls *utils)
-{
-	t_vec	v_rec_path;
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	j = 0;
-	vec_new(&v_rec_path, 0, MAX_PATH);
-	if (!utils->v_paths.len)
-	{
-		vec_push(&v_rec_path, ".");
-		get_dirs_recurse(utils, &v_rec_path, ".", i);
-		vec_sort(&v_rec_path, cmpfunc_str);
-		while (i < v_rec_path.len)
-		{
-			exec_flag_recurse(utils, v_rec_path, i);
-			i++;
-		}
-	}
-	else
-		vec_sort(&utils->v_paths, cmpfunc_str);
-	while (i < utils->v_paths.len)
-	{
-		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
-		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
-		vec_sort(&v_rec_path, cmpfunc_str);
-		while (j < v_rec_path.len)
-		{
-			exec_flag_recurse(utils, v_rec_path, j);
-			j++;
-		}
-		i++;
-	}
-	vec_free(&v_rec_path);
-} */

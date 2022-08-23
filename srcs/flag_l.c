@@ -45,7 +45,7 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 			ft_strdel(&file);
 	}
 	ft_printf("total: %d\n", total/2);
-	vec_sort(&v_files, &cmpfunc_str);
+	sort_it(&v_files, utils->bit_flags);
 	print_files_with_stat(statbuf, utils, &v_files, i);
 	vec_free(&v_files);
 }
@@ -60,7 +60,7 @@ void	flag_l(t_ls *utils)
 	if (!utils->v_paths.len)
 		exec_flag_l(utils, i);
 	else
-		vec_sort(&utils->v_paths, cmpfunc_str);
+		sort_it(&utils->v_paths, utils->bit_flags);
 	while (i < utils->v_paths.len)
 	{
 		while (j < utils->v_paths.len)

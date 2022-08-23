@@ -15,7 +15,7 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 			exit(1);
 		}
 	}
-	vec_sort(&v_files, cmpfunc_str);
+	sort_it(&v_files, utils->bit_flags);
 	print_files(utils, &v_files, i);
 	vec_free(&v_files);
 	/* if (closedir(utils->dp[i]) < 0)
@@ -35,7 +35,7 @@ void	flag_null(t_ls *utils)
 	if (!utils->v_paths.len)
 		exec_flag_null(utils, i);
 	else
-		vec_sort(&utils->v_paths, cmpfunc_str);
+		sort_it(&utils->v_paths, utils->bit_flags);
 	while (i < utils->v_paths.len)
 	{
 		while (j < utils->v_paths.len)
