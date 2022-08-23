@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-int cmpfunc_str(void *a, void *b)
+/* int cmpfunc_str(void *a, void *b)
 {
 	int	ret;
 	
@@ -13,6 +13,10 @@ int cmpfunc_str(void *a, void *b)
 		ret = ft_tolower(*(char *)a) - ft_tolower(*(char *)b);
 	}
 	return (ret);
+} */
+int cmpfunc_str(void *a, void *b)
+{
+	return (ft_strcmp((char *)a, (const char *)b));
 }
 
 

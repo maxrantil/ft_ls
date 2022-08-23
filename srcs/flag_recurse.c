@@ -28,7 +28,7 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
         return ;
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-		if (!ft_strcmp(utils->dirp->d_name, ".") || !ft_strcmp(utils->dirp->d_name, "..") || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+		if (!ft_strcmp(utils->dirp->d_name, ".") || !ft_strcmp(utils->dirp->d_name, ".."))// || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
 			continue;
 		ft_strcpy(path, base_path);
 		ft_strcat(path, "/");
@@ -38,13 +38,12 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
 		{
 			if (vec_push(v_rec_path, path) < 0)
 			{
-				perror("vec_push, flag_l");
+				perror("vec_push, get_dir_recurse");
 				exit(1);
 			}
 			get_dirs_recurse(utils, v_rec_path, path, i);
 		}
     }
-			ft_printf("inside::: %s\n", path);
 	if (closedir(dp) < 0)
 	{
 		perror("can't close directory");
@@ -69,10 +68,14 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	vec_new(&v_files, 0, MAX_FILENAME);
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-		/* if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0 || utils->dirp->d_name[0] == '.')) //hidden folders dont show(no -a flag)
-			continue; */
+		 if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0)// || utils->dirp->d_name[0] == '.')) //hidden folders dont show(no -a flag)
+			continue;
 		file_with_path = ft_strjoin(path, utils->dirp->d_name);
- 		vec_push(&v_files, file_with_path);
+		if (vec_push(&v_files, file_with_path) < 0)
+		{
+			perror("vec_push, exec_flag_recurse");
+			exit(1);
+		}
 		free(file_with_path);
     }
 	vec_sort(&v_files, cmpfunc_str);
@@ -118,6 +121,7 @@ void	flag_recurse(t_ls *utils)
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);
 		vec_sort(&v_rec_path, &cmpfunc_str);
+		//printf("SER DU?\n");
 	 	while (j < utils->v_paths.len)
 		{
 			utils->dp[j] = open_path(utils, j);
