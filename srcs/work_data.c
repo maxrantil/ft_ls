@@ -43,15 +43,14 @@ static void	exec_flags(t_ls *utils)
 		flag_null(utils);
 }
 
-void	work_data(t_ls *utils, char *flags)
+static void	free_all(t_ls *utils)
 {
 	ssize_t i;
 
-	turn_on_bit_flags(utils, flags);
-	malloc_directory_ptr(utils);
-	exec_flags(utils);
-	vec_free(&utils->v_paths);
-	i = utils->v_paths.len; // lean up this into another function?? or place it right after it is beeing used
+	if (utils->v_paths.len)
+		i = utils->v_paths.len - 1;
+	else
+		i = 0;
 	while (i >= 0)
 	{
 		if (closedir(utils->dp[i]) < 0)
@@ -62,4 +61,13 @@ void	work_data(t_ls *utils, char *flags)
 		i--;
 	}
 	free(utils->dp);
+	vec_free(&utils->v_paths);
+}
+
+void	work_data(t_ls *utils, char *flags)
+{
+	turn_on_bit_flags(utils, flags);
+	malloc_directory_ptr(utils);
+	exec_flags(utils);
+	free_all(utils);
 }
