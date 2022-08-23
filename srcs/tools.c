@@ -78,7 +78,7 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_paths, i));
 	for (size_t x = 0; x < v_files->len; x++)
 	{
-		if (((utils->bit_flags & (NULL_FLAG | A | R)) != 0))// || (utils->bit_flags ^ A) == 0 || (utils->bit_flags ^ R) == 0)
+		if (((utils->bit_flags & (NULL_FLAG | A | R | T)) != 0))// || (utils->bit_flags ^ A) == 0 || (utils->bit_flags ^ R) == 0)
 			file = (char *)vec_get(v_files, x);
 		else
 			file = no_path((char *)vec_get(v_files, x));
