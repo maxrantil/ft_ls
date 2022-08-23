@@ -35,12 +35,12 @@
 
 typedef enum e_flags
 {
-	NULL_FLAG = 0,
-	A = 1,
-	L = 2,
-	R = 4,
-	CAPITAL_R = 8,
-	T = 16
+	NULL_FLAG = 0b00000,
+	A = 0b00001,
+	L = 0b00010,
+	R = 0b00100,
+	CAPITAL_R = 0b01000,
+	T = 0b10000
 }			t_flags;
 
 typedef struct s_ls
@@ -68,7 +68,7 @@ DIR*	open_path(t_ls *utils, size_t j);
 void	usage(int status);
 size_t	count_files(t_ls *utils, size_t i);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
-void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i);
+void	print_files_with_stat(t_ls *utils, t_vec *v_files, size_t i);
 char	*no_path(char *file_with_path);
 void	print_file_props(struct stat statbuf);
 

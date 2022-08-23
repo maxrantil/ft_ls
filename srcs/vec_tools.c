@@ -20,10 +20,10 @@ static int	sort_str_mtime(void *a, void *b)
 	return (a_statbuf.st_mtime < b_statbuf.st_mtime);
 }
 
-void	print_str(void *src)
+/* void	print_str(void *src)
 {
     ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
-}
+} */
 
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 {

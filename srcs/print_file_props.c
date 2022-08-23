@@ -16,7 +16,7 @@ static void	print_permissions(struct stat statbuf)
 
 static void	print_nbr_hlinks(struct stat statbuf)
 {
-	ft_printf(" %*i", 2, statbuf.st_nlink);
+	ft_printf(" %*i", 3, statbuf.st_nlink);
 }
 
 static void	print_owner(struct stat statbuf)
@@ -41,6 +41,11 @@ static void	print_group(struct stat statbuf)
     	ft_printf(" %-s\t", grp->gr_name);
 }
 
+static void	print_size(struct stat statbuf)
+{
+	ft_printf(" %-*i", 8, statbuf.st_size);
+}
+
 static void	print_time(struct stat statbuf)
 {
 	char	*mtime;
@@ -49,11 +54,6 @@ static void	print_time(struct stat statbuf)
 	ft_strcpy(mtime, ctime(&statbuf.st_mtime));
 	ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
 	free(mtime);
-}
-
-static void	print_size(struct stat statbuf)
-{
-	ft_printf(" %-i\t", statbuf.st_size);
 }
 
 void	print_file_props(struct stat statbuf)

@@ -96,15 +96,15 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 	//write(1, "\n\n", 2);
 }
 
-void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i)
+void	print_files_with_stat(t_ls *utils, t_vec *v_files, size_t i)
 {
 	if (utils->v_paths.len > 1)
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_paths, i));
 	for (size_t x = 0; x < v_files->len; x++)
 	{
-		if (!stat((const char *)vec_get(v_files, x), &statbuf))
+		if (!stat((const char *)vec_get(v_files, x), &utils->statbuf))
 		{
-			print_file_props(statbuf);
+			print_file_props(utils->statbuf);
 			if (utils->v_paths.len)
  		   		ft_printf("%s\n", no_path((char *)vec_get(v_files, x)));
 			else

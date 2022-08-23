@@ -12,12 +12,12 @@
 
 #include "ft_ls.h"
 
-/* int	is_bit_set(unsigned int value, unsigned int bitindex)
+int	is_bit_set(unsigned int value, unsigned int bit_str)
 {
-	if (bitindex & (1 << value))
+	if (bit_str & value)
 		return (1);
 	return (0);
-} */
+}
 
 static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 {
@@ -28,9 +28,10 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
         return ;
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-		if (!ft_strcmp(utils->dirp->d_name, ".") || !ft_strcmp(utils->dirp->d_name, ".."))// || utils->dirp->d_name[0] == '.') //hidden folders dont show(no -a flag)
+		if (!ft_strcmp(utils->dirp->d_name, ".") || !ft_strcmp(utils->dirp->d_name, "..")
+			|| (!is_bit_set(A, utils->bit_flags) &&  utils->dirp->d_name[0] == '.'))
 			continue;
-		ft_strcpy(path, base_path);
+		ft_strcpy(path, base_path); //can i send this to the function to make paths? need to free then and might be hard.. can make a new funktion.
 		ft_strcat(path, "/");
 		ft_strcat(path, utils->dirp->d_name);
 		stat(path, &utils->statbuf);
@@ -60,15 +61,16 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
  
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
     dp = opendir(path);
-	if (v_rec_path.len - i - 1 != 0) // fix this later
+	/* if (v_rec_path.len - i - 1 != 0)  */
 		ft_printf("%s:\n", path);
-	else
-		ft_printf("\n%s:\n", path);
+	/* else
+		ft_printf("\n%s:\n", path); */
 	ft_strcat(path, "/");
 	vec_new(&v_files, 0, MAX_FILENAME);
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-		 if (ft_strcmp(utils->dirp->d_name, ".") == 0 || ft_strcmp(utils->dirp->d_name, "..") == 0)// || utils->dirp->d_name[0] == '.')) //hidden folders dont show(no -a flag)
+		if (!is_bit_set(A, utils->bit_flags) && (!ft_strcmp(utils->dirp->d_name, ".")
+			|| !ft_strcmp(utils->dirp->d_name, "..") || utils->dirp->d_name[0] == '.'))
 			continue;
 		file_with_path = ft_strjoin(path, utils->dirp->d_name);
 		if (vec_push(&v_files, file_with_path) < 0)
@@ -79,7 +81,11 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 		free(file_with_path);
     }
 	sort_it(&v_files, utils->bit_flags);
-	print_files(utils, &v_files, i);
+
+	if (is_bit_set(L, utils->bit_flags))
+		print_files_with_stat(utils, &v_files, i);
+	else
+		print_files(utils, &v_files, i);
 
 	if (v_rec_path.len != 0 && i != v_rec_path.len  - 1) // fix this later
 		write(1, "\n\n", 2);

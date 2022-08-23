@@ -42,11 +42,10 @@ MAKEFLAGS	+= --no-print-directory
 NAME		=	ft_ls
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra -Werror
-CFLAGS		+=	-O3 -flto -Wunreachable-code -Wpedantic -Wtype-limits
+CFLAGS		+=	-O3 -flto -Wunreachable-code -Wtype-limits
+#-Wpedantic(cant use 0b for defining my bits)
 LEAK_CHECK	=	-g
 LEAK_CHECK	+=	-fsanitize=address
-
-TERMCAPS 	= 	-ltermcap
 
 SOURCES 	= 	srcs
 OBJECTS 	= 	objs

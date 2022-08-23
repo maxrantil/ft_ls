@@ -14,7 +14,6 @@
 
 static void	exec_flag_l(t_ls *utils, size_t i)
 {
-	struct stat	statbuf;
 	t_vec		v_files;
 	char		*file;
 	int			total;
@@ -26,9 +25,9 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 		if ((utils->bit_flags & A) == 0 && utils->dirp->d_name[0] == '.')
 			continue ;
 		file = put_path_infront_of_file(utils, i); 
-		if (!stat(file, &statbuf))
+		if (!stat(file, &utils->statbuf))
 		{
-			total += statbuf.st_blocks;
+			total += utils->statbuf.st_blocks;
 			if (vec_push(&v_files, file) < 0)
 			{
 				perror("vec_push, flag_l");
@@ -46,7 +45,7 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 	}
 	ft_printf("total: %d\n", total/2);
 	sort_it(&v_files, utils->bit_flags);
-	print_files_with_stat(statbuf, utils, &v_files, i);
+	print_files_with_stat(utils, &v_files, i);
 	vec_free(&v_files);
 }
 
