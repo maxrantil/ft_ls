@@ -45,7 +45,8 @@ typedef enum e_flags
 
 typedef struct s_ls
 {
-	struct	dirent	*dirp;
+	struct dirent	*dirp;
+	struct stat		statbuf;
 	t_vec			v_paths;
 	DIR				**dp;
 	uint8_t			bit_flags;
@@ -68,6 +69,7 @@ void	usage(int status);
 size_t	count_files(t_ls *utils, size_t i);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
 void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i);
+char	*no_path(char *file_with_path);
 
 /*
 **	Vec Tools
