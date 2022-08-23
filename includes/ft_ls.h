@@ -69,6 +69,7 @@ void	usage(int status);
 size_t	count_files(t_ls *utils, size_t i);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
 void	print_files_with_stat(struct stat statbuf, t_ls *utils, t_vec *v_files, size_t i);
+char	*no_path(char *file_with_path);
 
 /*
 **	Vec Tools

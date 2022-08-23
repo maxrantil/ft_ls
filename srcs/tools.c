@@ -52,12 +52,12 @@ static size_t	window_size(void)
 	return (size.ws_col);
 }
 
-static char	*no_path(char *file_with_path)
+char	*no_path(char *file_with_path)
 {
 	size_t n;
 
 	n = ft_strlen(file_with_path);
-	while (file_with_path[n] != '/')// || n != 0)
+	while (file_with_path[n] != '/')
 		n--;
 	//if (n == 0)
 	//	return (&file_with_path[n]);
