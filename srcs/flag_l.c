@@ -12,6 +12,19 @@
 
 #include "ft_ls.h"
 
+static char	*put_path_infront_of_file(t_ls *utils, size_t i)
+{
+	char	*file_with_path;
+
+	if (utils->v_paths.len)
+	{
+		file_with_path = ft_strjoin((char *)vec_get(&utils->v_paths, i), "/");
+		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
+		return (file_with_path);
+	}
+	return (utils->dirp->d_name);
+}
+
 static void	exec_flag_l(t_ls *utils, size_t i)
 {
 	t_vec		v_files;
@@ -22,30 +35,17 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 	total = 0;
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		if ((utils->bit_flags & A) == 0 && utils->dirp->d_name[0] == '.')
+		if (!is_bit_set(utils->bit_flags, A) && utils->dirp->d_name[0] == '.')
 			continue ;
-		file = put_path_infront_of_file(utils, i); 
-		if (!stat(file, &utils->statbuf))
-		{
-			total += utils->statbuf.st_blocks;
-			if (vec_push(&v_files, file) < 0)
-			{
-				perror("vec_push, flag_l");
-				exit(1);
-			}
-		}
-		else
-		{
-			ft_printf("'%s' is not in: ", file);
-			perror("stat in flag_l");
-			exit(1);
-		}
+		file = put_path_infront_of_file(utils, i);
+		stat(file, &utils->statbuf);
+		total += utils->statbuf.st_blocks;
+		vec_push(&v_files, file);
 		if (utils->v_paths.len)
 			ft_strdel(&file);
 	}
-	ft_printf("total: %d\n", total/2);
 	sort_it(&v_files, utils->bit_flags);
-	print_files_with_stat(utils, &v_files, i);
+	print_it(utils, v_files, i, total);
 	vec_free(&v_files);
 }
 

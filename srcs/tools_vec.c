@@ -20,17 +20,12 @@ static int	sort_str_mtime(void *a, void *b)
 	return (a_statbuf.st_mtime < b_statbuf.st_mtime);
 }
 
-/* void	print_str(void *src)
-{
-    ft_printf("%-*s", ft_strlen((char *)src) + 2, (char *)src);
-} */
-
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 {
-	if ((bit_str & R) != 0)
-		vec_sort(vec_to_sort, sort_str_desc);
-	if ((bit_str & T) != 0)
-		vec_sort(vec_to_sort, sort_str_mtime);
+	if (is_bit_set(bit_str, T))
+		vec_sort(vec_to_sort, &sort_str_mtime);//this need to be checked on iMac, works with -lt but not only -t??
+	if (is_bit_set(bit_str, R))
+		vec_sort(vec_to_sort, &sort_str_desc);
 	else
-		vec_sort(vec_to_sort, sort_str_asc);
+		vec_sort(vec_to_sort, &sort_str_asc);
 }

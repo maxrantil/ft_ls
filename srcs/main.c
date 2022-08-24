@@ -12,6 +12,21 @@
 
 #include "ft_ls.h"
 
+static void	usage(int status)
+{
+	ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
+	ft_printf("\
+	List information about the FILEs (the current directory by default).\n\
+	Sort entries alphabetically if not -t is specified.\n");
+	ft_printf("\
+	-a	do not ignore entries starting with .\n\
+	-l	use a long listing format\n\
+	-r	reverse order while sorting\n\
+	-R	list subdirectories recursively\n\
+	-t	sort by modification time, newest first\n");
+	exit(status);
+}
+
 static char	*get_flags(char *str)
 {
 	static int	int_flags[MAX_FLAGS];
@@ -71,21 +86,14 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 	return (flags);
 }
 
-static void	init_ls(t_ls *utils)
-{
-	vec_new(&utils->v_paths, 0, MAX_PATH);
-	utils->bit_flags = 0;
-	utils->opendir_error_count = 0;
-
-}
-
 int main(int argc, const char **argv)
 {
 	t_ls	utils;
 	char	*flags;
 
-	init_ls(&utils);
+	vec_new(&utils.v_paths, 0, MAX_PATH);
 	flags = get_data(&utils, argv, argc);
 	work_data(&utils, flags);
+	vec_free(&utils.v_paths);
 	return (0);
 }

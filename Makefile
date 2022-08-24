@@ -56,14 +56,15 @@ SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	ft_ls
 
-FILES 		= 	main \
-				flag_l \
-				flag_recurse \
+FILES 		= 	flag_l \
 				flag_null \
-				tools \
+				flag_recurse \
+				main \
 				print_file_props \
-				vec_tools \
-				work_data \
+				tools_print \
+				tools_vec \
+				tools \
+				work_data 
 
 H_PATHS 	= 	$(addsuffix .h, $(addprefix $(INCLUDES)/, $(H_FILES)))
 C_PATHS 	= 	$(addsuffix .c, $(addprefix $(SOURCES)/, $(FILES)))

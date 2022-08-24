@@ -50,7 +50,6 @@ typedef struct s_ls
 	t_vec			v_paths;
 	DIR				**dp;
 	uint8_t			bit_flags;
-	int				opendir_error_count;
 }					t_ls;
 
 void	work_data(t_ls *utils, char *flags);
@@ -62,21 +61,19 @@ void	flag_recurse(t_ls *utils);
 /*
 **	Tools
 */
-
-char	*put_path_infront_of_file(t_ls *utils, size_t i);
+int		is_bit_set(unsigned int value, unsigned int bit_str);
 DIR*	open_path(t_ls *utils, size_t j);
-void	usage(int status);
-size_t	count_files(t_ls *utils, size_t i);
-void	print_files(t_ls *utils, t_vec *v_files, size_t i);
-void	print_files_with_stat(t_ls *utils, t_vec *v_files, size_t i);
 char	*no_path(char *file_with_path);
+
+/*
+**	Tools Vec
+*/
+void	print_it(t_ls *utils, t_vec v_files, size_t i, int total);
 void	print_file_props(struct stat statbuf);
 
 /*
-**	Vec Tools
+**	Tools Vec
 */
-
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str);
-void	print_str(void *src);
 
 #endif
