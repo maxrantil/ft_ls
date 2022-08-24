@@ -12,13 +12,12 @@
 
 #include "ft_ls.h"
 
-int	is_bit_set(unsigned int value, unsigned int bit_str)
+static void	pathcat_maker(char *file_name, char *path, char *base_path)
 {
-	if (bit_str & value)
-		return (1);
-	return (0);
+	ft_strcpy(path, base_path);
+	ft_strcat(path, "/");
+	ft_strcat(path, file_name);
 }
-
 
 static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 {
@@ -30,11 +29,9 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
 		if (!ft_strcmp(utils->dirp->d_name, ".") || !ft_strcmp(utils->dirp->d_name, "..")
-			|| (!is_bit_set(A, utils->bit_flags) &&  utils->dirp->d_name[0] == '.'))
+			|| (!is_bit_set(utils->bit_flags, A) &&  utils->dirp->d_name[0] == '.'))
 			continue;
-		ft_strcpy(path, base_path);
-		ft_strcat(path, "/");
-		ft_strcat(path, utils->dirp->d_name);
+		pathcat_maker(utils->dirp->d_name, path, base_path);
 		stat(path, &utils->statbuf);
 		if (S_ISDIR(utils->statbuf.st_mode))
 		{
@@ -46,11 +43,7 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
 			get_dirs_recurse(utils, v_rec_path, path, i);
 		}
     }
-	if (closedir(dp) < 0)
-	{
-		perror("can't close directory");
-		exit(1);
-	}
+	closedir(dp);
 }
 
 static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
@@ -59,40 +52,29 @@ static void exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	DIR		*dp;
 	char	path[MAX_PATH];
 	char	*file_with_path;
+	int		total;
  
+	total = 0;
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
     dp = opendir(path);
-	/* if (v_rec_path.len - i - 1 != 0)  */
-		ft_printf("%s:\n", path);
-	/* else
-		ft_printf("\n%s:\n", path); */
+	ft_printf("%s:\n", path);
 	ft_strcat(path, "/");
 	vec_new(&v_files, 0, MAX_FILENAME);
     while ((utils->dirp = readdir(dp)) != NULL)
 	{
-		if (!is_bit_set(A, utils->bit_flags) && (!ft_strcmp(utils->dirp->d_name, ".")
+		if (!is_bit_set(utils->bit_flags, A) && (!ft_strcmp(utils->dirp->d_name, ".")
 			|| !ft_strcmp(utils->dirp->d_name, "..") || utils->dirp->d_name[0] == '.'))
 			continue;
 		file_with_path = ft_strjoin(path, utils->dirp->d_name);
-		if (vec_push(&v_files, file_with_path) < 0)
-		{
-			perror("vec_push, exec_flag_recurse");
-			exit(1);
-		}
+		stat(file_with_path, &utils->statbuf);
+		total += utils->statbuf.st_blocks;
+		vec_push(&v_files, file_with_path);
 		free(file_with_path);
     }
 	sort_it(&v_files, utils->bit_flags);
-
-	if (is_bit_set(L, utils->bit_flags))
-		print_files_with_stat(utils, &v_files, i);
-	else
-		print_files(utils, &v_files, i);
-
-	if (v_rec_path.len != 0 && i != v_rec_path.len  - 1) // fix this later
-		write(1, "\n\n", 2);
-	else
+	print_it(utils, v_files, i, total);
+	if (i != v_rec_path.len - 1)
 		write(1, "\n", 1);
-	
 	vec_free(&v_files);
 	closedir(dp);
 }
@@ -107,7 +89,7 @@ void	flag_recurse(t_ls *utils)
 	i = 0;
 	j = 0;
 	k = 0;
-	vec_new(&v_rec_path, 0, MAX_PATH );
+	vec_new(&v_rec_path, 0, MAX_PATH);
 	if (!utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, ".");
@@ -120,10 +102,8 @@ void	flag_recurse(t_ls *utils)
 		}
 	}
 	else
-	{
 		sort_it(&utils->v_paths, utils->bit_flags);
-	}
-	while (i < utils->v_paths.len) //i think the leak is here somewhere? if v_path.len > 1 then there is a leak.
+	while (i < utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, (char *)vec_get(&utils->v_paths, i), i);

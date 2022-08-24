@@ -35,15 +35,15 @@ static void	malloc_directory_ptr(t_ls *utils)
 
 static void	exec_flags(t_ls *utils)
 {
-	if ((utils->bit_flags & CAPITAL_R) != 0)
+	if (is_bit_set(utils->bit_flags, CAPITAL_R))
 		flag_recurse(utils);
-	else if((utils->bit_flags & L) != 0)
+	else if(is_bit_set(utils->bit_flags, L))
 		flag_l(utils);
 	else
 		flag_null(utils);
 }
 
-static void	free_all(t_ls *utils)
+static void	free_dirs(t_ls *utils)
 {
 	ssize_t i;
 
@@ -54,14 +54,10 @@ static void	free_all(t_ls *utils)
 	while (i >= 0)
 	{
 		if (closedir(utils->dp[i]) < 0)
-		{
-			perror("can't close directory");
 			exit(1);
-		}
 		i--;
 	}
 	free(utils->dp);
-	vec_free(&utils->v_paths);
 }
 
 void	work_data(t_ls *utils, char *flags)
@@ -69,5 +65,5 @@ void	work_data(t_ls *utils, char *flags)
 	turn_on_bit_flags(utils, flags);
 	malloc_directory_ptr(utils);
 	exec_flags(utils);
-	free_all(utils);
+	free_dirs(utils);
 }

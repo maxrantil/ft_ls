@@ -20,7 +20,7 @@ int vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 		dst->memory = malloc(dst->alloc_size);
 		if (!dst->memory)
 		{
-			perror("vec_new");
+			perror("vec_new, malloc error");
 			exit(1);
 		}
 	}
