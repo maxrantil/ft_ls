@@ -37,7 +37,7 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 	{
 		if (!is_bit_set(utils->bit_flags, A) && utils->dirp->d_name[0] == '.')
 			continue ;
-		file = put_path_infront_of_file(utils, i);  //shall i change this to pathcat_maker??
+		file = put_path_infront_of_file(utils, i);
 		stat(file, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, file);
