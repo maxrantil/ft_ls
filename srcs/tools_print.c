@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_print.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:15:05 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 static size_t	window_size(void)
@@ -30,7 +42,7 @@ static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 			write(1, "\n", 1);
 			len_count = 0;
 		}
-   		ft_printf("%-*s", ft_strlen(file) + 2, file);
+		ft_printf("%-*s", ft_strlen(file) + 2, file);
 		y++;
 	}
 	write(1, "\n", 1);
@@ -43,12 +55,12 @@ static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
 	y = 0;
 	if (utils->v_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R))
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_paths, i));
-	ft_printf("total: %d\n", total/2);
+	ft_printf("total: %d\n", total / 2);
 	while (y < v_files->len)
 	{
 		stat((const char *)vec_get(v_files, y), &utils->statbuf);
 		print_file_props(utils->statbuf);
- 		ft_printf("%s\n", no_path((char *)vec_get(v_files, y)));
+		ft_printf("%s\n", no_path((char *)vec_get(v_files, y)));
 		y++;
 	}
 	if (utils->v_paths.len && i != utils->v_paths.len - 1)
@@ -57,7 +69,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
 
 void	print_it(t_ls *utils, t_vec v_files, size_t i, int total)
 {
-	if (is_bit_set(utils->bit_flags, L))
+	if (is_bit_set(utils->bit_flags, L_FLAG))
 		print_stat(utils, &v_files, i, total);
 	else
 		print_files(utils, &v_files, i);

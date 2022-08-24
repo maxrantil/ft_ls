@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools_vec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:14:29 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 static int	sort_str_asc(void *a, void *b)
@@ -20,11 +32,12 @@ static int	sort_str_mtime(void *a, void *b)
 	return (a_statbuf.st_mtime < b_statbuf.st_mtime);
 }
 
+//this need to be checked on iMac, works with -lt but not only -t??
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 {
-	if (is_bit_set(bit_str, T))
-		vec_sort(vec_to_sort, &sort_str_mtime);//this need to be checked on iMac, works with -lt but not only -t??
-	if (is_bit_set(bit_str, R))
+	if (is_bit_set(bit_str, T_FLAG))
+		vec_sort(vec_to_sort, &sort_str_mtime);
+	if (is_bit_set(bit_str, R_FLAG))
 		vec_sort(vec_to_sort, &sort_str_desc);
 	else
 		vec_sort(vec_to_sort, &sort_str_asc);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec_sort.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:05:08 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:05:41 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vec.h"
 
 /*
@@ -6,7 +18,7 @@
 // the array accordingly from the smallest to the largest element.
 */
 
-static void memswap8(unsigned char *a, unsigned char *b)
+static void	memswap8(unsigned char *a, unsigned char *b)
 {
 	if (a == b)
 		return ;
@@ -15,7 +27,7 @@ static void memswap8(unsigned char *a, unsigned char *b)
 	*a ^= *b;
 }
 
-static void memswap(unsigned char *a, unsigned char *b, size_t bytes)
+static void	memswap(unsigned char *a, unsigned char *b, size_t bytes)
 {
 	size_t	i;
 
@@ -29,11 +41,12 @@ static void memswap(unsigned char *a, unsigned char *b, size_t bytes)
 	}
 }
 
-static void vec_sort_recurse(t_vec *src, long int low, long int high, int (*f)(void *, void *))
+static void	vec_sort_recurse(t_vec *src, long int low, long int high,
+	int (*f)(void *, void *))
 {
-	long int pivot;
-	long int a;
-	long int b;
+	long int	pivot;
+	long int	a;
+	long int	b;
 
 	if (low >= high)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/17 12:54:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/24 19:26:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	usage(int status)
 	exit(status);
 }
 
+//too long function
 static char	*get_flags(char *str)
 {
 	static int	int_flags[MAX_FLAGS];
@@ -35,7 +36,7 @@ static char	*get_flags(char *str)
 	int			j;
 	int			k;
 	int			n;
-	
+
 	ret_str = ft_strnew(MAX_FLAGS);
 	n = ft_strlen(str);
 	i = 0;
@@ -86,10 +87,10 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 	return (flags);
 }
 
-int main(int argc, const char **argv)
+int	main(int argc, const char **argv)
 {
-	t_ls	utils;
-	char	*flags;
+	t_ls			utils;
+	char			*flags;
 
 	vec_new(&utils.v_paths, 0, MAX_PATH);
 	flags = get_data(&utils, argv, argc);

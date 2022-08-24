@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec_push.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:04:37 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:04:43 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vec.h"
 
 /*
@@ -5,7 +17,7 @@
 // to an element to be pushed to the end of the vector.
 */
 
-int vec_push(t_vec *dst, void *src)
+int	vec_push(t_vec *dst, void *src)
 {
 	if (!dst || !src)
 		return (-1);

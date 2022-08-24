@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   flag_null.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 18:43:51 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:17:38 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 static void	exec_flag_null(t_ls *utils, size_t i)
 {
 	t_vec	v_files;
-	
+
 	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		if (!is_bit_set(utils->bit_flags, A) && utils->dirp->d_name[0] == '.')
+		if (!is_bit_set(utils->bit_flags, A_FLAG) \
+			&& utils->dirp->d_name[0] == '.')
 			continue ;
 		vec_push(&v_files, utils->dirp->d_name);
 	}
@@ -18,8 +31,8 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 
 void	flag_null(t_ls *utils)
 {
-	size_t i;
-	size_t j;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;

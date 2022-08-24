@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec_resize.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:05:01 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:05:02 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vec.h"
 
 /*
@@ -6,7 +18,7 @@
 // copying the old contents over to the new allocation.
 */
 
-int		vec_resize(t_vec *src, size_t target_size)
+int	vec_resize(t_vec *src, size_t target_size)
 {
 	t_vec	dst;
 

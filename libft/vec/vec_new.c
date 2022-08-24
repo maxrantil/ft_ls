@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vec_new.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:04:31 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:06:57 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "vec.h"
 
 /*
@@ -6,7 +18,7 @@
 // initialize its length and element size.
 */
 
-int vec_new(t_vec *dst, size_t init_len, size_t elem_size)
+int	vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 {
 	if (!dst || elem_size == 0)
 		return (-1);

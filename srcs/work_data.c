@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   work_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:14:41 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 static void	turn_on_bit_flags(t_ls *utils, char *flags)
@@ -37,7 +49,7 @@ static void	exec_flags(t_ls *utils)
 {
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
 		flag_recurse(utils);
-	else if(is_bit_set(utils->bit_flags, L))
+	else if (is_bit_set(utils->bit_flags, L_FLAG))
 		flag_l(utils);
 	else
 		flag_null(utils);
@@ -45,7 +57,7 @@ static void	exec_flags(t_ls *utils)
 
 static void	free_dirs(t_ls *utils)
 {
-	ssize_t i;
+	ssize_t	i;
 
 	if (utils->v_paths.len)
 		i = utils->v_paths.len - 1;

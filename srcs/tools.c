@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tools.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
+/*   Updated: 2022/08/24 19:01:29 by mrantil          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_ls.h"
 
 int	is_bit_set(unsigned int bit_str, unsigned int value)
@@ -7,7 +19,7 @@ int	is_bit_set(unsigned int bit_str, unsigned int value)
 	return (0);
 }
 
-DIR		*open_path(t_ls *utils, size_t i)
+DIR	*open_path(t_ls *utils, size_t i)
 {
 	char	path[MAX_PATH];
 
@@ -23,7 +35,7 @@ DIR		*open_path(t_ls *utils, size_t i)
 
 char	*no_path(char *file_with_path)
 {
-	size_t n;
+	size_t	n;
 
 	n = ft_strlen(file_with_path);
 	while (file_with_path[n] != '/' && n > 0)

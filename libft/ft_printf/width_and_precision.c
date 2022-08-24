@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 13:16:11 by mrantil           #+#    #+#             */
-/*   Updated: 2022/07/13 09:28:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/24 19:10:25 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,11 @@ void	exec_width(t_ftprintf *data)
 		sub -= ((data->plus_flag > 0 && data->va_ret > 0) \
 			|| data->space_count > 0 || *data->fmt == 'c');
 		sub += data->width;
-		sub -= ((((*data->fmt == 'f' || (((*data->fmt == 'd' || *data->fmt == 'i') \
-			&& data->va_ret != 0)) || ((*data->fmt == 'x' || *data->fmt == 'X') \
-			&& ft_strcmp(data->hold_str, "0")))) && data->precision_flag && !data->precision));
+		sub -= ((((*data->fmt == 'f' || (((*data->fmt == 'd' \
+					|| *data->fmt == 'i') && data->va_ret != 0)) \
+					|| ((*data->fmt == 'x' || *data->fmt == 'X') \
+					&& ft_strcmp(data->hold_str, "0")))) \
+					&& data->precision_flag && !data->precision));
 		sub *= (sub > 0);
 		while ((size_t)sub-- > data->len_va_arg)
 			data->char_count += write(1, " ", 1);
