@@ -1,6 +1,6 @@
 #include "ft_ls.h"
 
-char	*put_path_infront_of_file(t_ls *utils, size_t i)
+/* char	*put_path_infront_of_file(t_ls *utils, size_t i)
 {
 	char	*file_with_path;
 
@@ -11,7 +11,7 @@ char	*put_path_infront_of_file(t_ls *utils, size_t i)
 		return (file_with_path);
 	}
 	return (utils->dirp->d_name);
-}
+} */
 
 void	usage(int status)
 {

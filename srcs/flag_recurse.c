@@ -19,6 +19,7 @@ int	is_bit_set(unsigned int value, unsigned int bit_str)
 	return (0);
 }
 
+
 static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 {
 	char 	path[MAX_PATH];
@@ -31,7 +32,7 @@ static void get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, si
 		if (!ft_strcmp(utils->dirp->d_name, ".") || !ft_strcmp(utils->dirp->d_name, "..")
 			|| (!is_bit_set(A, utils->bit_flags) &&  utils->dirp->d_name[0] == '.'))
 			continue;
-		ft_strcpy(path, base_path); //can i send this to the function to make paths? need to free then and might be hard.. can make a new funktion.
+		ft_strcpy(path, base_path);
 		ft_strcat(path, "/");
 		ft_strcat(path, utils->dirp->d_name);
 		stat(path, &utils->statbuf);
