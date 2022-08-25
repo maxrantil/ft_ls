@@ -26,7 +26,7 @@ int	vec_push(t_vec *dst, void *src)
 	if (dst->elem_size * dst->len >= dst->alloc_size)
 		if (vec_resize(dst, dst->len * 2) < 0)
 			return (-1);
-	ft_memmove(&dst->memory[dst->elem_size * dst->len], src, dst->elem_size);
+	ft_memcpy(&dst->memory[dst->elem_size * dst->len], src, dst->elem_size);
 	dst->len++;
 	return (1);
 }

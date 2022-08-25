@@ -14,7 +14,7 @@
 
 static void	print_permissions(struct stat statbuf)
 {
-	ft_printf( (S_ISDIR(statbuf.st_mode)) ? "d" : "-"); // do i need to fix for 'c' ? it uccurs in /dev, need to make it into functions for norm.... also make another file and put five in each.
+	ft_printf( (S_ISDIR(statbuf.st_mode)) ? "d" : "-"); // fix for 'c' and 'b'? it uccurs in /dev, need to make it into functions for norm.... also make another file and put five in each.
     ft_printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
     ft_printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
     ft_printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");

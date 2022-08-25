@@ -63,7 +63,6 @@ void	flag_recurse(t_ls *utils);
 */
 int		is_bit_set(unsigned int value, unsigned int bit_str);
 DIR		*open_path(t_ls *utils, size_t j);
-char	*no_path(char *file_with_path);
 
 /*
 **	Tools Vec

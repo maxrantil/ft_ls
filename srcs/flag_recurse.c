@@ -12,7 +12,7 @@
 
 #include "ft_ls.h"
 
-static void	pathcat_maker(char *file_name, char *path, char *base_path)
+static void	pathcat_maker(char *path, char *file_name, char *base_path)
 {
 	ft_strcpy(path, base_path);
 	ft_strcat(path, "/");
@@ -34,7 +34,7 @@ static void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 			|| (!is_bit_set(utils->bit_flags, A_FLAG)
 				&& utils->dirp->d_name[0] == '.'))
 			continue ;
-		pathcat_maker(utils->dirp->d_name, path, base_path);
+		pathcat_maker(path, utils->dirp->d_name, base_path);
 		stat(path, &utils->statbuf);
 		if (S_ISDIR(utils->statbuf.st_mode))
 		{
@@ -55,14 +55,12 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	t_vec	v_files;
 	DIR		*dp;
 	char	path[MAX_PATH];
-	char	*file_with_path;
 	int		total;
 
 	total = 0;
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
 	dp = opendir(path);
 	ft_printf("%s:\n", path);
-	ft_strcat(path, "/");
 	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(dp)) != NULL)
 	{
@@ -71,11 +69,10 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 				|| !ft_strcmp(utils->dirp->d_name, "..") \
 				|| utils->dirp->d_name[0] == '.'))
 			continue ;
-		file_with_path = ft_strjoin(path, utils->dirp->d_name);
-		stat(file_with_path, &utils->statbuf);
+		pathcat_maker(path, utils->dirp->d_name, "");		// turn it so dst is before src
+		stat(path, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
-		vec_push(&v_files, file_with_path);
-		free(file_with_path);
+		vec_push(&v_files, path);
 	}
 	sort_it(&v_files, utils->bit_flags);
 	print_it(utils, v_files, i, total);
@@ -96,10 +93,9 @@ void	flag_recurse(t_ls *utils)
 	i = 0;
 	j = 0;
 	k = 0;
-	//vec_new(&v_rec_path, 0, MAX_PATH);
+	vec_new(&v_rec_path, 0, MAX_PATH);
 	if (!utils->v_paths.len)
 	{
-		vec_new(&v_rec_path, 0, MAX_PATH);
 		vec_push(&v_rec_path, ".");
 		get_dirs_recurse(utils, &v_rec_path, ".", i);
 		sort_it(&v_rec_path, utils->bit_flags);
@@ -108,14 +104,12 @@ void	flag_recurse(t_ls *utils)
 			exec_flag_recurse(utils, v_rec_path, i);
 			i++;
 		}
-		vec_free(&v_rec_path);
 	}
 	else
 		sort_it(&utils->v_paths, utils->bit_flags);
 	while (i < utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
-		vec_new(&v_rec_path, 0, MAX_PATH * 4);
 		get_dirs_recurse(utils, &v_rec_path, \
 			(char *)vec_get(&utils->v_paths, i), i);
 		sort_it(&v_rec_path, utils->bit_flags);
@@ -128,12 +122,13 @@ void	flag_recurse(t_ls *utils)
 		{
 			while (k < v_rec_path.len)
 			{
+				static int x;
+				printf("SAY HELLO %d\n", x++);
 				exec_flag_recurse(utils, v_rec_path, k); // here somthing fucked out with -R ..
 				k++;
 			}
 		}
 		i++;
-		vec_free(&v_rec_path);
 	}
-	//vec_free(&v_rec_path);
+	vec_free(&v_rec_path);
 }

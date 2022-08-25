@@ -12,6 +12,18 @@
 
 #include "ft_ls.h"
 
+static char	*no_path(char *file_with_path)
+{
+	size_t	n;
+
+	n = ft_strlen(file_with_path);
+	while (file_with_path[n] != '/' && n > 0)
+		n--;
+	if (n == 0)
+		return (&file_with_path[n]);
+	return (&file_with_path[++n]);
+}
+
 static size_t	window_size(void)
 {
 	struct winsize	size;
