@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:14:02 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:35:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ DIR		*open_path(t_ls *utils, size_t j);
 /*
 **	Tools Vec
 */
+//char	*no_path(char *file_with_path);
 void	print_it(t_ls *utils, t_vec v_files, size_t i, int total);
-void	print_file_props(struct stat statbuf);
 
 /*
 **	Tools Vec

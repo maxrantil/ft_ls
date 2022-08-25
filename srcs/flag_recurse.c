@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 20:10:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/25 16:08:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 				|| !ft_strcmp(utils->dirp->d_name, "..") \
 				|| utils->dirp->d_name[0] == '.'))
 			continue ;
-		pathcat_maker(path, utils->dirp->d_name, "");		// turn it so dst is before src
+		pathcat_maker(path, utils->dirp->d_name, "");
 		stat(path, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, path);
@@ -82,17 +82,38 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	closedir(dp);
 }
 
-//too long function
+static void	open_paths_rec(t_ls *utils, t_vec *v_rec_path, size_t i)
+{
+	size_t	j;
+	size_t	k;
+
+	j = 0;
+	k = 0;
+	vec_push(v_rec_path, (char *)vec_get(&utils->v_paths, i));
+	get_dirs_recurse(utils, v_rec_path, \
+		(char *)vec_get(&utils->v_paths, i), i);
+	sort_it(v_rec_path, utils->bit_flags);
+	while (j < utils->v_paths.len)
+	{
+		utils->dp[j] = open_path(utils, j);
+		j++;
+	}
+	if (utils->dp[i])
+	{
+		while (k < v_rec_path->len)
+		{
+			exec_flag_recurse(utils, *v_rec_path, k);
+			k++;
+		}
+	}
+}
+
 void	flag_recurse(t_ls *utils)
 {
 	t_vec	v_rec_path;
 	size_t	i;
-	size_t	j;
-	size_t	k;
 
 	i = 0;
-	j = 0;
-	k = 0;
 	vec_new(&v_rec_path, 0, MAX_PATH);
 	if (!utils->v_paths.len)
 	{
@@ -110,24 +131,7 @@ void	flag_recurse(t_ls *utils)
 	while (i < utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
-		get_dirs_recurse(utils, &v_rec_path, \
-			(char *)vec_get(&utils->v_paths, i), i);
-		sort_it(&v_rec_path, utils->bit_flags);
-		while (j < utils->v_paths.len)
-		{
-			utils->dp[j] = open_path(utils, j);
-			j++;
-		}
-		if (utils->dp[i])
-		{
-			while (k < v_rec_path.len)
-			{
-				static int x;
-				printf("SAY HELLO %d\n", x++);
-				exec_flag_recurse(utils, v_rec_path, k); // here somthing fucked out with -R ..
-				k++;
-			}
-		}
+		open_paths_rec(utils, &v_rec_path, i);
 		i++;
 	}
 	vec_free(&v_rec_path);
