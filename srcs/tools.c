@@ -35,14 +35,14 @@ DIR	*open_path(t_ls *utils, size_t i)
 	char	path[MAX_PATH];
 
 	ft_strcpy(path, (const char *)vec_get(&utils->v_paths, i));
-	stat(path, &utils->statbuf);
-	if (S_ISDIR(utils->statbuf.st_mode))
+	//stat(path, &utils->statbuf);
+	//f (S_ISDIR(utils->statbuf.st_mode))
 		utils->dp[i] = opendir(path);
-	else
+/* 	else
 	{
 		ft_printf("%-*s", 2, path);
 		return (utils->dp[i] = NULL);
-	}
+	} */
 	if (!utils->dp[i])
 	{
 		//ft_printf("ft_ls: cannot access '%s': ", path);

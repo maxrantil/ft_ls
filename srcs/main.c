@@ -74,6 +74,7 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
+		stat(ptr, &utils->statbuf);
 		if (argv[i][0] == '-' && ft_isalpha(argv[i][1]))
 		{
 			ptr++;
@@ -81,8 +82,10 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 			ft_strcat(flags, temp);
 			free(temp);
 		}
-		else
+		else if (S_ISDIR(utils->statbuf.st_mode))
 			vec_push(&utils->v_paths, ptr);
+		else
+			ft_printf("%-*s", 2, ptr);
 	}
 	return (flags);
 }

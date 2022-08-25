@@ -82,7 +82,7 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	closedir(dp);
 }
 
-static void	open_paths_rec(t_ls *utils, t_vec *v_rec_path, size_t i)
+/* static void	open_paths_rec(t_ls *utils, t_vec *v_rec_path, size_t i)
 {
 	size_t	j;
 	size_t	k;
@@ -106,7 +106,7 @@ static void	open_paths_rec(t_ls *utils, t_vec *v_rec_path, size_t i)
 			k++;
 		}
 	}
-}
+} */
 
 void	flag_recurse(t_ls *utils)
 {
@@ -131,7 +131,26 @@ void	flag_recurse(t_ls *utils)
 	while (i < utils->v_paths.len)
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
-		open_paths_rec(utils, &v_rec_path, i);
+		//pen_paths_rec(utils, &v_rec_path, i);
+		size_t j = 0;
+		size_t 	k = 0;
+		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
+		get_dirs_recurse(utils, &v_rec_path, \
+			(char *)vec_get(&utils->v_paths, i), i);
+		sort_it(&v_rec_path, utils->bit_flags);
+		while (j < utils->v_paths.len)
+		{
+			utils->dp[j] = open_path(utils, j);
+			j++;
+		}
+		if (utils->dp[i])
+		{
+			while (k < v_rec_path.len)
+			{
+				exec_flag_recurse(utils, v_rec_path, k);
+				k++;
+			}
+		}
 		i++;
 	}
 	vec_free(&v_rec_path);
