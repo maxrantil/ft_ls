@@ -12,15 +12,19 @@
 
 #include "ft_ls.h"
 
-static void	exec_flag_null(t_ls *utils, size_t i)
+void	exec_flag_null(t_ls *utils, size_t i)
 {
 	t_vec	v_files;
 
 	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
 	{
-		if (!is_bit_set(utils->bit_flags, A_FLAG) \
-			&& utils->dirp->d_name[0] == '.')
+		//if (!is_bit_set(utils->bit_flags, A_FLAG) ..put backslash here if you change your mind
+		//	&& utils->dirp->d_name[0] == '.')
+		if (!ft_strcmp(utils->dirp->d_name, ".")
+			||!ft_strcmp(utils->dirp->d_name, "..")
+			|| (!is_bit_set(utils->bit_flags, A_FLAG)
+				&& utils->dirp->d_name[0] == '.'))
 			continue ;
 		vec_push(&v_files, utils->dirp->d_name);
 	}
@@ -36,13 +40,10 @@ void	flag_null(t_ls *utils)
 
 	i = 0;
 	j = 0;
-	if (!utils->v_paths.len)
-		exec_flag_null(utils, i);
-	else
-		sort_it(&utils->v_paths, utils->bit_flags);
-	while (i < utils->v_paths.len)
+	sort_it(&utils->v_input_paths, utils->bit_flags);
+	while (i < utils->v_input_paths.len)
 	{
-		while (j < utils->v_paths.len)
+		while (j < utils->v_input_paths.len)
 		{
 			utils->dp[j] = open_path(utils, j);
 			j++;

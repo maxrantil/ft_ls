@@ -74,15 +74,18 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
+		lstat(ptr, &utils->statbuf);
 		if (argv[i][0] == '-' && ft_isalpha(argv[i][1]))
 		{
-			ptr++;
+			ptr++;	//make this one function
 			temp = get_flags(ptr);
 			ft_strcat(flags, temp);
 			free(temp);
 		}
+		else if (S_ISDIR(utils->statbuf.st_mode))
+			vec_push(&utils->v_input_paths, ptr);
 		else
-			vec_push(&utils->v_paths, ptr);
+			vec_push(&utils->v_input_files, ptr);
 	}
 	return (flags);
 }
@@ -92,9 +95,11 @@ int	main(int argc, const char **argv)
 	t_ls			utils;
 	char			*flags;
 
-	vec_new(&utils.v_paths, 0, MAX_PATH);
+	vec_new(&utils.v_input_paths, 0, MAX_PATH); //make funciton?
+	vec_new(&utils.v_input_files, 0, MAX_PATH);
 	flags = get_data(&utils, argv, argc);
 	work_data(&utils, flags);
-	vec_free(&utils.v_paths);
+	vec_free(&utils.v_input_paths); //make function?
+	vec_free(&utils.v_input_files);
 	return (0);
 }

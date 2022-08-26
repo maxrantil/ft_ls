@@ -36,13 +36,13 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 
 static void	malloc_directory_ptr(t_ls *utils)
 {
-	if (!utils->v_paths.len)
+	if (!utils->v_input_paths.len)
 	{
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * 1);
 		utils->dp[0] = opendir(".");
 	}
 	else
-		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_paths.len);
+		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_input_paths.len);
 }
 
 static void	exec_flags(t_ls *utils)
@@ -59,8 +59,8 @@ static void	free_dirs(t_ls *utils)
 {
 	ssize_t	i;
 
-	if (utils->v_paths.len)
-		i = utils->v_paths.len - 1;
+	if (utils->v_input_paths.len)
+		i = utils->v_input_paths.len - 1;
 	else
 		i = 0;
 	while (i >= 0)
@@ -72,10 +72,43 @@ static void	free_dirs(t_ls *utils)
 	free(utils->dp);
 }
 
+static void	no_input(t_ls *utils)
+{
+	t_vec	v_no_input;
+	size_t	i;
+	
+	i = 0;
+	vec_new(&v_no_input, 0, MAX_PATH);
+	if (is_bit_set(utils->bit_flags, CAPITAL_R))
+	{
+		vec_push(&v_no_input, ".");
+		get_dirs_recurse(utils, &v_no_input, ".", i);
+		sort_it(&v_no_input, utils->bit_flags);
+		while (i < v_no_input.len)
+		{
+			exec_flag_recurse(utils, v_no_input, i);
+			i++;
+		}
+	}
+	else if (is_bit_set(utils->bit_flags, L_FLAG))
+		exec_flag_l(utils, i);
+	else
+		exec_flag_null(utils, i);
+	vec_free(&v_no_input);
+}
+
 void	work_data(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
 	malloc_directory_ptr(utils);
-	exec_flags(utils);
+	if (utils->v_input_files.len)
+	{
+		sort_it(&utils->v_input_files, utils->bit_flags);
+		print_it(utils, utils->v_input_files, 0, 0);
+	}
+	if (!utils->v_input_files.len && !utils->v_input_paths.len)
+		no_input(utils);
+	else
+		exec_flags(utils);
 	free_dirs(utils);
 }

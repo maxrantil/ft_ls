@@ -19,7 +19,7 @@ static void	pathcat_maker(char *path, char *file_name, char *base_path)
 	ft_strcat(path, file_name);
 }
 
-static void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
+void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 	char *base_path, size_t i)
 {
 	char	path[MAX_PATH];
@@ -50,7 +50,7 @@ static void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 }
 
 //Too long function
-static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
+void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 {
 	t_vec	v_files;
 	DIR		*dp;
@@ -69,7 +69,7 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 				|| !ft_strcmp(utils->dirp->d_name, "..") \
 				|| utils->dirp->d_name[0] == '.'))
 			continue ;
-		pathcat_maker(path, utils->dirp->d_name, "");		// turn it so dst is before src
+		pathcat_maker(path, utils->dirp->d_name, "");
 		stat(path, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, path);
@@ -94,26 +94,14 @@ void	flag_recurse(t_ls *utils)
 	j = 0;
 	k = 0;
 	vec_new(&v_rec_path, 0, MAX_PATH);
-	if (!utils->v_paths.len)
+	sort_it(&utils->v_input_paths, utils->bit_flags);
+	while (i < utils->v_input_paths.len)
 	{
-		vec_push(&v_rec_path, ".");
-		get_dirs_recurse(utils, &v_rec_path, ".", i);
-		sort_it(&v_rec_path, utils->bit_flags);
-		while (i < v_rec_path.len)
-		{
-			exec_flag_recurse(utils, v_rec_path, i);
-			i++;
-		}
-	}
-	else
-		sort_it(&utils->v_paths, utils->bit_flags);
-	while (i < utils->v_paths.len)
-	{
-		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
+		vec_push(&v_rec_path, (char *)vec_get(&utils->v_input_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, \
-			(char *)vec_get(&utils->v_paths, i), i);
+			(char *)vec_get(&utils->v_input_paths, i), i);
 		sort_it(&v_rec_path, utils->bit_flags);
-		while (j < utils->v_paths.len)
+		while (j < utils->v_input_paths.len)
 		{
 			utils->dp[j] = open_path(utils, j);
 			j++;
@@ -122,8 +110,6 @@ void	flag_recurse(t_ls *utils)
 		{
 			while (k < v_rec_path.len)
 			{
-				static int x;
-				printf("SAY HELLO %d\n", x++);
 				exec_flag_recurse(utils, v_rec_path, k); // here somthing fucked out with -R ..
 				k++;
 			}

@@ -16,16 +16,16 @@ static char	*put_path_infront_of_file(t_ls *utils, size_t i)
 {
 	char	*file_with_path;
 
-	if (utils->v_paths.len)
+	if (utils->v_input_paths.len)
 	{
-		file_with_path = ft_strjoin((char *)vec_get(&utils->v_paths, i), "/");
+		file_with_path = ft_strjoin((char *)vec_get(&utils->v_input_paths, i), "/");
 		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
 		return (file_with_path);
 	}
 	return (utils->dirp->d_name);
 }
 
-static void	exec_flag_l(t_ls *utils, size_t i)
+void	exec_flag_l(t_ls *utils, size_t i)
 {
 	t_vec		v_files;
 	char		*file;
@@ -42,7 +42,7 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 		stat(file, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, file);
-		if (utils->v_paths.len)
+		if (utils->v_input_paths.len)
 			ft_strdel(&file);
 	}
 	sort_it(&v_files, utils->bit_flags);
@@ -57,13 +57,10 @@ void	flag_l(t_ls *utils)
 
 	i = 0;
 	j = 0;
-	if (!utils->v_paths.len)
-		exec_flag_l(utils, i);
-	else
-		sort_it(&utils->v_paths, utils->bit_flags);
-	while (i < utils->v_paths.len)
+	sort_it(&utils->v_input_paths, utils->bit_flags);
+	while (i < utils->v_input_paths.len)
 	{
-		while (j < utils->v_paths.len)
+		while (j < utils->v_input_paths.len)
 		{
 			utils->dp[j] = open_path(utils, j);
 			j++;

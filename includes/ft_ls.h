@@ -47,16 +47,20 @@ typedef struct s_ls
 {
 	struct dirent	*dirp;
 	struct stat		statbuf;
-	t_vec			v_paths;
+	t_vec			v_input_paths;
+	t_vec			v_input_files;
 	DIR				**dp;
 	uint8_t			bit_flags;
 }					t_ls;
 
 void	work_data(t_ls *utils, char *flags);
-void	print_file_props(struct stat statbuf);
 void	flag_null(t_ls *utils);
+void	exec_flag_null(t_ls *utils, size_t i);
 void	flag_l(t_ls *utils);
+void	exec_flag_l(t_ls *utils, size_t i);
 void	flag_recurse(t_ls *utils);
+void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i); 
+void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i);
 
 /*
 **	Tools
