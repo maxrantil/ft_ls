@@ -24,7 +24,7 @@ static void	edge_case1(char *path)
 	size_t	n;
 
 	n = ft_strlen(path);
-	if (path[n] != '/')
+	if (path[n - 1] != '/')
 		ft_printf("ft_ls: %s: ", path);
 	else
 		ft_printf("ft_ls: ");
@@ -37,7 +37,7 @@ DIR	*open_path(t_ls *utils, size_t i)
 	ft_strcpy(path, (const char *)vec_get(&utils->v_paths, i));
 	//stat(path, &utils->statbuf);
 	//f (S_ISDIR(utils->statbuf.st_mode))
-		utils->dp[i] = opendir(path);
+	utils->dp[i] = opendir(path);
 /* 	else
 	{
 		ft_printf("%-*s", 2, path);

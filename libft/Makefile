@@ -37,14 +37,14 @@ MOVE = \033[
 #FORBID KEYBOARD INTERACT
 $(shell stty -echo)
 
-MAKEFLAGS += --no-print-directory
+MAKEFLAGS	+= --no-print-directory
 
 NAME		=	libft.a
 
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror -g -O3 -I$(INC_DIR)
 
-TERMCAPS	=	-ltermcap
+#TERMCAPS	=	-ltermcap
 
 _SRC_LIBFT =    ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_isdigit.c ft_isprint.c \
 				ft_itoa.c ft_memalloc.c ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c \

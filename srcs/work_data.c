@@ -20,15 +20,15 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 	while (flags[i])
 	{
 		if (flags[i] == 'a')
-			utils->bit_flags |= 1;
+			utils->bit_flags |= 0b00001;
 		if (flags[i] == 'l')
-			utils->bit_flags |= 2;
+			utils->bit_flags |= 0b00010;
 		if (flags[i] == 'r')
-			utils->bit_flags |= 4;
+			utils->bit_flags |= 0b00100;
 		if (flags[i] == 'R')
-			utils->bit_flags |= 8;
+			utils->bit_flags |= 0b01000;
 		if (flags[i] == 't')
-			utils->bit_flags |= 16;
+			utils->bit_flags |= 0b10000;
 		i++;
 	}
 	ft_strdel(&flags);

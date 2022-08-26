@@ -82,38 +82,17 @@ static void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	closedir(dp);
 }
 
-/* static void	open_paths_rec(t_ls *utils, t_vec *v_rec_path, size_t i)
-{
-	size_t	j;
-	size_t	k;
-
-	j = 0;
-	k = 0;
-	vec_push(v_rec_path, (char *)vec_get(&utils->v_paths, i));
-	get_dirs_recurse(utils, v_rec_path, \
-		(char *)vec_get(&utils->v_paths, i), i);
-	sort_it(v_rec_path, utils->bit_flags);
-	while (j < utils->v_paths.len)
-	{
-		utils->dp[j] = open_path(utils, j);
-		j++;
-	}
-	if (utils->dp[i])
-	{
-		while (k < v_rec_path->len)
-		{
-			exec_flag_recurse(utils, *v_rec_path, k);
-			k++;
-		}
-	}
-} */
-
+//Too long funtion
 void	flag_recurse(t_ls *utils)
 {
 	t_vec	v_rec_path;
 	size_t	i;
+	size_t	j;
+	size_t	k;
 
 	i = 0;
+	j = 0;
+	k = 0;
 	vec_new(&v_rec_path, 0, MAX_PATH);
 	if (!utils->v_paths.len)
 	{
@@ -130,10 +109,6 @@ void	flag_recurse(t_ls *utils)
 		sort_it(&utils->v_paths, utils->bit_flags);
 	while (i < utils->v_paths.len)
 	{
-		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
-		//pen_paths_rec(utils, &v_rec_path, i);
-		size_t j = 0;
-		size_t 	k = 0;
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_paths, i));
 		get_dirs_recurse(utils, &v_rec_path, \
 			(char *)vec_get(&utils->v_paths, i), i);

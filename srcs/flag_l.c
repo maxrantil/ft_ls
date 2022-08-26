@@ -39,7 +39,7 @@ static void	exec_flag_l(t_ls *utils, size_t i)
 			&& utils->dirp->d_name[0] == '.')
 			continue ;
 		file = put_path_infront_of_file(utils, i);
-		stat(file, &utils->statbuf);
+		lstat(file, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, file);
 		if (utils->v_paths.len)

@@ -19,7 +19,7 @@ static char	*no_path(char *file_with_path)
 	n = ft_strlen(file_with_path);
 	while (file_with_path[n] != '/' && n > 0)
 		n--;
-	if (n == 0)
+	if (n == 0 && file_with_path[n] != '/')
 		return (&file_with_path[n]);
 	return (&file_with_path[++n]);
 }
@@ -70,7 +70,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
 	ft_printf("total: %d\n", total / 2);
 	while (y < v_files->len)
 	{
-		stat((const char *)vec_get(v_files, y), &utils->statbuf);
+		lstat((const char *)vec_get(v_files, y), &utils->statbuf);
 		print_file_props(utils->statbuf);
 		ft_printf("%s\n", no_path((char *)vec_get(v_files, y)));
 		y++;
