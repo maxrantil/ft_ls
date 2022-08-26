@@ -74,7 +74,11 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
-		lstat(ptr, &utils->statbuf);
+		if (lstat(ptr, &utils->statbuf) < 0)
+		{
+			ft_printf("ft_ls: cannot access '%s': ", ptr);
+			perror("");
+		}
 		if (argv[i][0] == '-' && ft_isalpha(argv[i][1]))
 		{
 			ptr++;	//make this one function
@@ -84,7 +88,7 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 		}
 		else if (S_ISDIR(utils->statbuf.st_mode))
 			vec_push(&utils->v_input_paths, ptr);
-		else
+		else if (S_ISREG(utils->statbuf.st_mode))
 			vec_push(&utils->v_input_files, ptr);
 	}
 	return (flags);
@@ -92,8 +96,8 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 
 int	main(int argc, const char **argv)
 {
-	t_ls			utils;
-	char			*flags;
+	t_ls	utils;
+	char	*flags;
 
 	vec_new(&utils.v_input_paths, 0, MAX_PATH); //make funciton?
 	vec_new(&utils.v_input_files, 0, MAX_PATH);

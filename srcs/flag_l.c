@@ -27,20 +27,22 @@ static char	*put_path_infront_of_file(t_ls *utils, size_t i)
 
 void	exec_flag_l(t_ls *utils, size_t i)
 {
-	t_vec		v_files;
-	char		*file;
-	int			total;
+	t_vec	v_files;
+	DIR		*dp;
+	char	*file;
+	int		total;
 
 	vec_new(&v_files, 0, MAX_FILENAME);
 	total = 0;
-	while ((utils->dirp = readdir(utils->dp[i])) != NULL)
+	dp = opendir((char *)vec_get(&utils->v_input_paths, i));
+	while ((utils->dirp = readdir(dp)) != NULL)
 	{
 		if (!is_bit_set(utils->bit_flags, A_FLAG) \
 			&& utils->dirp->d_name[0] == '.')
 			continue ;
 		file = put_path_infront_of_file(utils, i);
-		stat(file, &utils->statbuf);
-		total += utils->statbuf.st_blocks;
+		lstat(file, &utils->statbuf);
+		total += utils->statbuf.st_blocks;		//i can make a struct that will take all data for a good padding here.
 		vec_push(&v_files, file);
 		if (utils->v_input_paths.len)
 			ft_strdel(&file);
@@ -53,19 +55,18 @@ void	exec_flag_l(t_ls *utils, size_t i)
 void	flag_l(t_ls *utils)
 {
 	size_t	i;
-	size_t	j;
+	//size_t	j;
 
 	i = 0;
-	j = 0;
-	sort_it(&utils->v_input_paths, utils->bit_flags);
+	//j = 0;
 	while (i < utils->v_input_paths.len)
 	{
-		while (j < utils->v_input_paths.len)
-		{
+		//while (j < utils->v_input_paths.len)
+		/* {
 			utils->dp[j] = open_path(utils, j);
 			j++;
-		}
-		if (utils->dp[i])
+		} */
+		//if (utils->dp[i])
 			exec_flag_l(utils, i);
 		i++;
 	}

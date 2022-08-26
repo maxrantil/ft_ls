@@ -93,22 +93,28 @@ static void	no_input(t_ls *utils)
 	else if (is_bit_set(utils->bit_flags, L_FLAG))
 		exec_flag_l(utils, i);
 	else
-		exec_flag_null(utils, i);
+	{
+		vec_push(&utils->v_input_paths, ".");
+		flag_null(utils);
+	}
 	vec_free(&v_no_input);
 }
 
 void	work_data(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
-	malloc_directory_ptr(utils);
 	if (utils->v_input_files.len)
 	{
 		sort_it(&utils->v_input_files, utils->bit_flags);
 		print_it(utils, utils->v_input_files, 0, 0);
 	}
-	if (!utils->v_input_files.len && !utils->v_input_paths.len)
+	malloc_directory_ptr(utils);
+	if (!utils->v_input_files.len && !utils->v_input_paths.len) //files.len will allways be 0 here?
 		no_input(utils);
 	else
+	{
+		sort_it(&utils->v_input_paths, utils->bit_flags);
 		exec_flags(utils);
+	}
 	free_dirs(utils);
 }

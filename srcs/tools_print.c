@@ -72,18 +72,17 @@ static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 	len_count = 0;
 	y = 0;
 	win_size = window_size();
-	if (utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R))
+	if (utils->v_input_paths.len > 1 && !utils->v_input_files.len && !is_bit_set(utils->bit_flags, CAPITAL_R))
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
-	while (y < v_files->len) //use i = 0 again here instead of y???
+	while (y < v_files->len) 											//use i = 0 again here instead of y??? can be a new function from here
 	{
 		file = no_path((char *)vec_get(v_files, y));
-		len_count += ft_strlen(file) + 2;
+		len_count += ft_strlen(file) + 6;
 		if (len_count > win_size)
 		{
 			write(1, "\n", 1);
 			len_count = 0;
 		}
-		//len_count += ft_strlen(file) + 2;
 		ft_printf("%-*s", ft_strlen(file) + 2, file);
 		y++;
 	}
@@ -91,7 +90,7 @@ static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 }
 
 void	print_it(t_ls *utils, t_vec v_files, size_t i, int total)
-{
+{//sort it here before.
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		print_stat(utils, &v_files, i, total);
 	else

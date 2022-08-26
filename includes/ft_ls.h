@@ -66,6 +66,7 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 **	Tools
 */
 int		is_bit_set(unsigned int value, unsigned int bit_str);
+void	pathcat_maker(char *path, char *file_name, char *base_path);
 DIR		*open_path(t_ls *utils, size_t j);
 
 /*

@@ -12,13 +12,6 @@
 
 #include "ft_ls.h"
 
-static void	pathcat_maker(char *path, char *file_name, char *base_path)
-{
-	ft_strcpy(path, base_path);
-	ft_strcat(path, "/");
-	ft_strcat(path, file_name);
-}
-
 void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 	char *base_path, size_t i)
 {
@@ -60,7 +53,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	total = 0;
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
 	dp = opendir(path);
-	ft_printf("%s:\n", path);
+	ft_printf("%s:\n", path);	//need to fix if path from input ends with slash
 	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(dp)) != NULL)
 	{
@@ -94,7 +87,6 @@ void	flag_recurse(t_ls *utils)
 	j = 0;
 	k = 0;
 	vec_new(&v_rec_path, 0, MAX_PATH);
-	sort_it(&utils->v_input_paths, utils->bit_flags);
 	while (i < utils->v_input_paths.len)
 	{
 		vec_push(&v_rec_path, (char *)vec_get(&utils->v_input_paths, i));
