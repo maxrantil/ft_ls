@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 11:08:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 20:13:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 				&& utils->dirp->d_name[0] == '.'))
 			continue ;
 		pathcat(path, utils->dirp->d_name, base_path);
-		stat(path, &utils->statbuf);
+		lstat(path, &utils->statbuf);
 		if (S_ISDIR(utils->statbuf.st_mode))
 		{
 			if (vec_push(v_rec_path, path) < 0)
@@ -53,7 +53,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	total = 0;
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
 	dp = opendir(path);
-	ft_printf("%s:\n", path);									//need to fix if path from input ends with slash
+	ft_printf("%s:\n", path);									//need to fix if path from input ends with slash, or not! check iMac
 	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(dp)) != NULL)
 	{
@@ -63,7 +63,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 				|| utils->dirp->d_name[0] == '.'))
 			continue ;
 		pathcat(path, utils->dirp->d_name, "");
-		stat(path, &utils->statbuf);
+		lstat(path, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, path);
 	}
@@ -80,12 +80,10 @@ void	flag_recurse(t_ls *utils)
 {
 	t_vec	v_rec_path;
 	size_t	i;
-	size_t	j;
-	size_t	k;
+ 	size_t	j;
 
 	i = 0;
-	j = 0;
-	k = 0;
+ 	j = 0;
 	vec_new(&v_rec_path, 0, MAX_PATH);
 	while (i < utils->v_input_paths.len)
 	{
@@ -93,18 +91,10 @@ void	flag_recurse(t_ls *utils)
 		get_dirs_recurse(utils, &v_rec_path, \
 			(char *)vec_get(&utils->v_input_paths, i), i);
 		sort_it(&v_rec_path, utils->bit_flags);
-		while (j < utils->v_input_paths.len)
+		while (j < v_rec_path.len)
 		{
-			utils->dp[j] = open_path(utils, j);
+			exec_flag_recurse(utils, v_rec_path, j);
 			j++;
-		}
-		if (utils->dp[i])
-		{
-			while (k < v_rec_path.len)
-			{
-				exec_flag_recurse(utils, v_rec_path, k); // here somthing fucked out with -R ..
-				k++;
-			}
 		}
 		i++;
 	}

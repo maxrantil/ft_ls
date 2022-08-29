@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 12:26:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 20:11:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 		}
 		else if (S_ISDIR(utils->statbuf.st_mode))
 			vec_push(&utils->v_input_paths, ptr);
-		else if (S_ISREG(utils->statbuf.st_mode))
+		else// if (S_ISREG(utils->statbuf.st_mode))
 			vec_push(&utils->v_input_files, ptr);
 	}
 	return (flags);
