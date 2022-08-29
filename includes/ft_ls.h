@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:14:02 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 13:01:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,24 @@ typedef struct s_ls
 	struct stat		statbuf;
 	t_vec			v_input_paths;
 	t_vec			v_input_files;
+	//t_vec			v_input_errors; //do i need to sort them?
 	DIR				**dp;
+	size_t			input_errors;
 	uint8_t			bit_flags;
 }					t_ls;
 
+/* typedef struct s_data
+{
+	size_t	total;
+	size_t	links_len;
+	size_t	owner_len;
+	size_t	group_len;
+	size_t	size_len;
+}			t_data; */
+
 void	work_data(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
-void	exec_flag_null(t_ls *utils, size_t i);
+//void	exec_flag_null(t_ls *utils, size_t i);
 void	flag_l(t_ls *utils);
 void	exec_flag_l(t_ls *utils, size_t i);
 void	flag_recurse(t_ls *utils);
@@ -66,7 +77,7 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 **	Tools
 */
 int		is_bit_set(unsigned int value, unsigned int bit_str);
-void	pathcat_maker(char *path, char *file_name, char *base_path);
+void	pathcat(char *path, char *file_name, char *base_path);
 DIR		*open_path(t_ls *utils, size_t j);
 
 /*

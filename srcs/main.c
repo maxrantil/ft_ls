@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:26:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 12:26:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,27 @@ static char	*get_data(t_ls *utils, const char **argv, int argc)
 	char	*flags;
 	int		i;
 
+	vec_new(&utils->v_input_paths, 0, MAX_PATH); //make funciton?
+	vec_new(&utils->v_input_files, 0, MAX_PATH);
+	utils->input_errors = 0;
 	flags = ft_strnew(MAX_FLAGS);
 	i = 0;
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
+		if (argv[i][0] == '-' && ft_isalpha(argv[i][1]))	//change i to 1 and then the fix is there for iMac terminal flags
+		{
+			ptr++;											//make this one function
+			temp = get_flags(ptr);
+			ft_strcat(flags, temp);
+			free(temp);
+			continue ;
+		}
 		if (lstat(ptr, &utils->statbuf) < 0)
 		{
 			ft_printf("ft_ls: cannot access '%s': ", ptr);
 			perror("");
-		}
-		if (argv[i][0] == '-' && ft_isalpha(argv[i][1]))
-		{
-			ptr++;	//make this one function
-			temp = get_flags(ptr);
-			ft_strcat(flags, temp);
-			free(temp);
+			++utils->input_errors;
 		}
 		else if (S_ISDIR(utils->statbuf.st_mode))
 			vec_push(&utils->v_input_paths, ptr);
@@ -99,8 +104,6 @@ int	main(int argc, const char **argv)
 	t_ls	utils;
 	char	*flags;
 
-	vec_new(&utils.v_input_paths, 0, MAX_PATH); //make funciton?
-	vec_new(&utils.v_input_files, 0, MAX_PATH);
 	flags = get_data(&utils, argv, argc);
 	work_data(&utils, flags);
 	vec_free(&utils.v_input_paths); //make function?

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:14:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 12:34:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,26 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 {
 	int	i;
 
+	utils->bit_flags = 0b00000;
 	i = 0;
 	while (flags[i])
 	{
 		if (flags[i] == 'a')
-			utils->bit_flags |= 1;
+			utils->bit_flags |= 0b00001;
 		if (flags[i] == 'l')
-			utils->bit_flags |= 2;
+			utils->bit_flags |= 0b00010;
 		if (flags[i] == 'r')
-			utils->bit_flags |= 4;
+			utils->bit_flags |= 0b00100;
 		if (flags[i] == 'R')
-			utils->bit_flags |= 8;
+			utils->bit_flags |= 0b01000;
 		if (flags[i] == 't')
-			utils->bit_flags |= 16;
+			utils->bit_flags |= 0b10000;
 		i++;
 	}
 	ft_strdel(&flags);
 }
 
-static void	malloc_directory_ptr(t_ls *utils)
+/* static void	malloc_directory_ptr(t_ls *utils)
 {
 	if (!utils->v_input_paths.len)
 	{
@@ -43,7 +44,7 @@ static void	malloc_directory_ptr(t_ls *utils)
 	}
 	else
 		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_input_paths.len);
-}
+} */
 
 static void	exec_flags(t_ls *utils)
 {
@@ -55,7 +56,7 @@ static void	exec_flags(t_ls *utils)
 		flag_null(utils);
 }
 
-static void	free_dirs(t_ls *utils)
+/* static void	free_dirs(t_ls *utils)
 {
 	ssize_t	i;
 
@@ -70,7 +71,7 @@ static void	free_dirs(t_ls *utils)
 		i--;
 	}
 	free(utils->dp);
-}
+} */
 
 static void	no_input(t_ls *utils)
 {
@@ -91,7 +92,10 @@ static void	no_input(t_ls *utils)
 		}
 	}
 	else if (is_bit_set(utils->bit_flags, L_FLAG))
+	{
+		vec_push(&utils->v_input_paths, ".");			//can we put this in the start of function?
 		exec_flag_l(utils, i);
+	}
 	else
 	{
 		vec_push(&utils->v_input_paths, ".");
@@ -108,13 +112,15 @@ void	work_data(t_ls *utils, char *flags)
 		sort_it(&utils->v_input_files, utils->bit_flags);
 		print_it(utils, utils->v_input_files, 0, 0);
 	}
-	malloc_directory_ptr(utils);
-	if (!utils->v_input_files.len && !utils->v_input_paths.len) //files.len will allways be 0 here?
+	//malloc_directory_ptr(utils);
+	if (!utils->v_input_paths.len && !utils->input_errors) 				//files.len will allways be 0 here?
 		no_input(utils);
-	else
+	else if (utils->v_input_paths.len)
 	{
 		sort_it(&utils->v_input_paths, utils->bit_flags);
 		exec_flags(utils);
 	}
-	free_dirs(utils);
+	vec_free(&utils->v_input_paths); 		//is this the right place?
+	vec_free(&utils->v_input_files);
+	/* free_dirs(utils); */
 }

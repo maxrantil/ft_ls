@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:25:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 13:02:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@ static char	*put_path_infront_of_file(t_ls *utils, size_t i)
 
 void	exec_flag_l(t_ls *utils, size_t i)
 {
+//	t_data	data;
 	t_vec	v_files;
 	DIR		*dp;
+	char	path[MAX_PATH];
 	char	*file;
 	int		total;
 
+	/* data.links_len = 1; */
 	vec_new(&v_files, 0, MAX_FILENAME);
 	total = 0;
-	dp = opendir((char *)vec_get(&utils->v_input_paths, i));
+	ft_strcpy(path, (const char *)vec_get(&utils->v_input_paths, i));
+	dp = opendir(path);
 	while ((utils->dirp = readdir(dp)) != NULL)
 	{
 		if (!is_bit_set(utils->bit_flags, A_FLAG) \
@@ -42,32 +46,28 @@ void	exec_flag_l(t_ls *utils, size_t i)
 			continue ;
 		file = put_path_infront_of_file(utils, i);
 		lstat(file, &utils->statbuf);
-		total += utils->statbuf.st_blocks;		//i can make a struct that will take all data for a good padding here.
+		total += utils->statbuf.st_blocks;		//i can make a struct that will take all data for a good padding here. look belove, but make it in a function of its own that can be called from -R aswell
+		/* if (ft_strlen(ft_itoa(utils->statbuf.st_nlink)) > data.links_len)
+			utils->v_input_paths.len = ft_strlen(ft_itoa(utils->statbuf.st_nlink); */
 		vec_push(&v_files, file);
 		if (utils->v_input_paths.len)
 			ft_strdel(&file);
 	}
 	sort_it(&v_files, utils->bit_flags);
+	//print_stat(utils, &v_files, i, total);
 	print_it(utils, v_files, i, total);
 	vec_free(&v_files);
+	free(dp);
 }
 
 void	flag_l(t_ls *utils)
 {
 	size_t	i;
-	//size_t	j;
 
 	i = 0;
-	//j = 0;
 	while (i < utils->v_input_paths.len)
 	{
-		//while (j < utils->v_input_paths.len)
-		/* {
-			utils->dp[j] = open_path(utils, j);
-			j++;
-		} */
-		//if (utils->dp[i])
-			exec_flag_l(utils, i);
+		exec_flag_l(utils, i);
 		i++;
 	}
 }

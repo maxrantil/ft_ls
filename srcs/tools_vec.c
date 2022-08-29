@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:14:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 12:22:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ static int	sort_str_mtime(void *a, void *b)
 //this need to be checked on iMac, works with -lt but not only -t??
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 {
+	vec_sort(vec_to_sort, &sort_str_asc);
 	if (is_bit_set(bit_str, T_FLAG))
-		vec_sort(vec_to_sort, &sort_str_mtime);
+		vec_sort(vec_to_sort, &sort_str_mtime); //is this the right order?
 	if (is_bit_set(bit_str, R_FLAG))
 		vec_sort(vec_to_sort, &sort_str_desc);
-	else
-		vec_sort(vec_to_sort, &sort_str_asc);
 }

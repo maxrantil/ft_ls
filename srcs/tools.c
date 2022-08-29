@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:01:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 11:07:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_bit_set(unsigned int bit_str, unsigned int value)
 	return (0);
 }
 
-void	pathcat_maker(char *path, char *file_name, char *base_path)
+void	pathcat(char *path, char *file_name, char *base_path)
 {
 	//size_t	n;
 

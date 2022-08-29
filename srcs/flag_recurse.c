@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 20:10:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 11:08:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 			|| (!is_bit_set(utils->bit_flags, A_FLAG)
 				&& utils->dirp->d_name[0] == '.'))
 			continue ;
-		pathcat_maker(path, utils->dirp->d_name, base_path);
+		pathcat(path, utils->dirp->d_name, base_path);
 		stat(path, &utils->statbuf);
 		if (S_ISDIR(utils->statbuf.st_mode))
 		{
@@ -53,7 +53,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	total = 0;
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
 	dp = opendir(path);
-	ft_printf("%s:\n", path);	//need to fix if path from input ends with slash
+	ft_printf("%s:\n", path);									//need to fix if path from input ends with slash
 	vec_new(&v_files, 0, MAX_FILENAME);
 	while ((utils->dirp = readdir(dp)) != NULL)
 	{
@@ -62,7 +62,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 				|| !ft_strcmp(utils->dirp->d_name, "..") \
 				|| utils->dirp->d_name[0] == '.'))
 			continue ;
-		pathcat_maker(path, utils->dirp->d_name, "");
+		pathcat(path, utils->dirp->d_name, "");
 		stat(path, &utils->statbuf);
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, path);
@@ -70,7 +70,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 	sort_it(&v_files, utils->bit_flags);
 	print_it(utils, v_files, i, total);
 	if (i != v_rec_path.len - 1)
-		write(1, "\n", 1);
+		ft_putchar('\n');
 	vec_free(&v_files);
 	closedir(dp);
 }

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:15:05 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/29 13:46:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ static char	*no_path(char *file_with_path)
 	size_t	n;
 
 	n = ft_strlen(file_with_path);
-	while (file_with_path[n] != '/' && n > 0)
+	while (n > 0 && file_with_path[n] != '/')
 		n--;
-	if (n == 0 && file_with_path[n] != '/')
+	if ((n == 0 && file_with_path[n] != '/') || n == ft_strlen(file_with_path))
 		return (&file_with_path[n]);
 	return (&file_with_path[++n]);
 }
@@ -28,69 +28,68 @@ static size_t	window_size(void)
 {
 	struct winsize	size;
 
-	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
-		perror("TIOCGWINSZ");
-	return (size.ws_col);
-}
-
-static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
-{
-	size_t	y;
-
-	y = 0;
-	if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
-		|| (utils->v_input_paths.len && !utils->v_input_files.len))
-		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
-	if (!utils->v_input_files.len)
-		ft_printf("total: %d\n", total / 2);
-	while (y < v_files->len)
-	{
-		stat((const char *)vec_get(v_files, y), &utils->statbuf);
-		print_file_props(utils->statbuf);
-		if (utils->v_input_files.len)
-		{
-			ft_printf("%s\n", (char *)vec_get(v_files, y));
-			if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
-				write(1, "\n", 1);
-			utils->v_input_files.len--;
-		}
-		else
-			ft_printf("%s\n", no_path((char *)vec_get(v_files, y)));
-		y++;
+		if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
+			perror("TIOCGWINSZ");
+		return (size.ws_col);
 	}
-	if (utils->v_input_paths.len && i != utils->v_input_paths.len - 1)
-		write(1, "\n", 1);
+
+	static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
+	{
+		if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
+			|| (utils->v_input_paths.len && !utils->v_input_files.len))
+			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
+		if (!utils->v_input_files.len)
+			ft_printf("total: %d\n", total / 2);
+		i = 0;
+		while (i < v_files->len)
+		{
+			stat((const char *)vec_get(v_files, i), &utils->statbuf);
+			print_file_props(utils->statbuf);
+			if (utils->v_input_files.len)
+			{
+				ft_printf("%s\n", (char *)vec_get(v_files, i));
+				if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
+					ft_putchar('\n');
+				utils->v_input_files.len--;
+			}
+			else
+				ft_printf("%s\n", no_path((char *)vec_get(v_files, i)));
+			i++;
+		}
+		if (utils->v_input_paths.len && i != utils->v_input_paths.len - 1)
+			ft_putchar('\n');
 }
 
 static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
-	char	*file;
+	char	file[MAX_PATH];
+	size_t	term_len;
 	size_t	len_count;
-	size_t	win_size;
-	size_t	y;
 
 	len_count = 0;
-	y = 0;
-	win_size = window_size();
+	term_len = window_size();
 	if (utils->v_input_paths.len > 1 && !utils->v_input_files.len && !is_bit_set(utils->bit_flags, CAPITAL_R))
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
-	while (y < v_files->len) 											//use i = 0 again here instead of y??? can be a new function from here
+	i = 0;
+	while (i < v_files->len)
 	{
-		file = no_path((char *)vec_get(v_files, y));
+		ft_strcat(file, no_path((char *)vec_get(v_files, i)));
 		len_count += ft_strlen(file) + 6;
-		if (len_count > win_size)
+		if (len_count > term_len)
 		{
-			write(1, "\n", 1);
+			ft_putchar('\n');
 			len_count = 0;
 		}
 		ft_printf("%-*s", ft_strlen(file) + 2, file);
-		y++;
+		ft_bzero(file, ft_strlen(file));
+		i++;
 	}
-	write(1, "\n", 1);
+	ft_putchar('\n');
 }
 
 void	print_it(t_ls *utils, t_vec v_files, size_t i, int total)
 {//sort it here before.
+	sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		print_stat(utils, &v_files, i, total);
 	else
