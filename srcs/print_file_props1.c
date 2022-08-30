@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_file_props.c                                 :+:      :+:    :+:   */
+/*   print_file_props1.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 16:16:25 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 16:43:45 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,58 +88,16 @@ static void	print_oth_permissions(struct stat statbuf)
 		ft_putchar('-');
     if (statbuf.st_mode & S_IXOTH)
     	if (statbuf.st_mode & S_ISVTX)
-			ft_putchar('T');
+			ft_putchar('t');
 		else
 			ft_putchar('x');
     else if (statbuf.st_mode & S_ISVTX)
-		ft_putchar('t');
+		ft_putchar('T');
 	else
 		ft_putchar('-');
 }
 
-static void	print_nbr_hlinks(struct stat statbuf)
-{
-	ft_printf(" %*i", 3, statbuf.st_nlink);
-}
-
-static void	print_owner(struct stat statbuf)
-{
-	struct passwd	*pwd;
-
-	pwd = getpwuid(statbuf.st_uid);
-	if (pwd == NULL)
-		perror("getpwuid");
-	else
-		ft_printf(" %s\t", pwd->pw_name);
-}
-
-static void	print_group(struct stat statbuf)
-{
-	struct group	*grp;
-
-	grp = getgrgid(statbuf.st_gid);
-	if (grp == NULL)
-		perror("getgrgid");
-	else
-		ft_printf(" %-s\t", grp->gr_name);
-}
-
-static void	print_size(struct stat statbuf)
-{
-	ft_printf(" %-*i", 8, statbuf.st_size);
-}
-
-static void	print_time(struct stat statbuf)
-{
-	char	*mtime;
-
-	mtime = ft_memalloc(ft_strlen(ctime(&statbuf.st_mtime)));
-	ft_strcpy(mtime, ctime(&statbuf.st_mtime));
-	ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
-	free(mtime);
-}
-
-size_t	print_file_props(struct stat statbuf)
+size_t	print_file_props1(struct stat statbuf)
 {
 	size_t	ret;
 	
@@ -147,10 +105,6 @@ size_t	print_file_props(struct stat statbuf)
 	print_usr_permissions(statbuf);
 	print_grp_permissions(statbuf);
 	print_oth_permissions(statbuf);
-	print_nbr_hlinks(statbuf);
-	print_owner(statbuf);
-	print_group(statbuf);
-	print_size(statbuf);
-	print_time(statbuf);
+	print_file_props2(statbuf);
 	return (ret);
 }

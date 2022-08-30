@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 16:11:24 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 16:39:17 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static size_t	window_size(void)
 		{
 			ft_strcpy(path, (char *)vec_get(v_files, i));
 			lstat(path, &utils->statbuf);
-			link = print_file_props(utils->statbuf);
+			link = print_file_props1(utils->statbuf);
 			if (utils->v_input_files.len)
 			{
 				ft_printf("%s\n", path);
