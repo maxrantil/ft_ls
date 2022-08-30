@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 11:51:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 15:54:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,20 @@ static int	sort_str_desc(void *a, void *b)
 
 static int	sort_str_mtime(void *a, void *b)
 {
-	struct stat	statbuf_a;
-	struct stat	statbuf_b;
-	long long	times[4];
+	struct stat		statbuf_a;		//is it a problem to have two statbufs???
+	struct stat		statbuf_b;
+	unsigned long	times[4];
 
-	stat((char *)a, &statbuf_a);
+	lstat((char *)a, &statbuf_a);
 	times[0] = statbuf_a.st_mtime;
 	times[1] = statbuf_a.st_mtim.tv_nsec;
-	stat((char *)b, &statbuf_b);
+	lstat((char *)b, &statbuf_b);
 	times[2] = statbuf_b.st_mtime;
 	times[3] = statbuf_b.st_mtim.tv_nsec;
-//	ft_printf("0	=	%ld\n", times[0]);
-//	ft_printf("1	=	%ld\n", times[1]);
 	if (times[0] < times[2] || (times[0] == times[2] && times[1] < times[3]))			//look in school, can i do this in a return without if? can i do it with only nano seconds?
 		return (1);
 	return (0);
 }
-// st_atim.tv_nsec
 
 //this need to be checked on iMac, works with -lt but not only -t??
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)

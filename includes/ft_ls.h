@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 12:16:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 16:07:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_ls
 	//t_vec			v_input_errors; //do i need to sort them?
 	DIR				**dp;
 	size_t			input_errors;
+	size_t			input_files_stdout_c;
 	uint8_t			bit_flags;
 }					t_ls;
 

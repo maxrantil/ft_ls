@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 12:38:56 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 16:11:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static size_t	window_size(void)
 
 		ft_bzero(path, MAX_PATH);
 		if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
-			|| (utils->v_input_paths.len && !utils->v_input_files.len))
+			|| (utils->v_input_paths.len && utils->v_input_files.len == utils->input_files_stdout_c))
 			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 		if (!utils->v_input_files.len)
 			ft_printf("total: %d\n", total / 2);
@@ -56,7 +56,8 @@ static size_t	window_size(void)
 				ft_printf("%s\n", path);
 				if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
 					ft_putchar('\n');
-				utils->v_input_files.len--;														//can this be better controlled?
+				//utils->v_input_files.len--;														//can this be better controlled?
+				utils->input_files_stdout_c++;														//can this be better controlled?
 			}
 			else
 				ft_printf("%s", no_path(path));

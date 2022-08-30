@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ft_ls",
-            "args": ["-t"],
+            "args": ["-l", "sticky_bits"],
             "stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
             "environment": [],

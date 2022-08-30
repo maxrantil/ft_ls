@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 05:52:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 16:14:25 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static char	*get_input(t_ls *utils, const char **argv, int argc)
 	vec_new(&utils->v_input_paths, 0, MAX_PATH); 			//make funciton?
 	vec_new(&utils->v_input_files, 0, MAX_PATH);
 	utils->input_errors = 0;
+	utils->input_files_stdout_c = 0; //does this need to be in struct??? the whole variable i mean, or can i pass it insead? look at that
 	flags = ft_strnew(MAX_FLAGS);
 	i = 0;
 	while (++i < argc)
@@ -87,7 +88,7 @@ static char	*get_input(t_ls *utils, const char **argv, int argc)
 		}
 		if (lstat(ptr, &utils->statbuf) < 0)
 		{
-			ft_printf("ft_ls: cannot access '%s': ", ptr);
+			ft_printf("ft_ls: cannot access '%s': ", ptr);		//need som edge_case handeling here
 			perror("");
 			++utils->input_errors;
 		}
