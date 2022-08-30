@@ -6,15 +6,36 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 13:00:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 12:20:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+static size_t	print_dir_permissions(struct stat statbuf)
+{
+	if (S_ISDIR(statbuf.st_mode))
+		ft_putchar('d');
+	else if (S_ISCHR(statbuf.st_mode))
+		ft_putchar('c');
+	else if (S_ISBLK(statbuf.st_mode))
+		ft_putchar('b');
+	else if (S_ISLNK(statbuf.st_mode))
+	{
+		ft_putchar('l');
+		return (1);
+	}
+	else if (S_ISSOCK(statbuf.st_mode))
+		ft_putchar('s');
+	else if (S_ISFIFO(statbuf.st_mode))
+		ft_putchar('p');
+	else
+		ft_putchar('-');
+	return (0);
+}
+
 static void	print_permissions(struct stat statbuf)
 {
-	ft_printf( (S_ISDIR(statbuf.st_mode)) ? "d" : "-"); // fix for 'c' and 'b'? it uccurs in /dev, need to make it into functions for norm.... also make another file and put five in each.
     ft_printf( (statbuf.st_mode & S_IRUSR) ? "r" : "-");
     ft_printf( (statbuf.st_mode & S_IWUSR) ? "w" : "-");
     ft_printf( (statbuf.st_mode & S_IXUSR) ? "x" : "-");
@@ -68,12 +89,16 @@ static void	print_time(struct stat statbuf)
 	free(mtime);
 }
 
-void	print_file_props(struct stat statbuf)
+size_t	print_file_props(struct stat statbuf)
 {
+	size_t	ret;
+	
+	ret = print_dir_permissions(statbuf);
 	print_permissions(statbuf);
 	print_nbr_hlinks(statbuf);
 	print_owner(statbuf);
 	print_group(statbuf);
 	print_size(statbuf);
 	print_time(statbuf);
+	return (ret);
 }

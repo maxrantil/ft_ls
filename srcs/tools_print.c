@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 05:44:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 12:38:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,11 @@ static size_t	window_size(void)
 
 	static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
 	{
+		char	path[MAX_PATH];
+		char	link_buf[MAX_PATH];
+		size_t	link;
+
+		ft_bzero(path, MAX_PATH);
 		if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
 			|| (utils->v_input_paths.len && !utils->v_input_files.len))
 			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
@@ -43,17 +48,25 @@ static size_t	window_size(void)
 		i = 0;
 		while (i < v_files->len)
 		{
-			stat((const char *)vec_get(v_files, i), &utils->statbuf);
-			print_file_props(utils->statbuf);
+			ft_strcpy(path, (char *)vec_get(v_files, i));
+			lstat(path, &utils->statbuf);
+			link = print_file_props(utils->statbuf);
 			if (utils->v_input_files.len)
 			{
-				ft_printf("%s\n", (char *)vec_get(v_files, i));
+				ft_printf("%s\n", path);
 				if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
 					ft_putchar('\n');
-				utils->v_input_files.len--;
+				utils->v_input_files.len--;														//can this be better controlled?
 			}
 			else
-				ft_printf("%s\n", no_path((char *)vec_get(v_files, i)));
+				ft_printf("%s", no_path(path));
+			if (link)
+			{
+				ft_bzero(link_buf, MAX_PATH);
+				if (readlink(path, link_buf, MAX_PATH) > 0)
+					ft_printf(" -> %s", link_buf);	
+			}
+			ft_putchar('\n');
 			i++;
 		}
 		if (utils->v_input_paths.len && i != utils->v_input_paths.len - 1)

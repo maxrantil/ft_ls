@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:05:08 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:05:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 10:44:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ static void	memswap(unsigned char *a, unsigned char *b, size_t bytes)
 	}
 }
 
-static void	vec_sort_recurse(t_vec *src, long int low, long int high,
+static void	vec_sort_recurse(t_vec *src, long low, long high,
 	int (*f)(void *, void *))
 {
-	long int	pivot;
-	long int	a;
-	long int	b;
+	long	pivot;
+	long	a;
+	long	b;
 
 	if (low >= high)
 		return ;
