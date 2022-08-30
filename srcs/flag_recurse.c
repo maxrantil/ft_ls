@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 20:13:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 05:12:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 		total += utils->statbuf.st_blocks;
 		vec_push(&v_files, path);
 	}
-	sort_it(&v_files, utils->bit_flags);
+	//sort_it(&v_files, utils->bit_flags);
 	print_it(utils, v_files, i, total);
 	if (i != v_rec_path.len - 1)
 		ft_putchar('\n');

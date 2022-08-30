@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 13:02:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 05:12:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	exec_flag_l(t_ls *utils, size_t i)
 		if (utils->v_input_paths.len)
 			ft_strdel(&file);
 	}
-	sort_it(&v_files, utils->bit_flags);
+	//sort_it(&v_files, utils->bit_flags);
 	//print_stat(utils, &v_files, i, total);
 	print_it(utils, v_files, i, total);
 	vec_free(&v_files);

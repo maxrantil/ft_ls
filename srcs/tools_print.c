@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 13:46:35 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 05:44:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,19 +62,20 @@ static size_t	window_size(void)
 
 static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
-	char	file[MAX_PATH];
+	char	file[MAX_FILENAME];
 	size_t	term_len;
 	size_t	len_count;
 
 	len_count = 0;
-	term_len = window_size();
+	term_len = window_size() - 50;
+	ft_bzero(file, MAX_FILENAME);
 	if (utils->v_input_paths.len > 1 && !utils->v_input_files.len && !is_bit_set(utils->bit_flags, CAPITAL_R))
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 	i = 0;
 	while (i < v_files->len)
 	{
 		ft_strcat(file, no_path((char *)vec_get(v_files, i)));
-		len_count += ft_strlen(file) + 6;
+		len_count += ft_strlen(file) + 2;
 		if (len_count > term_len)
 		{
 			ft_putchar('\n');
@@ -88,7 +89,7 @@ static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 }
 
 void	print_it(t_ls *utils, t_vec v_files, size_t i, int total)
-{//sort it here before.
+{
 	sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		print_stat(utils, &v_files, i, total);

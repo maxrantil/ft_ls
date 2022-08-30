@@ -6,7 +6,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/ft_ls",
-            "args": ["libft/ft_printf/"],
+            "args": ["-R"],
             "stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
             "environment": [],

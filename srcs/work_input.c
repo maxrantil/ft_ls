@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   work_data.c                                        :+:      :+:    :+:   */
+/*   work_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 12:34:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 05:47:02 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,6 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 	ft_strdel(&flags);
 }
 
-/* static void	malloc_directory_ptr(t_ls *utils)
-{
-	if (!utils->v_input_paths.len)
-	{
-		utils->dp = (DIR **)malloc(sizeof(DIR *) * 1);
-		utils->dp[0] = opendir(".");
-	}
-	else
-		utils->dp = (DIR **)malloc(sizeof(DIR *) * utils->v_input_paths.len);
-} */
-
 static void	exec_flags(t_ls *utils)
 {
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
@@ -55,23 +44,6 @@ static void	exec_flags(t_ls *utils)
 	else
 		flag_null(utils);
 }
-
-/* static void	free_dirs(t_ls *utils)
-{
-	ssize_t	i;
-
-	if (utils->v_input_paths.len)
-		i = utils->v_input_paths.len - 1;
-	else
-		i = 0;
-	while (i >= 0)
-	{
-		if (closedir(utils->dp[i]) < 0)
-			exit(1);
-		i--;
-	}
-	free(utils->dp);
-} */
 
 static void	no_input(t_ls *utils)
 {
@@ -104,16 +76,12 @@ static void	no_input(t_ls *utils)
 	vec_free(&v_no_input);
 }
 
-void	work_data(t_ls *utils, char *flags)
+void	work_input(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
 	if (utils->v_input_files.len)
-	{
-		sort_it(&utils->v_input_files, utils->bit_flags);
 		print_it(utils, utils->v_input_files, 0, 0);
-	}
-	//malloc_directory_ptr(utils);
-	if (!utils->v_input_paths.len && !utils->input_errors) 				//files.len will allways be 0 here?
+	if (!utils->v_input_files.len && !utils->v_input_paths.len && !utils->input_errors)
 		no_input(utils);
 	else if (utils->v_input_paths.len)
 	{
@@ -122,5 +90,4 @@ void	work_data(t_ls *utils, char *flags)
 	}
 	vec_free(&utils->v_input_paths); 		//is this the right place?
 	vec_free(&utils->v_input_files);
-	/* free_dirs(utils); */
 }

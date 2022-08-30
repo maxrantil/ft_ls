@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 20:11:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 05:52:43 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ static char	*get_flags(char *str)
 	return (ret_str);
 }
 
-static char	*get_data(t_ls *utils, const char **argv, int argc)
+static char	*get_input(t_ls *utils, const char **argv, int argc)
 {
 	char	*ptr;
 	char	*temp;
 	char	*flags;
 	int		i;
 
-	vec_new(&utils->v_input_paths, 0, MAX_PATH); //make funciton?
+	vec_new(&utils->v_input_paths, 0, MAX_PATH); 			//make funciton?
 	vec_new(&utils->v_input_files, 0, MAX_PATH);
 	utils->input_errors = 0;
 	flags = ft_strnew(MAX_FLAGS);
@@ -104,9 +104,7 @@ int	main(int argc, const char **argv)
 	t_ls	utils;
 	char	*flags;
 
-	flags = get_data(&utils, argv, argc);
-	work_data(&utils, flags);
-	vec_free(&utils.v_input_paths); //make function?
-	vec_free(&utils.v_input_files);
+	flags = get_input(&utils, argv, argc);
+	work_input(&utils, flags);
 	return (0);
 }

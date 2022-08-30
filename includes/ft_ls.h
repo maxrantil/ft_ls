@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 13:01:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 05:07:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
-# define MAX_FILENAME 256
+# define MAX_FILENAME 256 + 1
 # define MAX_PATH 1048
 
 typedef enum e_flags
@@ -64,7 +64,7 @@ typedef struct s_ls
 	size_t	size_len;
 }			t_data; */
 
-void	work_data(t_ls *utils, char *flags);
+void	work_input(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
 //void	exec_flag_null(t_ls *utils, size_t i);
 void	flag_l(t_ls *utils);
