@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 16:32:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 18:09:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,14 @@ typedef struct s_ls
 	uint8_t			bit_flags;
 }					t_ls;
 
-/* typedef struct s_data
+typedef struct s_data
 {
 	size_t	total;
 	size_t	links_len;
 	size_t	owner_len;
 	size_t	group_len;
-	size_t	size_len;
-}			t_data; */
+	long	size_len;
+}			t_data;
 
 void	work_input(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
@@ -80,13 +80,17 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 int		is_bit_set(unsigned int value, unsigned int bit_str);
 void	pathcat(char *path, char *file_name, char *base_path);
 DIR		*open_path(t_ls *utils, size_t j);
+void	init_data(t_data *data);
+void	get_data(struct stat statbuf, t_data *data);
 
 /*
 **	Tools Vec
 */
-void	print_it(t_ls *utils, t_vec v_files, size_t i, int total);
-size_t	print_file_props1(struct stat statbuf);
-void	print_file_props2(struct stat statbuf);
+
+void	print_files(t_ls *utils, t_vec *v_files, size_t i);
+void	print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i);
+size_t	print_file_props1(struct stat statbuf, t_data *data);
+void	print_file_props2(struct stat statbuf, t_data *data);
 
 /*
 **	Tools Vec

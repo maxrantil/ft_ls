@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 16:39:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 18:22:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	print_owner(struct stat statbuf)
+static void	print_owner(struct stat statbuf, t_data *data)
 {
 	struct passwd	*pwd;
 
@@ -20,10 +20,10 @@ static void	print_owner(struct stat statbuf)
 	if (pwd == NULL)
 		perror("getpwuid");
 	else
-		ft_printf(" %s\t", pwd->pw_name);
+		ft_printf(" %*s", data->owner_len, pwd->pw_name);
 }
 
-static void	print_group(struct stat statbuf)
+static void	print_group(struct stat statbuf, t_data *data)
 {
 	struct group	*grp;
 
@@ -31,7 +31,7 @@ static void	print_group(struct stat statbuf)
 	if (grp == NULL)
 		perror("getgrgid");
 	else
-		ft_printf(" %-s\t", grp->gr_name);
+		ft_printf(" %-*s", data->group_len, grp->gr_name);
 }
 
 static void	print_time(struct stat statbuf)
@@ -44,11 +44,11 @@ static void	print_time(struct stat statbuf)
 	free(mtime);
 }
 
-void	print_file_props2(struct stat statbuf)
+void	print_file_props2(struct stat statbuf, t_data *data)
 {
-	ft_printf(" %*i", 3, statbuf.st_nlink);
-	print_owner(statbuf);
-	print_group(statbuf);
-	ft_printf(" %-*i", 8, statbuf.st_size);
+	ft_printf(" %*i", ft_intlen((long)data->links_len), statbuf.st_nlink);
+	print_owner(statbuf, data);
+	print_group(statbuf, data);
+	ft_printf(" %*d", ft_intlen((long)data->size_len) , statbuf.st_size);
 	print_time(statbuf);
 }

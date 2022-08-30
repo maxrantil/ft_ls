@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 16:39:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 18:07:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static size_t	window_size(void)
 		return (size.ws_col);
 	}
 
-	static void	print_stat(t_ls *utils, t_vec *v_files, size_t i, int total)
+	static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 	{
 		char	path[MAX_PATH];
 		char	link_buf[MAX_PATH];
@@ -44,20 +44,20 @@ static size_t	window_size(void)
 			|| (utils->v_input_paths.len && utils->v_input_files.len == utils->input_files_stdout_c))
 			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 		if (!utils->v_input_files.len)
-			ft_printf("total: %d\n", total / 2);
+			ft_printf("total: %d\n", data->total / 2);
 		i = 0;
 		while (i < v_files->len)
 		{
 			ft_strcpy(path, (char *)vec_get(v_files, i));
 			lstat(path, &utils->statbuf);
-			link = print_file_props1(utils->statbuf);
+			link = print_file_props1(utils->statbuf, data);
 			if (utils->v_input_files.len)
 			{
 				ft_printf("%s\n", path);
 				if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
 					ft_putchar('\n');
 				//utils->v_input_files.len--;														//can this be better controlled?
-				utils->input_files_stdout_c++;														//can this be better controlled?
+				utils->input_files_stdout_c++;														//is this the solution?
 			}
 			else
 				ft_printf("%s", no_path(path));
@@ -74,7 +74,7 @@ static size_t	window_size(void)
 			ft_putchar('\n');
 }
 
-static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
+void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
 	char	file[MAX_FILENAME];
 	size_t	term_len;
@@ -102,11 +102,11 @@ static void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 	ft_putchar('\n');
 }
 
-void	print_it(t_ls *utils, t_vec v_files, size_t i, int total)
+void	print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i)
 {
 	sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
 	if (is_bit_set(utils->bit_flags, L_FLAG))
-		print_stat(utils, &v_files, i, total);
+		print_stat(utils, &v_files, data, i);
 	else
 		print_files(utils, &v_files, i);
 }

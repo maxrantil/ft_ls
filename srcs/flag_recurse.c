@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 05:12:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 17:53:53 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,14 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 //Too long function
 void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 {
+	t_data	data;
 	t_vec	v_files;
 	DIR		*dp;
 	char	path[MAX_PATH];
-	int		total;
+	//int		total;
 
-	total = 0;
+	//total = 0;
+	init_data(&data);
 	ft_strcpy(path, (const char *)vec_get(&v_rec_path, i));
 	dp = opendir(path);
 	ft_printf("%s:\n", path);									//need to fix if path from input ends with slash, or not! check iMac
@@ -64,11 +66,12 @@ void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i)
 			continue ;
 		pathcat(path, utils->dirp->d_name, "");
 		lstat(path, &utils->statbuf);
-		total += utils->statbuf.st_blocks;
+		//total += utils->statbuf.st_blocks;
+		get_data(utils->statbuf, &data);
 		vec_push(&v_files, path);
 	}
 	//sort_it(&v_files, utils->bit_flags);
-	print_it(utils, v_files, i, total);
+	print_it(utils, v_files, &data, i);
 	if (i != v_rec_path.len - 1)
 		ft_putchar('\n');
 	vec_free(&v_files);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:43:51 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/29 13:46:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/30 18:05:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 		pathcat(path, utils->dirp->d_name, NULL);
 		vec_push(&v_files, path);
 	}
-	//sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
-	print_it(utils, v_files, i, 0);
+	sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
+	print_files(utils, &v_files, i);
 	free(dp);
 	vec_free(&v_files);
 }
