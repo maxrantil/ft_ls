@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 18:09:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 10:15:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ typedef struct s_data
 
 void	work_input(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
-//void	exec_flag_null(t_ls *utils, size_t i);
 void	flag_l(t_ls *utils);
 void	exec_flag_l(t_ls *utils, size_t i);
 void	flag_recurse(t_ls *utils);

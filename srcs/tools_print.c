@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 18:07:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 11:14:14 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static size_t	window_size(void)
 			|| (utils->v_input_paths.len && utils->v_input_files.len == utils->input_files_stdout_c))
 			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 		if (!utils->v_input_files.len)
-			ft_printf("total: %d\n", data->total / 2);
+			ft_printf("total: %d\n", data->total);
 		i = 0;
 		while (i < v_files->len)
 		{
