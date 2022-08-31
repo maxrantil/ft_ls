@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 13:09:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 19:24:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	flag_null(t_ls *utils);
 void	flag_l(t_ls *utils);
 void	exec_flag_l(t_ls *utils, size_t i);
 void	flag_recurse(t_ls *utils);
-void	exec_flag_recurse(t_ls *utils, t_vec v_rec_path, size_t i); 
+void	exec_flag_recurse(t_ls *utils, t_vec *v_rec_path, size_t i); 
 void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i);
 
 /*
@@ -82,6 +82,7 @@ char	*put_path_infront_of_file(t_ls *utils, size_t i);
 DIR		*open_path(t_ls *utils, size_t j);
 void	init_data(t_data *data);
 void	get_data(struct stat statbuf, t_data *data);
+int		check_flag_a(t_ls *utils);
 
 /*
 **	Tools Print

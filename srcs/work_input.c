@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 13:16:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 19:11:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	no_input(t_ls *utils)
 		sort_it(&v_no_input, utils->bit_flags);
 		while (i < v_no_input.len)
 		{
-			exec_flag_recurse(utils, v_no_input, i);
+			exec_flag_recurse(utils, &v_no_input, i);
 			i++;
 		}
 	}
