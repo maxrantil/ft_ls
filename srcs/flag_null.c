@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:43:51 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 18:05:20 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 12:05:44 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 	t_vec	v_files;
 	DIR		*dp;
 	char	path[MAX_PATH];
+	char	*file;
 
 	vec_new(&v_files, 0, MAX_FILENAME);
 	ft_strcpy(path, (const char *)vec_get(&utils->v_input_paths, i));
@@ -26,8 +27,12 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 		if (!is_bit_set(utils->bit_flags, A_FLAG) \
 			&& utils->dirp->d_name[0] == '.')
 			continue ;
-		pathcat(path, utils->dirp->d_name, NULL);
-		vec_push(&v_files, path);
+		//pathcat(path, utils->dirp->d_name, NULL);
+		//vec_push(&v_files, path);
+		file = put_path_infront_of_file(utils, i);
+		vec_push(&v_files, file);
+		if (utils->v_input_paths.len)
+			ft_strdel(&file);
 	}
 	sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
 	print_files(utils, &v_files, i);

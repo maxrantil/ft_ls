@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 11:14:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 13:52:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,50 +28,50 @@ static size_t	window_size(void)
 {
 	struct winsize	size;
 
-		if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
-			perror("TIOCGWINSZ");
-		return (size.ws_col);
-	}
+	if (ioctl(0, TIOCGWINSZ, (char *)&size) < 0)
+		perror("TIOCGWINSZ");
+	return (size.ws_col);
+}
 
-	static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
+static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
+{
+	char	path[MAX_PATH];
+	char	link_buf[MAX_PATH];
+	size_t	link;
+
+	ft_bzero(path, MAX_PATH);
+	if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
+		|| (utils->v_input_paths.len && utils->v_input_files.len == utils->input_files_stdout_c))
+		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
+	if (!utils->v_input_files.len)
+		ft_printf("total: %d\n", data->total);
+	i = 0;
+	while (i < v_files->len)
 	{
-		char	path[MAX_PATH];
-		char	link_buf[MAX_PATH];
-		size_t	link;
-
-		ft_bzero(path, MAX_PATH);
-		if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
-			|| (utils->v_input_paths.len && utils->v_input_files.len == utils->input_files_stdout_c))
-			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
-		if (!utils->v_input_files.len)
-			ft_printf("total: %d\n", data->total);
-		i = 0;
-		while (i < v_files->len)
+		ft_strcpy(path, (char *)vec_get(v_files, i));
+		lstat(path, &utils->statbuf);
+		link = print_file_props1(utils->statbuf, data);
+		if (utils->v_input_files.len)
 		{
-			ft_strcpy(path, (char *)vec_get(v_files, i));
-			lstat(path, &utils->statbuf);
-			link = print_file_props1(utils->statbuf, data);
-			if (utils->v_input_files.len)
-			{
-				ft_printf("%s\n", path);
-				if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
-					ft_putchar('\n');
-				//utils->v_input_files.len--;														//can this be better controlled?
-				utils->input_files_stdout_c++;														//is this the solution?
-			}
-			else
-				ft_printf("%s", no_path(path));
-			if (link)
-			{
-				ft_bzero(link_buf, MAX_PATH);
-				if (readlink(path, link_buf, MAX_PATH) > 0)
-					ft_printf(" -> %s", link_buf);	
-			}
-			ft_putchar('\n');
-			i++;
+			ft_printf("%s\n", path);
+			if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
+				ft_putchar('\n');
+			//utils->v_input_files.len--;														//can this be better controlled?
+			utils->input_files_stdout_c++;														//is this the solution?
 		}
-		if (utils->v_input_paths.len && i != utils->v_input_paths.len - 1)
-			ft_putchar('\n');
+		else
+			ft_printf("%s", no_path(path));
+		if (link)
+		{
+			ft_bzero(link_buf, MAX_PATH);
+			if (readlink(path, link_buf, MAX_PATH) > 0)
+				ft_printf(" -> %s", link_buf);	
+		}
+		ft_putchar('\n');
+		i++;
+	}
+	if (utils->v_input_paths.len && i != utils->v_input_paths.len - 1)
+		ft_putchar('\n');
 }
 
 void	print_files(t_ls *utils, t_vec *v_files, size_t i)

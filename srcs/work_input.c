@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 16:10:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 13:16:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	work_input(t_ls *utils, char *flags)
 	turn_on_bit_flags(utils, flags);
 	if (utils->v_input_files.len)
 		print_it(utils, utils->v_input_files, 0, 0);
-	if (!utils->v_input_files.len && !utils->v_input_paths.len)// && utils->input_errors)
+	if (!utils->v_input_files.len && !utils->v_input_paths.len && !utils->v_input_errors.len)
 		no_input(utils);
 	else if (utils->v_input_paths.len)
 	{

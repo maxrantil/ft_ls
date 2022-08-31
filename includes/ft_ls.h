@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 10:15:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 13:09:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ typedef struct s_ls
 	struct stat		statbuf;
 	t_vec			v_input_paths;
 	t_vec			v_input_files;
-	//t_vec			v_input_errors; //do i need to sort them?
-	DIR				**dp;
-	size_t			input_errors;
+	t_vec			v_input_errors;
+	DIR				**dp; 				//take away?
+	size_t			input_errors; 		//can use v_input_errors.len here instead.
 	size_t			input_files_stdout_c;
 	uint8_t			bit_flags;
 }					t_ls;
@@ -78,12 +78,13 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i)
 */
 int		is_bit_set(unsigned int value, unsigned int bit_str);
 void	pathcat(char *path, char *file_name, char *base_path);
+char	*put_path_infront_of_file(t_ls *utils, size_t i);
 DIR		*open_path(t_ls *utils, size_t j);
 void	init_data(t_data *data);
 void	get_data(struct stat statbuf, t_data *data);
 
 /*
-**	Tools Vec
+**	Tools Print
 */
 
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
@@ -95,5 +96,6 @@ void	print_file_props2(struct stat statbuf, t_data *data);
 **	Tools Vec
 */
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str);
+void	print_errors(t_vec error_vec);
 
 #endif

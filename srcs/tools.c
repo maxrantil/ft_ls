@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 17:49:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/08/31 12:33:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,19 @@ void	pathcat(char *path, char *file_name, char *base_path)
 	ft_strcat(path, file_name);
 }
 
+char	*put_path_infront_of_file(t_ls *utils, size_t i)
+{
+	char	*file_with_path;
+
+	if (utils->v_input_paths.len)
+	{
+		file_with_path = ft_strjoin((char *)vec_get(&utils->v_input_paths, i), "/");
+		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
+		return (file_with_path);
+	}
+	return (utils->dirp->d_name);
+}
+
 /* static void	edge_case1(char *path)
 {
 	size_t n;
@@ -41,21 +54,6 @@ void	pathcat(char *path, char *file_name, char *base_path)
 	else
 		ft_printf("ft_ls: "); //newline?
 } */
-
-DIR	*open_path(t_ls *utils, size_t i)
-{
-	char	path[MAX_PATH];
-
-	ft_strcpy(path, (const char *)vec_get(&utils->v_input_paths, i));
-	utils->dp[i] = opendir(path);
-	if (!utils->dp[i])
-	{
-		ft_printf("ft_ls: cannot access '%s': ", path); //error here with wrong filename and no flag
-		//edge_case1(path);
-		perror("");
-	}
-	return (utils->dp[i]);
-}
 
 void	init_data(t_data *data)
 {
