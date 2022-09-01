@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 19:39:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/01 11:46:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	exec_flag_recurse(t_ls *utils, t_vec *v_rec_path, size_t i)
 	t_vec	v_files;
 	DIR		*dp;
 
+	vec_new(&v_files, 0, MAX_FILENAME);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		init_data(&data);
 	ft_strcpy(path, (const char *)vec_get(v_rec_path, i));
 	dp = opendir(path);
 	ft_printf("%s:\n", path);
-	vec_new(&v_files, 0, MAX_FILENAME);
-	while ((utils->dirp = readdir(dp)) != NULL)
+	while ((utils->dirp = readdir(dp)))
 	{
 		if (check_flag_a(utils))
 			continue ;
@@ -52,35 +52,42 @@ void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path,
 	
 	if (!(dp = opendir(base_path)))
 		return ;
-	while ((utils->dirp = readdir(dp)) != NULL)
+	while ((utils->dirp = readdir(dp)))
 	{
 		if (check_flag_a(utils))
 			continue ;
 		pathcat(path, utils->dirp->d_name, base_path);
 		lstat(path, &utils->statbuf);
 		if (S_ISDIR(utils->statbuf.st_mode))
+		{
 			vec_push(v_rec_path, path);
-		exec_flag_recurse(utils, *v_rec_path, i);	
-		//get_dirs_recurse(utils, v_rec_path, path, i);
+			if (v_rec_path->len)
+				exec_flag_recurse(utils, v_rec_path, i);
+			get_dirs_recurse(utils, v_rec_path, path, i++);	
+		}
 	}
-	//sort_it(v_rec_path, utils->bit_flags);
-	//ft_printf("i%i", i);
+ 	sort_it(v_rec_path, utils->bit_flags);
+ //	ft_printf("i%i", i);
 	closedir(dp);
 }
 
 void	flag_recurse(t_ls *utils)
 {
 	t_vec	v_rec_path;
+	char	*input_path;
 	size_t	i;
 
 	i = 0;
 	vec_new(&v_rec_path, 0, MAX_PATH);
 	while (i < utils->v_input_paths.len)
 	{
-		vec_push(&v_rec_path, (char *)vec_get(&utils->v_input_paths, i));
-		exec_flag_recurse(utils, &v_rec_path, i);
-		get_dirs_recurse(utils, &v_rec_path, \
-			(char *)vec_get(&utils->v_input_paths, i), i);
+		input_path = (char *)vec_get(&utils->v_input_paths, i);
+		vec_push(&v_rec_path, input_path);
+		//exec_flag_recurse(utils, &v_rec_path, i);
+		//ft_putchar('\n');
+		//vec_free(&v_rec_path);
+		//vec_new(&v_rec_path, 0, MAX_PATH);
+		get_dirs_recurse(utils, &v_rec_path, input_path, i);
 		i++;
 	}
 	vec_free(&v_rec_path);
