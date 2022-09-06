@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 19:11:47 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/06 12:58:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,16 @@ static void	exec_flags(t_ls *utils)
 
 static void	no_input(t_ls *utils)
 {
-	t_vec	v_no_input;
 	size_t	i;
 	
 	i = 0;
-	vec_new(&v_no_input, 0, MAX_PATH);
+	vec_push(&utils->v_input_paths, ".");			//can we put this in the start of function?
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
-	{
-		vec_push(&v_no_input, ".");
-		get_dirs_recurse(utils, &v_no_input, ".", i);
-		sort_it(&v_no_input, utils->bit_flags);
-		while (i < v_no_input.len)
-		{
-			exec_flag_recurse(utils, &v_no_input, i);
-			i++;
-		}
-	}
+		exec_flag_recurse(utils, ".", i);
 	else if (is_bit_set(utils->bit_flags, L_FLAG))
-	{
-		vec_push(&utils->v_input_paths, ".");			//can we put this in the start of function?
 		exec_flag_l(utils, i);
-	}
 	else
-	{
-		vec_push(&utils->v_input_paths, ".");
 		flag_null(utils);
-	}
-	vec_free(&v_no_input);
 }
 
 void	work_input(t_ls *utils, char *flags)

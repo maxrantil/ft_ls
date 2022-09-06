@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 19:24:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/06 13:12:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ void	work_input(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
 void	flag_l(t_ls *utils);
 void	exec_flag_l(t_ls *utils, size_t i);
+
 void	flag_recurse(t_ls *utils);
-void	exec_flag_recurse(t_ls *utils, t_vec *v_rec_path, size_t i); 
-void	get_dirs_recurse(t_ls *utils, t_vec *v_rec_path, char *base_path, size_t i);
+void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i); 
+void	get_dirs_recurse(t_ls *utils, char *input_path, size_t i);
 
 /*
 **	Tools

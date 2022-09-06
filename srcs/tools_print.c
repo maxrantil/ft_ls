@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 13:53:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/06 13:27:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,10 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 	size_t	link;
 
 	ft_bzero(path, MAX_PATH);
-	if ((utils->v_input_paths.len > 1 && !is_bit_set(utils->bit_flags, CAPITAL_R)) \
-		|| (utils->v_input_paths.len && utils->v_input_files.len == utils->input_files_stdout_c))
-		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
+	if (!is_bit_set(utils->bit_flags, CAPITAL_R))
+		if (utils->v_input_paths.len > 1 || (utils->v_input_paths.len && \
+			utils->v_input_files.len == utils->input_files_stdout_c))
+			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 	if (!utils->v_input_files.len)
 		ft_printf("total: %d\n", data->total);
 	i = 0;
@@ -56,8 +57,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 			ft_printf("%s\n", path);
 			if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
 				ft_putchar('\n');
-			//utils->v_input_files.len--;														//can this be better controlled?
-			utils->input_files_stdout_c++;														//is this the solution?
+			utils->input_files_stdout_c++;
 		}
 		else
 			ft_printf("%s", no_path(path));
@@ -99,6 +99,7 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 		ft_bzero(file, ft_strlen(file));
 		i++;
 	}
+	ft_putchar('\n');
 	ft_putchar('\n');
 }
 
