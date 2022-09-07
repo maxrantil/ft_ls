@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 18:44:07 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/06 15:27:17 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@ static size_t	print_dir_permissions(struct stat statbuf)
 	if (S_ISDIR(statbuf.st_mode))
 		ft_putchar('d');
 	else if (S_ISCHR(statbuf.st_mode))
+	{
 		ft_putchar('c');
+		return (2);
+	}
 	else if (S_ISBLK(statbuf.st_mode))
+	{
 		ft_putchar('b');
+		return (2);
+	}
 	else if (S_ISLNK(statbuf.st_mode))
 	{
 		ft_putchar('l');
@@ -105,6 +111,6 @@ size_t	print_file_props1(struct stat statbuf, t_data *data)
 	print_usr_permissions(statbuf);
 	print_grp_permissions(statbuf);
 	print_oth_permissions(statbuf);
-	print_file_props2(statbuf, data);
+	print_file_props2(statbuf, data, ret);
 	return (ret);
 }

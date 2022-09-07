@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/06 13:12:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 09:06:28 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
+
+/* Major/Minor Numbers */
+# include <sys/sysmacros.h>
+
 # include <stdio.h>
 # include <stdint.h>
 # include <stdlib.h>
@@ -50,8 +54,6 @@ typedef struct s_ls
 	t_vec			v_input_paths;
 	t_vec			v_input_files;
 	t_vec			v_input_errors;
-	DIR				**dp; 				//take away?
-	size_t			input_errors; 		//can use v_input_errors.len here instead.
 	size_t			input_files_stdout_c;
 	uint8_t			bit_flags;
 }					t_ls;
@@ -62,6 +64,8 @@ typedef struct s_data
 	size_t	links_len;
 	size_t	owner_len;
 	size_t	group_len;
+	long	major_len;
+	long	minor_len;
 	long	size_len;
 }			t_data;
 
@@ -92,7 +96,7 @@ int		check_flag_a(t_ls *utils);
 void	print_files(t_ls *utils, t_vec *v_files, size_t i);
 void	print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i);
 size_t	print_file_props1(struct stat statbuf, t_data *data);
-void	print_file_props2(struct stat statbuf, t_data *data);
+void	print_file_props2(struct stat statbuf, t_data *data, size_t ret);
 
 /*
 **	Tools Vec

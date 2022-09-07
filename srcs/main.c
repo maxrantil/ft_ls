@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 13:11:43 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/06 15:29:26 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static char	*get_input(t_ls *utils, const char **argv, int argc)
 	vec_new(&utils->v_input_paths, 0, MAX_PATH); 			//make funciton?
 	vec_new(&utils->v_input_files, 0, MAX_PATH);
 	vec_new(&utils->v_input_errors, 0, MAX_PATH);
-	utils->input_errors = 0;
+	//utils->input_errors = 0;
 	utils->input_files_stdout_c = 0; 						//does this need to be in struct??? the whole variable i mean, or can i pass it insead? look at that
 	flags = ft_strnew(MAX_FLAGS);
 	i = 0;

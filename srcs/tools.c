@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/31 19:21:25 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 09:28:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	init_data(t_data *data)
 	data->links_len = 0;			///can i memset the who struct?
 	data->owner_len = 0;
 	data->group_len = 0;
+	data->major_len = 0;
+	data->minor_len = 0;
 	data->size_len = 0;
 }
 
@@ -82,6 +84,10 @@ void	get_data(struct stat statbuf, t_data *data)
 	gr_len = ft_strlen(grp->gr_name);
 	if (gr_len > data->group_len)
 		data->group_len = gr_len;
+	if (major(statbuf.st_rdev) > data->major_len)
+		data->major_len = major(statbuf.st_rdev);
+	if (minor(statbuf.st_rdev) > data->minor_len)
+		data->minor_len = minor(statbuf.st_rdev);
 	if (statbuf.st_size > data->size_len)
 		data->size_len = statbuf.st_size;
 }
