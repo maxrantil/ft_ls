@@ -6,11 +6,21 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 18:50:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 20:14:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void	print_error(char *path)
+{
+	if (path[ft_strlen(path) - 1] == '/')
+			ft_printf("ft_ls: : ");	
+		else
+			ft_printf("ft_ls: %s: ", path);
+		perror("");
+		ft_putchar('\n');
+}
 
 static char	*no_path(char *file_with_path)
 {
@@ -21,7 +31,7 @@ static char	*no_path(char *file_with_path)
 	n = ft_strlen(file_with_path) - 1;
 	while (n > 0 && file_with_path[n] != '/')
 		n--;
-	if (n == 0 && file_with_path[n] != '/')
+	if (n == 0)// && file_with_path[n] != '/')
 		return (&file_with_path[n]);
 	return (&file_with_path[++n]);
 }
@@ -41,11 +51,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 	char	link_buf[MAX_PATH];
 	size_t	link;
 
-	ft_bzero(path, MAX_PATH);
-	if (!is_bit_set(utils->bit_flags, CAPITAL_R))
-		if (utils->v_input_paths.len > 1 || (utils->v_input_paths.len && \
-			utils->v_input_files.len && utils->v_input_files.len == utils->input_files_stdout_c))
-			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
+	//ft_bzero(path, MAX_PATH);
 	if (!utils->v_input_files.len)
 		ft_printf("total: %d\n", data->total);
 	i = 0;
@@ -65,7 +71,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 			ft_printf("%s", no_path(path));
 		if (link)
 		{
-			ft_bzero(link_buf, MAX_PATH);
+			//ft_bzero(link_buf, MAX_PATH);
 			if (readlink(path, link_buf, MAX_PATH) > 0)
 				ft_printf(" -> %s", link_buf);	
 		}
@@ -76,7 +82,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 		ft_putchar('\n');
 }
 
-void	print_files(t_ls *utils, t_vec *v_files, size_t i)
+void	print_files(t_vec *v_files, size_t i)
 {	
 	char	file[MAX_PATH];
 	size_t	term_len;
@@ -85,8 +91,6 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 	len_count = 0;
 	term_len = window_size() - 50;
 	ft_bzero(file, MAX_PATH);
-	if (utils->v_input_paths.len > 1 && !utils->v_input_files.len && !is_bit_set(utils->bit_flags, CAPITAL_R))
-		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 	i = 0;
 	while (i < v_files->len)
 	{
@@ -105,11 +109,11 @@ void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 	ft_putchar('\n');
 }
 
-void	print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i)
+void	sort_and_print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i)
 {
-	sort_it(&v_files, utils->bit_flags); 				//al thses inside at the top of the print function
+	sort_it(&v_files, utils->bit_flags);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		print_stat(utils, &v_files, data, i);
 	else
-		print_files(utils, &v_files, i);
+		print_files(&v_files, i);
 }
