@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 09:28:34 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 15:16:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ void	get_data(struct stat statbuf, t_data *data)
 		data->size_len = statbuf.st_size;
 }
 
-int	check_flag_a(t_ls *utils)
+int	check_flag_a(t_ls *utils, struct dirent *dirp)
 {
-	return (!ft_strcmp(utils->dirp->d_name, ".") \
-			|| !ft_strcmp(utils->dirp->d_name, "..") \
+	return (!ft_strcmp(dirp->d_name, ".") \
+			|| !ft_strcmp(dirp->d_name, "..") \
 			|| (!is_bit_set(utils->bit_flags, A_FLAG) \
-				&& utils->dirp->d_name[0] == '.'));
+				&& dirp->d_name[0] == '.'));
 }

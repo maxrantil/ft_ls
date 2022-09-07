@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/06 12:37:32 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:15:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	look_for_dirs(t_ls *utils, t_vec *v_files)
 {
-	char	input_path[MAX_PATH];
+	char	input_path[MAX_FILENAME];
 	size_t	i;
 
 	i = 0;
@@ -30,7 +30,9 @@ static void	look_for_dirs(t_ls *utils, t_vec *v_files)
 
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 {
+	//struct dirent	*dirp;
 	char	path[MAX_PATH];
+	//char	*file;
 	t_data	data;
 	t_vec	v_files;
 	DIR		*dp;
@@ -38,22 +40,33 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 	vec_new(&v_files, 0, MAX_FILENAME);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		init_data(&data);
-	dp = opendir(input_path);
 	ft_printf("%s:\n", input_path);
+	dp = opendir(input_path);
+	if (!dp)
+	{
+		perror("");
+		ft_putchar('\n');
+		return ;
+	}
 	while ((utils->dirp = readdir(dp)))
 	{
-		if (check_flag_a(utils))
+		if (check_flag_a(utils, utils->dirp))
 			continue ;
+		ft_bzero(path, ft_strlen(path));
+		//file = put_path_infront_of_file(utils, i);
 		pathcat(path, utils->dirp->d_name, input_path);
-		lstat(path, &utils->statbuf);
 		if (is_bit_set(utils->bit_flags, L_FLAG))
+		{
+			lstat(path, &utils->statbuf);
 			get_data(utils->statbuf, &data);
+		}
 		vec_push(&v_files, path);
 	}
 	print_it(utils, v_files, &data, i);
+	//free(dirp);
+	closedir(dp);
 	look_for_dirs(utils, &v_files);
 	vec_free(&v_files);
-	closedir(dp);
 }
 
 void	flag_recurse(t_ls *utils)

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/01 06:55:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 14:15:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,10 @@ static int	sort_str_mtime(void *a, void *b)
 
 	lstat((char *)a, &statbuf);
 	times[0] = statbuf.st_mtime;
-	times[1] = statbuf.st_mtim.tv_nsec;			//linux
-	//times[1] = statbuf.st_mtimespec.tv_nsec;		//iMac
+	times[1] = statbuf.NANOTIME;
 	lstat((char *)b, &statbuf);
 	times[2] = statbuf.st_mtime;
-	times[3] = statbuf.st_mtim.tv_nsec;			//linux
-	//times[3] = statbuf.st_mtimespec.tv_nsec;		//iMac
+	times[3] = statbuf.NANOTIME;
 	ret = times[2] - times[0];
 	if (ret)
 		return (ret);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 09:06:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 15:16:36 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,16 @@
 # include <sys/types.h>
 # include <sys/ioctl.h>
 
+# ifdef __linux__
 /* Major/Minor Numbers */
 # include <sys/sysmacros.h>
+
+# define NANOTIME st_mtim.tv_nsec
+# endif
+
+# ifdef __APPLE__
+# define NANOTIME st_mtimespec.tv_nsec
+# endif
 
 # include <stdio.h>
 # include <stdint.h>
@@ -87,7 +95,7 @@ char	*put_path_infront_of_file(t_ls *utils, size_t i);
 DIR		*open_path(t_ls *utils, size_t j);
 void	init_data(t_data *data);
 void	get_data(struct stat statbuf, t_data *data);
-int		check_flag_a(t_ls *utils);
+int		check_flag_a(t_ls *utils, struct dirent *dirp);
 
 /*
 **	Tools Print

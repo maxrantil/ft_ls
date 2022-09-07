@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/06 13:27:13 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 18:50:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,12 @@ static char	*no_path(char *file_with_path)
 {
 	size_t	n;
 
-	n = ft_strlen(file_with_path);
+	if (!file_with_path)
+		return (NULL);
+	n = ft_strlen(file_with_path) - 1;
 	while (n > 0 && file_with_path[n] != '/')
 		n--;
-	if ((n == 0 && file_with_path[n] != '/') || n == ft_strlen(file_with_path))
+	if (n == 0 && file_with_path[n] != '/')
 		return (&file_with_path[n]);
 	return (&file_with_path[++n]);
 }
@@ -42,7 +44,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 	ft_bzero(path, MAX_PATH);
 	if (!is_bit_set(utils->bit_flags, CAPITAL_R))
 		if (utils->v_input_paths.len > 1 || (utils->v_input_paths.len && \
-			utils->v_input_files.len == utils->input_files_stdout_c))
+			utils->v_input_files.len && utils->v_input_files.len == utils->input_files_stdout_c))
 			ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 	if (!utils->v_input_files.len)
 		ft_printf("total: %d\n", data->total);
@@ -76,13 +78,13 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 
 void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
-	char	file[MAX_FILENAME];
+	char	file[MAX_PATH];
 	size_t	term_len;
 	size_t	len_count;
 
 	len_count = 0;
 	term_len = window_size() - 50;
-	ft_bzero(file, MAX_FILENAME);
+	ft_bzero(file, MAX_PATH);
 	if (utils->v_input_paths.len > 1 && !utils->v_input_files.len && !is_bit_set(utils->bit_flags, CAPITAL_R))
 		ft_printf("%s:\n", (char *)vec_get(&utils->v_input_paths, i));
 	i = 0;

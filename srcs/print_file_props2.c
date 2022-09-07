@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 09:27:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/07 14:55:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	print_owner(struct stat statbuf, t_data *data)
 	if (pwd == NULL)
 		perror("getpwuid");
 	else
-		ft_printf(" %*s ", data->owner_len, pwd->pw_name);
+		ft_printf(" %-*s ", data->owner_len, pwd->pw_name);
 }
 
 static void	print_group(struct stat statbuf, t_data *data)
@@ -44,16 +44,18 @@ static void	print_time(struct stat statbuf)
 	free(mtime);
 }
 
-void	print_file_props2(struct stat statbuf, t_data *data, size_t ret)
+void	print_file_props2(struct stat statbuf, t_data *data, size_t ret) //noneed for ret, can use the variable namme instead
 {
 	ft_printf("  %*i", ft_intlen((long)data->links_len), statbuf.st_nlink);
 	print_owner(statbuf, data);
 	print_group(statbuf, data);
 	if (ret == 2)
 	{
-		ft_printf("  %*ld,", ft_intlen((long)data->major_len), (long)major(statbuf.st_rdev));
-		ft_printf("  %*ld", ft_intlen((long)data->minor_len), (long)minor(statbuf.st_rdev));
+		ft_printf("   %*ld,", ft_intlen((long)data->major_len), (long)major(statbuf.st_rdev));
+		ft_printf("%*ld", ft_intlen((long)data->minor_len), (long)minor(statbuf.st_rdev));
 	}
+	else if (data->major_len || data->minor_len)
+		ft_printf("    %*d", ft_intlen((long)data->major_len) + ft_intlen((long)data->minor_len), statbuf.st_size);
 	else
 		ft_printf("  %*d", ft_intlen((long)data->size_len), statbuf.st_size);
 	print_time(statbuf);
