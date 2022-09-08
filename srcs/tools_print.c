@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 20:14:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 07:26:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 	char	link_buf[MAX_PATH];
 	size_t	link;
 
-	//ft_bzero(path, MAX_PATH);
+	ft_bzero(path, MAX_PATH);
 	if (!utils->v_input_files.len)
 		ft_printf("total: %d\n", data->total);
 	i = 0;
@@ -71,14 +71,15 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 			ft_printf("%s", no_path(path));
 		if (link)
 		{
-			//ft_bzero(link_buf, MAX_PATH);
+			ft_bzero(link_buf, MAX_PATH);
 			if (readlink(path, link_buf, MAX_PATH) > 0)
 				ft_printf(" -> %s", link_buf);	
 		}
 		ft_putchar('\n');
 		i++;
 	}
-	if (utils->v_input_paths.len && i != utils->v_input_paths.len - 1)
+	//ft_printf("%d = i\n", i);
+	if (utils->v_input_paths.len)
 		ft_putchar('\n');
 }
 
@@ -113,7 +114,7 @@ void	sort_and_print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i)
 {
 	sort_it(&v_files, utils->bit_flags);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
-		print_stat(utils, &v_files, data, i);
+		print_stat(utils, &v_files, data, i); 					//noneed to send i here
 	else
 		print_files(&v_files, i);
 }

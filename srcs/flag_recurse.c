@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 19:14:12 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 07:12:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	look_for_dirs(t_ls *utils, t_vec *v_files)
 
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 {
-	//struct dirent	*dirp;
 	char	path[MAX_PATH];
 	//char	*file;
 	t_data	data;
@@ -63,7 +62,6 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 		vec_push(&v_files, path);
 	}
 	sort_and_print_it(utils, v_files, &data, i);
-	//free(dirp);
 	closedir(dp);
 	look_for_dirs(utils, &v_files);
 	vec_free(&v_files);
