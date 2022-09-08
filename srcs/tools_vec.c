@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 14:11:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 17:14:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,15 @@ static int	sort_str_desc(void *a, void *b)
 	return (ft_strcmp((char *)b, (const char *)a));
 }
 
-/* static int	sort_rev(void *a, void *b)
+static void	rev_sort(void *vec)
 {
-	return ((const char *)a   (char *)b);
-} */
+	char	*a;
+	char	*b;
+	
+	a = vec_get(vec, 1);
+	b = vec_get(vec, 2);
+	ft_swap((int *)a, (int *)b);
+}
 
 static int	sort_str_mtime(void *a, void *b)
 {
@@ -54,8 +59,8 @@ void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 	vec_sort(vec_to_sort, &sort_str_asc);
 	if (is_bit_set(bit_str, T_FLAG))
 		vec_sort(vec_to_sort, &sort_str_mtime);
-	/* if (is_bit_set(bit_str, T_FLAG) && is_bit_set(bit_str, R_FLAG))
-		vec_sort(vec_to_sort, &sort_rev); */
+	if (is_bit_set(bit_str, T_FLAG) && is_bit_set(bit_str, R_FLAG))
+		vec_iter(vec_to_sort, (void)rev_sort(vec_to_sort)); 					//work more here.
 	else if (is_bit_set(bit_str, R_FLAG))
 		vec_sort(vec_to_sort, &sort_str_desc);
 }
