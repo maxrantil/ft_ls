@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 07:12:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:23:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 	vec_new(&v_files, 0, MAX_FILENAME);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
 		init_data(&data);
-	ft_printf("%s:\n", input_path);
+	print_newline_and_path(utils, input_path, i);
 	dp = opendir(input_path);
 	if (!dp)
 	{

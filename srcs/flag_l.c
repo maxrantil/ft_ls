@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 19:21:02 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:22:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ void	exec_flag_l(t_ls *utils, size_t i)
 	init_data(&data);																//use memset 0 here?
 	ft_strcpy(path, (const char *)vec_get(&utils->v_input_paths, i));
 	dp = opendir(path);
-	if (utils->v_input_paths.len > 1 || (utils->v_input_paths.len && \
-		utils->v_input_files.len && utils->v_input_files.len == utils->input_files_stdout_c))
-			ft_printf("%s:\n", path);
+	print_newline_and_path(utils, path, i);
 	if (!dp)
 	{
 		print_error(path);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 19:17:39 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:21:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		check_flag_a(t_ls *utils, struct dirent *dirp);
 **	Tools Print
 */
 
+void	print_newline_and_path(t_ls *utils, char *path, size_t i);
 void	print_error(char *path);
 void	print_files(t_vec *v_files, size_t i);
 void	sort_and_print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i);

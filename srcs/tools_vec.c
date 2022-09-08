@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 14:15:58 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:11:22 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ static int	sort_str_desc(void *a, void *b)
 {
 	return (ft_strcmp((char *)b, (const char *)a));
 }
+
+/* static int	sort_rev(void *a, void *b)
+{
+	return ((const char *)a   (char *)b);
+} */
 
 static int	sort_str_mtime(void *a, void *b)
 {
@@ -49,7 +54,9 @@ void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 	vec_sort(vec_to_sort, &sort_str_asc);
 	if (is_bit_set(bit_str, T_FLAG))
 		vec_sort(vec_to_sort, &sort_str_mtime);
-	if (is_bit_set(bit_str, R_FLAG))
+	/* if (is_bit_set(bit_str, T_FLAG) && is_bit_set(bit_str, R_FLAG))
+		vec_sort(vec_to_sort, &sort_rev); */
+	else if (is_bit_set(bit_str, R_FLAG))
 		vec_sort(vec_to_sort, &sort_str_desc);
 }
 

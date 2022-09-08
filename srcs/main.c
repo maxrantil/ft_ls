@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/06 15:29:26 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:42:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,5 @@ int	main(int argc, const char **argv)
 	work_input(&utils, flags);
 	return (0);
 }
+
+ ./ft_ls  -l srcs objs Makefile

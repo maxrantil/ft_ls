@@ -6,11 +6,20 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 07:26:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:22:05 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void	print_newline_and_path(t_ls *utils, char *path, size_t i)
+{
+	if (i != 0)
+		ft_putchar('\n');
+	if (utils->v_input_paths.len > 1 || (utils->v_input_paths.len && \
+		utils->v_input_files.len && utils->v_input_files.len == utils->input_files_stdout_c))
+			ft_printf("%s:\n", path);
+}
 
 void	print_error(char *path)
 {
@@ -78,9 +87,6 @@ static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
 		ft_putchar('\n');
 		i++;
 	}
-	//ft_printf("%d = i\n", i);
-	if (utils->v_input_paths.len)
-		ft_putchar('\n');
 }
 
 void	print_files(t_vec *v_files, size_t i)
@@ -106,7 +112,6 @@ void	print_files(t_vec *v_files, size_t i)
 		ft_bzero(file, ft_strlen(file));
 		i++;
 	}
-	ft_putchar('\n');
 	ft_putchar('\n');
 }
 
