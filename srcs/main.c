@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 14:42:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 14:13:27 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ static char	*get_input(t_ls *utils, const char **argv, int argc)
 		else
 			vec_push(&utils->v_input_files, ptr);
 	}
-	print_errors(utils->v_input_errors);
+	if (utils->v_input_errors.len)
+		print_errors(utils->v_input_errors);
 	return (flags);
 }
 
@@ -107,5 +108,3 @@ int	main(int argc, const char **argv)
 	work_input(&utils, flags);
 	return (0);
 }
-
- ./ft_ls  -l srcs objs Makefile

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 06:35:14 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/08 13:46:07 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	print_file_props2(struct stat statbuf, t_data *data, size_t ret) //noneed f
 		else
 			ft_printf(" %*ld", ft_intlen((long)data->minor_len), (long)minor(statbuf.st_rdev));
 	}
-	else if (data->major_len || data->minor_len)
-		ft_printf("     %*d", ft_intlen((long)data->major_len) + ft_intlen((long)data->minor_len), statbuf.st_size);
+	/* else if (data->major_len || data->minor_len)
+		ft_printf("     %*d", ft_intlen((long)data->major_len) + ft_intlen((long)data->minor_len), statbuf.st_size); */
 	else
 		ft_printf("  %*d", ft_intlen((long)data->size_len), statbuf.st_size);
 	print_time(statbuf);
