@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 14:23:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:08:17 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 	if (!dp)
 	{
 		perror("");
-		ft_putchar('\n');
 		return ;
 	}
 	while ((utils->dirp = readdir(dp)))

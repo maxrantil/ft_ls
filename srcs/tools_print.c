@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 14:22:05 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 17:18:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 {
-	if (i != 0)
+	if (i != 0 || (i == 0 && utils->v_input_files.len))
 		ft_putchar('\n');
-	if (utils->v_input_paths.len > 1 || (utils->v_input_paths.len && \
-		utils->v_input_files.len && utils->v_input_files.len == utils->input_files_stdout_c))
+	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
+		(utils->v_input_paths.len && utils->v_input_files.len && \
+		utils->v_input_files.len == utils->input_files_stdout_c))
 			ft_printf("%s:\n", path);
 }
 
@@ -28,7 +29,6 @@ void	print_error(char *path)
 		else
 			ft_printf("ft_ls: %s: ", path);
 		perror("");
-		ft_putchar('\n');
 }
 
 static char	*no_path(char *file_with_path)

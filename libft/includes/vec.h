@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:07:48 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 15:08:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:12:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ void	*vec_get(t_vec *src, size_t index);
 int		vec_push(t_vec *src, void *elem);
 void	vec_iter(t_vec *src, void (*f) (void *));
 void	vec_sort(t_vec *src, int (*f)(void *, void *));
-void	vec_rev_sort(t_vec *src);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 14:21:56 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:03:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,16 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/ioctl.h>
+# include <stdio.h>
+# include <stdint.h>
+# include <stdlib.h>
+# include <string.h>
+# include <time.h>
+# include <pwd.h>
+# include <grp.h>
 
-# ifdef __linux__
 /* Major/Minor Numbers */
+# ifdef __linux__
 # include <sys/sysmacros.h>
 
 # define NANOTIME st_mtim.tv_nsec
@@ -32,17 +39,9 @@
 # define NANOTIME st_mtimespec.tv_nsec
 # endif
 
-# include <stdio.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <string.h>
-# include <time.h>
-# include <pwd.h>
-# include <grp.h>
-
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
-# define MAX_FILENAME 256 + 1
+# define MAX_FILENAME 256 + 6
 # define MAX_PATH 1048
 
 typedef enum e_flags
@@ -73,7 +72,6 @@ typedef struct s_data
 	size_t	owner_len;
 	size_t	group_len;
 	long	major_len;
-	long	minor_len;
 	long	size_len;
 }			t_data;
 

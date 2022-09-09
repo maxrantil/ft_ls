@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:05:08 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/30 10:44:20 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 18:13:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 // the array accordingly from the smallest to the largest element.
 */
 
-static void	memswap8(unsigned char *a, unsigned char *b)
+static void	memswap8bytes(char *a, char *b)
 {
 	if (a == b)
 		return ;
@@ -27,7 +27,7 @@ static void	memswap8(unsigned char *a, unsigned char *b)
 	*a ^= *b;
 }
 
-static void	memswap(unsigned char *a, unsigned char *b, size_t bytes)
+static void	memswap(char *a, char *b, size_t bytes)
 {
 	size_t	i;
 
@@ -36,7 +36,7 @@ static void	memswap(unsigned char *a, unsigned char *b, size_t bytes)
 	i = 0;
 	while (i < bytes)
 	{
-		memswap8(&a[i], &b[i]);
+		memswap8bytes(&a[i], &b[i]);
 		i++;
 	}
 }

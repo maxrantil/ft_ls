@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/07 15:16:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:01:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@ int	is_bit_set(unsigned int bit_str, unsigned int value)
 
 void	pathcat(char *path, char *file_name, char *base_path)
 {
-	//size_t	n;
-
 	if (base_path)
 		ft_strcpy(path, base_path);
-	//n = ft_strlen(path);		do i need these?
-	//if (path[n] != '\n')
-		ft_strcat(path, "/");
+	ft_strcat(path, "/");
 	ft_strcat(path, file_name);
 }
 
@@ -44,25 +40,13 @@ char	*put_path_infront_of_file(t_ls *utils, size_t i)
 	return (utils->dirp->d_name);
 }
 
-/* static void	edge_case1(char *path)
-{
-	size_t n;
-
-	n = ft_strlen(path);
-	if (path[n] != '/')
-		ft_printf("ft_ls: %s ", path);
-	else
-		ft_printf("ft_ls: "); //newline?
-} */
-
 void	init_data(t_data *data)
 {
 	data->total = 0;
-	data->links_len = 0;			///can i memset the who struct?
+	data->links_len = 0;			///can i memset the whole struct?
 	data->owner_len = 0;
 	data->group_len = 0;
 	data->major_len = 0;
-	data->minor_len = 0;
 	data->size_len = 0;
 }
 
@@ -86,8 +70,6 @@ void	get_data(struct stat statbuf, t_data *data)
 		data->group_len = gr_len;
 	if (major(statbuf.st_rdev) > data->major_len)
 		data->major_len = major(statbuf.st_rdev);
-	if (minor(statbuf.st_rdev) > data->minor_len)
-		data->minor_len = minor(statbuf.st_rdev);
 	if (statbuf.st_size > data->size_len)
 		data->size_len = statbuf.st_size;
 }
