@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/08 15:14:53 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 20:08:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ static void	no_input(t_ls *utils)
 void	work_input(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
-	if (utils->v_input_files.len)
-		sort_and_print_it(utils, utils->v_input_files, 0, 0);
+	if (utils->v_input_files.len)// && !is_bit_set(utils->bit_flags, L_FLAG))
+		sort_and_print_it(utils, utils->v_input_files, 0);
 	if (!utils->v_input_files.len && !utils->v_input_paths.len && !utils->v_input_errors.len)
 		no_input(utils);
 	else if (utils->v_input_paths.len)

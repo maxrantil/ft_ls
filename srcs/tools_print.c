@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 17:18:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 22:25:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 		ft_putchar('\n');
 	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
 		(utils->v_input_paths.len && utils->v_input_files.len && \
-		utils->v_input_files.len == utils->input_files_stdout_c))
+		utils->v_input_files.len == utils->input_files_stdout_c) || \
+		is_bit_set(utils->bit_flags, CAPITAL_R))
 			ft_printf("%s:\n", path);
 }
 
@@ -45,6 +46,60 @@ static char	*no_path(char *file_with_path)
 	return (&file_with_path[++n]);
 }
 
+static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < v_files->len)
+	{
+		get_data((char *)vec_get(v_files, i), &data);	
+		i++;
+	}
+	if (utils->v_input_files.len == utils->input_files_stdout_c)
+		ft_printf("total: %d\n", data.total);
+	return (data);
+}
+
+static void	if_link(size_t link, char *path)
+{
+	char	link_buf[MAX_PATH];
+	
+	if (link)
+	{
+		ft_bzero(link_buf, MAX_PATH);
+		if (readlink(path, link_buf, MAX_PATH) > 0)
+			ft_printf(" -> %s", link_buf);	
+	}
+}
+
+static void	print_stat(t_ls *utils, t_vec *v_files, size_t i)
+{
+	char	path[MAX_PATH];
+	t_data	data;
+	size_t	link;
+
+	ft_bzero(path, MAX_PATH);			
+	init_data(&data);
+	data = padding(utils, v_files, data);
+	i = 0;
+	while (i < v_files->len)
+	{
+		ft_strcpy(path, (char *)vec_get(v_files, i));
+		link = print_file_props1(path, &data);
+		if (utils->v_input_files.len != utils->input_files_stdout_c)
+		{
+			ft_printf("%s", path);
+			utils->input_files_stdout_c++;
+		}
+		else
+			ft_printf("%s", no_path(path));
+		if_link(link, path);
+		i++;
+		ft_putchar('\n');
+	}
+}
+
 static size_t	window_size(void)
 {
 	struct winsize	size;
@@ -54,42 +109,7 @@ static size_t	window_size(void)
 	return (size.ws_col);
 }
 
-static void	print_stat(t_ls *utils, t_vec *v_files, t_data *data, size_t i)
-{
-	char	path[MAX_PATH];
-	char	link_buf[MAX_PATH];
-	size_t	link;
-
-	ft_bzero(path, MAX_PATH);
-	if (!utils->v_input_files.len)
-		ft_printf("total: %d\n", data->total);
-	i = 0;
-	while (i < v_files->len)
-	{
-		ft_strcpy(path, (char *)vec_get(v_files, i));
-		lstat(path, &utils->statbuf);
-		link = print_file_props1(utils->statbuf, data);
-		if (utils->v_input_files.len)
-		{
-			ft_printf("%s\n", path);
-			if (utils->v_input_files.len == 1 && utils->v_input_paths.len)
-				ft_putchar('\n');
-			utils->input_files_stdout_c++;
-		}
-		else
-			ft_printf("%s", no_path(path));
-		if (link)
-		{
-			ft_bzero(link_buf, MAX_PATH);
-			if (readlink(path, link_buf, MAX_PATH) > 0)
-				ft_printf(" -> %s", link_buf);	
-		}
-		ft_putchar('\n');
-		i++;
-	}
-}
-
-void	print_files(t_vec *v_files, size_t i)
+void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
 	char	file[MAX_PATH];
 	size_t	term_len;
@@ -101,7 +121,13 @@ void	print_files(t_vec *v_files, size_t i)
 	i = 0;
 	while (i < v_files->len)
 	{
-		ft_strcat(file, no_path((char *)vec_get(v_files, i)));
+		if (utils->v_input_files.len != utils->input_files_stdout_c)
+		{
+			ft_printf("%s", (char *)vec_get(v_files, i));
+			utils->input_files_stdout_c++;
+		}
+		else
+			ft_strcat(file, no_path((char *)vec_get(v_files, i)));
 		len_count += ft_strlen(file) + 2;
 		if (len_count > term_len)
 		{
@@ -115,11 +141,11 @@ void	print_files(t_vec *v_files, size_t i)
 	ft_putchar('\n');
 }
 
-void	sort_and_print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i)
+void	sort_and_print_it(t_ls *utils, t_vec v_files, size_t i)
 {
 	sort_it(&v_files, utils->bit_flags);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
-		print_stat(utils, &v_files, data, i); 					//noneed to send i here
+		print_stat(utils, &v_files, i); 					//noneed to send i here or?
 	else
-		print_files(&v_files, i);
+		print_files(utils, &v_files, i);
 }

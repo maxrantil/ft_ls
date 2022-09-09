@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 19:01:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:24:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,15 @@ void	init_data(t_data *data)
 	data->size_len = 0;
 }
 
-void	get_data(struct stat statbuf, t_data *data)
+void	get_data(char *file, t_data *data)
 {
+	struct stat		statbuf;
 	struct passwd	*pwd;
 	struct group	*grp;
 	size_t			pw_len;
 	size_t			gr_len;
 	
+	lstat(file, &statbuf);
 	data->total += statbuf.st_blocks;
 	if (statbuf.st_nlink > data->links_len)
 		data->links_len = statbuf.st_nlink;

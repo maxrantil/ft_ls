@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 18:08:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 20:07:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,16 @@
 
 static void	look_for_dirs(t_ls *utils, t_vec *v_files)
 {
-	char	input_path[MAX_FILENAME];
-	size_t	i;
+	struct stat	statbuf;
+	char		input_path[MAX_FILENAME];
+	size_t		i;
 
 	i = 0;
 	while (i < v_files->len)
 	{
 		ft_strcpy(input_path, vec_get(v_files, i));
-		lstat(input_path, &utils->statbuf);
-		if (S_ISDIR(utils->statbuf.st_mode))
+		lstat(input_path, &statbuf);
+		if (S_ISDIR(statbuf.st_mode))
 			exec_flag_recurse(utils, input_path, i);
 		i++;
 	}
@@ -32,13 +33,13 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 {
 	char	path[MAX_PATH];
 	//char	*file;
-	t_data	data;
+	/* t_data	data; */
 	t_vec	v_files;
 	DIR		*dp;
 
 	vec_new(&v_files, 0, MAX_FILENAME);
-	if (is_bit_set(utils->bit_flags, L_FLAG))
-		init_data(&data);
+	/* if (is_bit_set(utils->bit_flags, L_FLAG))
+		init_data(&data); */
 	print_newline_and_path(utils, input_path, i);
 	dp = opendir(input_path);
 	if (!dp)
@@ -51,16 +52,13 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 		if (check_flag_a(utils, utils->dirp))
 			continue ;
 		ft_bzero(path, ft_strlen(path));
-		//file = put_path_infront_of_file(utils, i);
+		//file = put_path_infront_of_file(utils, i);				/try this again
 		pathcat(path, utils->dirp->d_name, input_path);
-		if (is_bit_set(utils->bit_flags, L_FLAG))
-		{
-			lstat(path, &utils->statbuf);
-			get_data(utils->statbuf, &data);
-		}
+		/* if (is_bit_set(utils->bit_flags, L_FLAG))
+			get_data(path, &data); */
 		vec_push(&v_files, path);
 	}
-	sort_and_print_it(utils, v_files, &data, i);
+	sort_and_print_it(utils, v_files, i);
 	closedir(dp);
 	look_for_dirs(utils, &v_files);
 	vec_free(&v_files);

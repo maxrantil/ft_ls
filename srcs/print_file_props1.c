@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 19:03:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:28:12 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,16 @@ static void	print_oth_permissions(struct stat statbuf)
 		ft_putchar('-');
 }
 
-size_t	print_file_props1(struct stat statbuf, t_data *data)
+size_t	print_file_props1(char *file, t_data *data)
 {
-	size_t	ret;
+	struct stat	statbuf;
+	size_t		ret;
 	
+	lstat(file, &statbuf);
 	ret = print_dir_permissions(statbuf);
 	print_usr_permissions(statbuf);
 	print_grp_permissions(statbuf);
 	print_oth_permissions(statbuf);
-	print_file_props2(statbuf, data, ret);
+	print_file_props2(&statbuf, data, ret);
 	return (ret);
 }
