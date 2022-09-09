@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:43:51 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 18:31:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 21:02:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	exec_flag_null(t_ls *utils, size_t i)
 			ft_strdel(&file);
 	}
 	sort_it(&v_files, utils->bit_flags);
-	print_files(&v_files, i);
+	print_files(utils, &v_files, i);
 	free(dp);
 	vec_free(&v_files);
 }

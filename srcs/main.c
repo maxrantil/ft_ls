@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 17:50:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 19:23:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,15 @@ static char	*get_flags(char *str)
 
 static char	*get_input(t_ls *utils, const char **argv, int argc)
 {
-	char	*ptr;
-	char	*temp;
-	char	*flags;
-	int		i;
+	struct stat	statbuf;
+	char		*ptr;
+	char		*temp;
+	char		*flags;
+	int			i;
 
 	vec_new(&utils->v_input_paths, 0, MAX_PATH); 			//make funciton?
 	vec_new(&utils->v_input_files, 0, MAX_PATH);
 	vec_new(&utils->v_input_errors, 0, MAX_PATH);
-	//utils->input_errors = 0;
 	utils->input_files_stdout_c = 0; 						//does this need to be in struct??? the whole variable i mean, or can i pass it insead? look at that
 	flags = ft_strnew(MAX_FLAGS);
 	i = 0;
@@ -87,9 +87,9 @@ static char	*get_input(t_ls *utils, const char **argv, int argc)
 			free(temp);
 			continue ;
 		}
-		if (lstat(ptr, &utils->statbuf) < 0)
+		if (lstat(ptr, &statbuf) < 0)
 			vec_push(&utils->v_input_errors, ptr);
-		else if (S_ISDIR(utils->statbuf.st_mode))
+		else if (S_ISDIR(statbuf.st_mode))
 			vec_push(&utils->v_input_paths, ptr);
 		else
 			vec_push(&utils->v_input_files, ptr);

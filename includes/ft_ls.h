@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 19:03:37 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/09 21:02:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef enum e_flags
 typedef struct s_ls
 {
 	struct dirent	*dirp;
-	struct stat		statbuf;
+	//struct stat		statbuf;
 	t_vec			v_input_paths;
 	t_vec			v_input_files;
 	t_vec			v_input_errors;
@@ -92,7 +92,7 @@ void	pathcat(char *path, char *file_name, char *base_path);
 char	*put_path_infront_of_file(t_ls *utils, size_t i);
 DIR		*open_path(t_ls *utils, size_t j);
 void	init_data(t_data *data);
-void	get_data(struct stat statbuf, t_data *data);
+void	get_data(char *file, t_data *data);
 int		check_flag_a(t_ls *utils, struct dirent *dirp);
 
 /*
@@ -101,10 +101,10 @@ int		check_flag_a(t_ls *utils, struct dirent *dirp);
 
 void	print_newline_and_path(t_ls *utils, char *path, size_t i);
 void	print_error(char *path);
-void	print_files(t_vec *v_files, size_t i);
-void	sort_and_print_it(t_ls *utils, t_vec v_files, t_data *data, size_t i);
-size_t	print_file_props1(struct stat statbuf, t_data *data);
-void	print_file_props2(struct stat statbuf, t_data *data, size_t ret);
+void	print_files(t_ls *utils, t_vec *v_files, size_t i);
+void	sort_and_print_it(t_ls *utils, t_vec v_files, size_t i);
+size_t	print_file_props1(char *file, t_data *data);
+void	print_file_props2(struct stat *statbuf, t_data *data, size_t ret);
 
 /*
 **	Tools Vec

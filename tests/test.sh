@@ -9,3 +9,6 @@ if [[ "$VAR1" == "$VAR2" ]]; then
 else
     echo "Strings are not equal."
 fi
+
+
+./ft_ls Makefile ../ft_printf/src/print_null_float_oct.c (print full path here)
