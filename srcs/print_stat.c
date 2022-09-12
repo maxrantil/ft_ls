@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 08:30:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 14:26:02 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void	if_link(size_t link, char *path)
 
 static void	output_stat(t_ls *utils, t_printstat *printstat, t_vec *v_files, ssize_t i)
 {
+	ft_bzero(printstat->path, MAX_PATH);
 	ft_strcpy(printstat->path, (char *)vec_get(v_files, i));
 	printstat->link = print_file_props1(printstat->path, &printstat->data);
 	if (utils->v_input_files.len != utils->input_files_stdout_c)
@@ -52,32 +53,19 @@ static void	output_stat(t_ls *utils, t_printstat *printstat, t_vec *v_files, ssi
 		ft_printf("%s", no_path(printstat->path));
 	if_link(printstat->link, printstat->path);
 	ft_putchar('\n');
-
 }
 
-void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i)
+void	print_stat(t_ls *utils, t_vec *v_files, size_t i)
 {
 	t_printstat	printstat;
 
-	ft_bzero(printstat.path, MAX_PATH);			
+	//ft_bzero(printstat.path, MAX_PATH);			
 	init_data(&printstat.data);
 	printstat.data = padding(utils, v_files, printstat.data);
-	if (is_bit_set(utils->bit_flags, R_FLAG))
+	i = 0;
+	while (i < v_files->len)
 	{
-		i = v_files->len - 1;
-		while (i >= 0)
-		{
-			output_stat(utils, &printstat, v_files, i);
-			i--;
-		}	
-	}
-	else
-	{
-		i = 0;
-		while (i < (ssize_t)v_files->len)
-		{
-			output_stat(utils, &printstat, v_files, i);
-			i++;
-		}
+		output_stat(utils, &printstat, v_files, i);
+		i++;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/09 18:12:40 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/12 13:48:43 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ _SRC_LIBFT =    ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c ft_i
 				ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c ft_lstnew.c ft_lstdelone.c \
 				ft_lstdel.c ft_lstadd.c ft_lstiter.c ft_lstmap.c ft_intlen.c ft_lstcount.c ft_lstaddend.c \
 				ft_lstputstr.c ft_isspace.c ft_strcdup.c ft_strclen.c ft_strupdate.c ft_imax.c ft_imin.c \
-				get_next_line.c ft_swap.c
+				get_next_line.c ft_swap.c ft_swapstr.c
 
 _SRC_PRINTF = 	ft_printf.c print_int_address.c print_c_str.c print_uint_binary.c \
 				print_null_float_oct.c print_hex_astrix_procent.c float_work.c flags_plus_minus_hash_null.c \

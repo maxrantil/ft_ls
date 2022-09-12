@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   ft_swapstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:10:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 13:46:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 15:07:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_swap(int *a, int *b)
+#include <stdio.h>
+void	ft_swapstr(void **a, void **b)
 {
-	int	temp;
+	printf("a = %s\n", (char *)a);
+	printf("b = %s\n", (char *)b);
+	void	*temp;
 
-	temp = *a;
-	*a = *b;
-	*b = temp;
+	temp = (*a);
+	(*a) = (*b);
+	(*b) = temp;
+	printf("a = %s\n", (char *)a);
+	printf("b = %s\n", (char *)b);
 }

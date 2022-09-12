@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 07:53:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 14:49:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ static size_t	window_size(void)
 	return (size.ws_col);
 }
 
-static void	output_files(t_ls *utils, t_print *print_data, t_vec *v_files, ssize_t i)
+static void	output_files(t_ls *utils, t_print *print_data, t_vec *v_files, size_t i)
 {
+	ft_bzero(print_data->file, MAX_PATH);
 	if (utils->v_input_files.len != utils->input_files_stdout_c)
 	{
 		ft_printf("%s", (char *)vec_get(v_files, i));
@@ -40,30 +41,17 @@ static void	output_files(t_ls *utils, t_print *print_data, t_vec *v_files, ssize
 	ft_bzero(print_data->file, ft_strlen(print_data->file));
 }
 
-void	print_files(t_ls *utils, t_vec *v_files, ssize_t i)
+void	print_files(t_ls *utils, t_vec *v_files, size_t i)
 {	
 	t_print	print_data;
 
 	print_data.len_count = 0;
 	print_data.term_len = window_size() - 50;
-	ft_bzero(print_data.file, MAX_PATH);
-	if (is_bit_set(utils->bit_flags, R_FLAG))
+	i = 0;
+	while (i < v_files->len)
 	{
-		i = v_files->len - 1;
-		while (i >= 0)
-		{
-			output_files(utils, &print_data, v_files, i);
-			i--;
-		}	
-	}
-	else
-	{
-		i = 0;
-		while (i < (ssize_t)v_files->len)
-		{
-			output_files(utils, &print_data, v_files, i);
-			i++;
-		}	
-	}
+		output_files(utils, &print_data, v_files, i);
+		i++;
+	}	
 	ft_putchar('\n');
 }

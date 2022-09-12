@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 07:10:28 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 15:07:59 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,47 @@ static int	sort_str_mtime(void *a, void *b)
 		return (ret);
 	return (ft_strcmp((char *)a, (const char *)b));
 }
+/* void reverse_array(int arr[], int start, int end)
+{
+    while (start < end)
+    {
+        int temp = arr[start];
+        arr[start] = arr[end];
+        arr[end] = temp;
+        start++;
+        end--;
+    }
+	return ();
+} */
 
-//this need to be checked on iMac, works with -lt but not only -t??
+void	reverse_sort(t_vec *vec_to_sort)
+{
+	size_t	n;
+	size_t	start;	
+	size_t	end;
+	
+	start = 0;
+	end = vec_to_sort->len - 1;	
+	n = vec_to_sort->len;
+	if (n % 2)
+		n -= 1;
+	n /= 2;
+/* 	while (n)
+	{ */
+		ft_swapstr(vec_get(vec_to_sort, start), vec_get(vec_to_sort, end));
+/* 		start++;
+		end--;
+		n--;
+	}	 */
+}
+
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str)
 {
 	vec_sort(vec_to_sort, &sort_str_asc);
 	if (is_bit_set(bit_str, T_FLAG))
 		vec_sort(vec_to_sort, &sort_str_mtime);
-	/* if (is_bit_set(bit_str, T_FLAG) && is_bit_set(bit_str, R_FLAG))
-		vec_iter(vec_to_sort, (void)rev_sort(vec_to_sort)); 	 */				//work more here.
-	/* else if (is_bit_set(bit_str, R_FLAG))
-		vec_sort(vec_to_sort, &sort_str_desc); */
+	if (is_bit_set(bit_str, R_FLAG))
+		reverse_sort(vec_to_sort); 
 }
 
 void	print_errors(t_vec error_vec)

@@ -105,5 +105,6 @@ char	*ft_strupdate(char *s1, const char *s2);
 int		ft_imin(int a, int b);
 int		ft_imax(int a, int b);
 void	ft_swap(int *a, int *b);
+void	ft_swapstr(void **a, void **b);
 
 #endif
