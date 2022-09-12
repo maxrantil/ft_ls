@@ -6,12 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 19:23:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:33:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
+//need more correct for iMac
 static void	usage(int status)
 {
 	ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");

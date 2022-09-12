@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 19:35:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:10:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,16 @@ void	print_file_props2(struct stat *statbuf, t_data *data, size_t ret)
 	print_group(statbuf, data);
 	if (ret == 2)
 	{
-		ft_printf("   %*ld,", ft_intlen((long)data->major_len), (long)major(statbuf->st_rdev));
+		ft_printf("   %*ld,", ft_intlen((long)data->major_len), \
+		(long)major(statbuf->st_rdev));
 		if ((long)minor(statbuf->st_rdev) > 999)
 			ft_printf(" %#010lx", (long)minor(statbuf->st_rdev));
 		else
 			ft_printf("%*ld", 4, (long)minor(statbuf->st_rdev));
 	}
 	else if (data->major_len)
-		ft_printf("    %*d", ft_intlen((long)data->major_len) + 4, statbuf->st_size);
+		ft_printf("    %*d", ft_intlen((long)data->major_len) + 4, \
+		statbuf->st_size);
 	else
 		ft_printf("  %*d", ft_intlen((long)data->size_len), statbuf->st_size);
 	print_time(statbuf);

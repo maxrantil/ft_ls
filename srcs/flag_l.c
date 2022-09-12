@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 21:32:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:26:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,11 @@ void	exec_flag_l(t_ls *utils, size_t i)
 		print_error(path);
 		return ;
 	}
-	while ((utils->dirp = readdir(dp)) != NULL)
+	while (1)
 	{
+		utils->dirp = readdir(dp);
+		if (!utils->dirp)
+			break ;
 		if (!is_bit_set(utils->bit_flags, A_FLAG) \
 			&& utils->dirp->d_name[0] == '.')
 			continue ;

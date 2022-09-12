@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 07:53:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:59:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static size_t	window_size(void)
 	return (size.ws_col);
 }
 
-static void	output_files(t_ls *utils, t_print *print_data, t_vec *v_files, ssize_t i)
+static void	output_files(t_ls *utils, t_print *print_data, t_vec *v_files, \
+ssize_t i)
 {
 	if (utils->v_input_files.len != utils->input_files_stdout_c)
 	{

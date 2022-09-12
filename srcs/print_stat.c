@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 08:30:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:08:17 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
 	i = 0;
 	while (i < v_files->len)
 	{
-		get_data((char *)vec_get(v_files, i), &data);	
+		get_data((char *)vec_get(v_files, i), &data);
 		i++;
 	}
 	if (utils->v_input_files.len == utils->input_files_stdout_c)
@@ -30,16 +30,17 @@ static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
 static void	if_link(size_t link, char *path)
 {
 	char	link_buf[MAX_PATH];
-	
+
 	if (link)
 	{
 		ft_bzero(link_buf, MAX_PATH);
 		if (readlink(path, link_buf, MAX_PATH) > 0)
-			ft_printf(" -> %s", link_buf);	
+			ft_printf(" -> %s", link_buf);
 	}
 }
 
-static void	output_stat(t_ls *utils, t_printstat *printstat, t_vec *v_files, ssize_t i)
+static void	output_stat(t_ls *utils, t_printstat *printstat, \
+t_vec *v_files, ssize_t i)
 {
 	ft_strcpy(printstat->path, (char *)vec_get(v_files, i));
 	printstat->link = print_file_props1(printstat->path, &printstat->data);
@@ -52,14 +53,23 @@ static void	output_stat(t_ls *utils, t_printstat *printstat, t_vec *v_files, ssi
 		ft_printf("%s", no_path(printstat->path));
 	if_link(printstat->link, printstat->path);
 	ft_putchar('\n');
+}
 
+static void	init_data(t_data *data)
+{
+	data->total = 0;
+	data->links_len = 0;
+	data->owner_len = 0;
+	data->group_len = 0;
+	data->major_len = 0;
+	data->size_len = 0;
 }
 
 void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i)
 {
 	t_printstat	printstat;
 
-	ft_bzero(printstat.path, MAX_PATH);			
+	ft_bzero(printstat.path, MAX_PATH);
 	init_data(&printstat.data);
 	printstat.data = padding(utils, v_files, printstat.data);
 	if (is_bit_set(utils->bit_flags, R_FLAG))

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 17:51:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:19:15 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 /* Major/Minor Numbers */
 # ifdef __linux__
-# include <sys/sysmacros.h>
+# include <sys/sysmacros.h>		//fix for eval but save for after eval
 
 # define NANOTIME st_mtim.tv_nsec
 # endif
@@ -96,7 +96,7 @@ void	flag_l(t_ls *utils);
 void	exec_flag_l(t_ls *utils, size_t i);
 
 void	flag_recurse(t_ls *utils);
-void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i); 
+void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i);
 void	get_dirs_recurse(t_ls *utils, char *input_path, size_t i);
 
 /*
@@ -106,7 +106,6 @@ int		is_bit_set(unsigned int value, unsigned int bit_str);
 void	pathcat(char *path, char *file_name, char *base_path);
 char	*put_path_infront_of_file(t_ls *utils, size_t i);
 DIR		*open_path(t_ls *utils, size_t j);
-void	init_data(t_data *data);
 void	get_data(char *file, t_data *data);
 int		check_flag_a(t_ls *utils, struct dirent *dirp);
 

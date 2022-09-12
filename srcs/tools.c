@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 19:24:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:03:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,17 @@ void	pathcat(char *path, char *file_name, char *base_path)
 	ft_strcat(path, file_name);
 }
 
-char	*put_path_infront_of_file(t_ls *utils, size_t i)
+char	*put_path_infront_of_file(t_ls *u, size_t i)
 {
 	char	*file_with_path;
 
-	if (utils->v_input_paths.len)
+	if (u->v_input_paths.len)
 	{
-		file_with_path = ft_strjoin((char *)vec_get(&utils->v_input_paths, i), "/");
-		file_with_path = ft_strupdate(file_with_path, utils->dirp->d_name);
+		file_with_path = ft_strjoin((char *)vec_get(&u->v_input_paths, i), "/");
+		file_with_path = ft_strupdate(file_with_path, u->dirp->d_name);
 		return (file_with_path);
 	}
-	return (utils->dirp->d_name);
-}
-
-void	init_data(t_data *data)
-{
-	data->total = 0;
-	data->links_len = 0;			///can i memset the whole struct?
-	data->owner_len = 0;
-	data->group_len = 0;
-	data->major_len = 0;
-	data->size_len = 0;
+	return (u->dirp->d_name);
 }
 
 void	get_data(char *file, t_data *data)
@@ -57,7 +47,7 @@ void	get_data(char *file, t_data *data)
 	struct group	*grp;
 	size_t			pw_len;
 	size_t			gr_len;
-	
+
 	lstat(file, &statbuf);
 	data->total += statbuf.st_blocks;
 	if (statbuf.st_nlink > data->links_len)
@@ -78,8 +68,8 @@ void	get_data(char *file, t_data *data)
 
 int	check_flag_a(t_ls *utils, struct dirent *dirp)
 {
-	return (!ft_strcmp(dirp->d_name, ".") \
-			|| !ft_strcmp(dirp->d_name, "..") \
-			|| (!is_bit_set(utils->bit_flags, A_FLAG) \
-				&& dirp->d_name[0] == '.'));
+	return (!ft_strcmp(dirp->d_name, ".") || \
+	!ft_strcmp(dirp->d_name, "..") || \
+	(!is_bit_set(utils->bit_flags, A_FLAG) && \
+	dirp->d_name[0] == '.'));
 }

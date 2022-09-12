@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:07:48 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 18:12:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:50:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VEC_H
 
 # include "libft.h"
+/* for perror() */
 # include <stdio.h>
 
 typedef struct s_vec

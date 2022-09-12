@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 20:08:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 19:17:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static void	exec_flags(t_ls *utils)
 static void	no_input(t_ls *utils)
 {
 	size_t	i;
-	
+
 	i = 0;
-	vec_push(&utils->v_input_paths, ".");			//can we put this in the start of function?
+	vec_push(&utils->v_input_paths, ".");
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
 		exec_flag_recurse(utils, ".", i);
 	else if (is_bit_set(utils->bit_flags, L_FLAG))
@@ -62,16 +62,17 @@ static void	no_input(t_ls *utils)
 void	work_input(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
-	if (utils->v_input_files.len)// && !is_bit_set(utils->bit_flags, L_FLAG))
+	if (utils->v_input_files.len)
 		sort_and_print_it(utils, utils->v_input_files, 0);
-	if (!utils->v_input_files.len && !utils->v_input_paths.len && !utils->v_input_errors.len)
+	if (!utils->v_input_files.len && !utils->v_input_paths.len && \
+	!utils->v_input_errors.len)
 		no_input(utils);
 	else if (utils->v_input_paths.len)
 	{
 		sort_it(&utils->v_input_paths, utils->bit_flags);
 		exec_flags(utils);
 	}
-	vec_free(&utils->v_input_paths); 		//is this the right place?
+	vec_free(&utils->v_input_paths);
 	vec_free(&utils->v_input_files);
 	vec_free(&utils->v_input_errors);
 }
