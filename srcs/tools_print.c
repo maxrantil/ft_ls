@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 17:56:11 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 18:01:01 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	print_error(char *path)
 {
 	if (path[ft_strlen(path) - 1] == '/')
-			ft_printf("ft_ls: : ");	
-		else
-			ft_printf("ft_ls: %s: ", path);
-		perror("");
+		ft_printf("ft_ls: : ");
+	else
+		ft_printf("ft_ls: %s: ", path);
+	perror("");
 }
 
 char	*no_path(char *file_with_path)
@@ -40,10 +40,10 @@ void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 	if (i != 0 || (i == 0 && utils->v_input_files.len))
 		ft_putchar('\n');
 	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
-		(utils->v_input_files.len && \
-		utils->v_input_files.len == utils->input_files_stdout_c) || \
-		(is_bit_set(utils->bit_flags, CAPITAL_R) && i != 0))
-			ft_printf("%s:\n", path);
+		(utils->v_input_files.len == utils->input_files_stdout_c) || \
+		(is_bit_set(utils->bit_flags, CAPITAL_R) && i != 0) || \
+			utils->v_input_files.len)
+		ft_printf("%s:\n", path);
 }
 
 void	sort_and_print_it(t_ls *utils, t_vec v_files, size_t i)
