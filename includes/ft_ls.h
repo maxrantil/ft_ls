@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/09 21:02:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 08:28:03 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,20 @@ typedef struct s_data
 	long	size_len;
 }			t_data;
 
+typedef struct s_print
+{
+	char	file[MAX_PATH];
+	size_t	term_len;
+	size_t	len_count;
+}			t_print;
+
+typedef struct s_printstat
+{
+	char	path[MAX_PATH];
+	t_data	data;
+	size_t	link;
+}			t_printstat;
+
 void	work_input(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
 void	flag_l(t_ls *utils);
@@ -101,10 +115,12 @@ int		check_flag_a(t_ls *utils, struct dirent *dirp);
 
 void	print_newline_and_path(t_ls *utils, char *path, size_t i);
 void	print_error(char *path);
-void	print_files(t_ls *utils, t_vec *v_files, size_t i);
+void	print_files(t_ls *utils, t_vec *v_files, ssize_t i);
+void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i);
 void	sort_and_print_it(t_ls *utils, t_vec v_files, size_t i);
 size_t	print_file_props1(char *file, t_data *data);
 void	print_file_props2(struct stat *statbuf, t_data *data, size_t ret);
+char	*no_path(char *file_with_path);
 
 /*
 **	Tools Vec

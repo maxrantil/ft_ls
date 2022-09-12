@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/09 18:02:37 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/12 07:56:20 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,8 @@ FILES 		= 	flag_l \
 				main \
 				print_file_props1 \
 				print_file_props2 \
+				print_files \
+				print_stat \
 				tools_print \
 				tools_vec \
 				tools \
