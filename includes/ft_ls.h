@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 08:28:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 17:51:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@
 
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
-# define MAX_FILENAME 256 + 6
+/* the 8 is for getting the max strline of a file on Mac */
+# define MAX_FILENAME 256 + 8
 # define MAX_PATH 1048
 
 typedef enum e_flags

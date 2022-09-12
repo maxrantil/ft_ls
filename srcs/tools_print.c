@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 07:57:03 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/12 17:56:11 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*no_path(char *file_with_path)
 	n = ft_strlen(file_with_path) - 1;
 	while (n > 0 && file_with_path[n] != '/')
 		n--;
-	if (n == 0)// && file_with_path[n] != '/')
+	if (n == 0)
 		return (&file_with_path[n]);
 	return (&file_with_path[++n]);
 }
@@ -40,9 +40,9 @@ void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 	if (i != 0 || (i == 0 && utils->v_input_files.len))
 		ft_putchar('\n');
 	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
-		(utils->v_input_paths.len && utils->v_input_files.len && \
+		(utils->v_input_files.len && \
 		utils->v_input_files.len == utils->input_files_stdout_c) || \
-		is_bit_set(utils->bit_flags, CAPITAL_R))
+		(is_bit_set(utils->bit_flags, CAPITAL_R) && i != 0))
 			ft_printf("%s:\n", path);
 }
 
