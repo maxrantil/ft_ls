@@ -36,11 +36,24 @@ static void	print_group(struct stat *statbuf, t_data *data)
 
 static void	print_time(struct stat *statbuf)
 {
+	time_t	current_time;
 	char	*mtime;
 
+	time(&current_time);
+	
+	// ft_printf("current-> %d ", current_time);
+	// ft_printf("filetime-> %d ", statbuf->st_mtime);
+	
 	mtime = ft_memalloc(ft_strlen(ctime(&statbuf->st_mtime)));
 	ft_strcpy(mtime, ctime(&statbuf->st_mtime));
-	ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
+	if ((current_time - statbuf->st_mtime) >= SIX_MONTHS_SEC || \
+	statbuf->st_mtime > current_time + ONE_HOUR_SEC)
+	{
+		ft_printf(" %.7s ", &(mtime[ft_strlen(mtime) - 21]));
+		ft_printf("%.4s ", &(mtime[ft_strlen(mtime) - 5]));
+	}
+	else
+		ft_printf(" %.12s ", &(mtime[ft_strlen(mtime) - 21]));
 	free(mtime);
 }
 

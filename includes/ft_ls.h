@@ -44,6 +44,8 @@
 /* the 8 is for getting the max strlen of a file on Mac */
 # define MAX_FILENAME 256 + 8
 # define MAX_PATH 1048
+# define SIX_MONTHS_SEC 15778476
+# define ONE_HOUR_SEC 3600
 
 typedef enum e_flags
 {
