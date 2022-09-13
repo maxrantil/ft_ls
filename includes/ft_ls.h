@@ -41,30 +41,40 @@
 
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
-/* the 8 is for getting the max strline of a file on Mac */
+/* the 8 is for getting the max strlen of a file on Mac */
 # define MAX_FILENAME 256 + 8
 # define MAX_PATH 1048
 
 typedef enum e_flags
 {
-	NULL_FLAG = 0b00000,
-	A_FLAG = 0b00001,
-	L_FLAG = 0b00010,
-	R_FLAG = 0b00100,
-	CAPITAL_R = 0b01000,
-	T_FLAG = 0b10000
+	NULL_FLAG	= 0b00000,
+	A_FLAG		= 0b00001,
+	L_FLAG		= 0b00010,
+	R_FLAG		= 0b00100,
+	CAPITAL_R	= 0b01000,
+	T_FLAG		= 0b10000
 }			t_flags;
 
 typedef struct s_ls
 {
 	struct dirent	*dirp;
-	//struct stat		statbuf;
 	t_vec			v_input_paths;
 	t_vec			v_input_files;
 	t_vec			v_input_errors;
 	size_t			input_files_stdout_c;
 	uint8_t			bit_flags;
+	size_t			flags_flag;
 }					t_ls;
+
+typedef struct s_flagvars
+{
+	int		int_flags[MAX_FLAGS];
+	char	*ret_str;
+	int		i;
+	int		j;
+	int		ret_i;
+	int		n;
+}			t_flagvars;
 
 typedef struct s_data
 {
@@ -90,14 +100,15 @@ typedef struct s_printstat
 	size_t	link;
 }			t_printstat;
 
+/*
+**	Basics
+*/
 void	work_input(t_ls *utils, char *flags);
-//void	flag_null(t_ls *utils);
 void	get_files(t_ls *utils, t_vec *v_files, size_t i);
 void	get_files_from_path(t_ls *utils);
 void	push_file(t_ls *utils, t_vec *v_files, size_t i);
 void	flag_recurse(t_ls *utils);
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i);
-void	get_dirs_recurse(t_ls *utils, char *input_path, size_t i);
 
 /*
 **	Tools
@@ -112,7 +123,6 @@ int		check_flag_a(t_ls *utils, struct dirent *dirp);
 /*
 **	Tools Print
 */
-
 void	print_newline_and_path(t_ls *utils, char *path, size_t i);
 void	print_error(char *path);
 void	print_files(t_ls *utils, t_vec *v_files, ssize_t i);
@@ -123,7 +133,7 @@ void	print_file_props2(struct stat *statbuf, t_data *data, size_t ret);
 char	*no_path(char *file_with_path);
 
 /*
-**	Tools Vec
+**	Sort
 */
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str);
 void	print_errors(t_vec error_vec);

@@ -15,77 +15,73 @@
 //need more correct for iMac
 static void	usage(int status)
 {
-	ft_printf("Usage: %s [OPTION]... [FILE]...\n", "./ft_ls");
-	ft_printf("\
-	List information about the FILEs (the current directory by default).\n\
-	Sort entries alphabetically if not -t is specified.\n");
-	ft_printf("\
-	-a	do not ignore entries starting with .\n\
-	-l	use a long listing format\n\
-	-r	reverse order while sorting\n\
-	-R	list subdirectories recursively\n\
-	-t	sort by modification time, newest first\n");
+	ft_printf("Usage: %s [-alrRt]... [FILE]...\n", "./ft_ls");
 	exit(status);
 }
 
-//too long function
+static void	init_flag_struct(t_flagvars *flagst, char *str)
+{
+	ft_memset(flagst->int_flags, 0, MAX_FLAGS);
+	flagst->ret_str = ft_strnew(MAX_FLAGS);
+	flagst->i = 0;
+	flagst->ret_i = 0;
+	flagst->n = ft_strlen(str);
+}
+
 static char	*get_flags(char *str)
 {
-	static int	int_flags[MAX_FLAGS];
-	char		*ret_str;
-	int			i;
-	int			j;
-	int			k;
-	int			n;
+	t_flagvars	flagst;
 
-	ret_str = ft_strnew(MAX_FLAGS);
-	n = ft_strlen(str);
-	i = 0;
-	k = 0;
-	while (i < n)
+	init_flag_struct(&flagst, str);
+	while (flagst.i < flagst.n)
 	{
-		j = 0;
-		while (j <= MAX_FLAGS)
+		flagst.j = 0;
+		while (flagst.j <= MAX_FLAGS)
 		{
-			if (LS_FLAGS[j] == str[i])
+			if (LS_FLAGS[flagst.j] == str[flagst.i])
 				break ;
-			if (j == MAX_FLAGS)
+			if (flagst.j == MAX_FLAGS)
 				usage(1);
-			j++;
+			flagst.j++;
 		}
-		if (!int_flags[j])
+		if (!flagst.int_flags[flagst.j])
 		{
-			int_flags[j] = 1;
-			ret_str[k++] = str[i];
+			flagst.int_flags[flagst.j] = 1;
+			flagst.ret_str[flagst.ret_i++] = str[flagst.i];
 		}
-		i++;
+		flagst.i++;
 	}
-	return (ret_str);
+	return (flagst.ret_str);
+}
+
+static char	*check_flags(char *ptr, char *flags)
+{
+	char	*temp;
+
+	ptr++;
+	temp = get_flags(ptr);
+	ft_strcat(flags, temp);
+	free(temp);
+	return (flags);
 }
 
 static char	*get_input(t_ls *utils, const char **argv, int argc)
 {
 	struct stat	statbuf;
 	char		*ptr;
-	char		*temp;
 	char		*flags;
 	int			i;
 
-	vec_new(&utils->v_input_paths, 0, MAX_PATH); 			//make funciton?
-	vec_new(&utils->v_input_files, 0, MAX_PATH);
-	vec_new(&utils->v_input_errors, 0, MAX_PATH);
-	utils->input_files_stdout_c = 0; 						//does this need to be in struct??? the whole variable i mean, or can i pass it insead? look at that
 	flags = ft_strnew(MAX_FLAGS);
+	utils->flags_flag = 0;
 	i = 0;
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
-		if (argv[i][0] == '-' && ft_isalpha(argv[i][1]))	//change i to 1 and then the fix is there for iMac terminal flags
+		if (!utils->flags_flag && argv[i][0] == '-' && ft_isalpha(argv[i][1]))	//change i to 1 and then the fix is there for iMac terminal flags
 		{
-			ptr++;											//make this one function
-			temp = get_flags(ptr);
-			ft_strcat(flags, temp);
-			free(temp);
+			flags = check_flags(ptr, flags);
+			utils->flags_flag = 1;
 			continue ;
 		}
 		if (lstat(ptr, &statbuf) < 0)
@@ -100,11 +96,20 @@ static char	*get_input(t_ls *utils, const char **argv, int argc)
 	return (flags);
 }
 
+static void	init_utils(t_ls *utils)
+{
+	vec_new(&utils->v_input_paths, 0, MAX_PATH);
+	vec_new(&utils->v_input_files, 0, MAX_PATH);
+	vec_new(&utils->v_input_errors, 0, MAX_PATH);
+	utils->input_files_stdout_c = 0;
+}
+
 int	main(int argc, const char **argv)
 {
 	t_ls	utils;
 	char	*flags;
 
+	init_utils(&utils);
 	flags = get_input(&utils, argv, argc);
 	work_input(&utils, flags);
 	return (0);
