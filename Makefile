@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/12 18:51:46 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/13 07:18:22 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,6 @@ SOURCE_COUNT = $(words $(FILES))
 H_FILES 	= 	ft_ls
 
 FILES 		= 	flag_l \
-				flag_null \
 				flag_recurse \
 				main \
 				print_file_props1 \

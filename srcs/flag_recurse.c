@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 06:34:40 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 08:43:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 static void	check_for_dirs(t_ls *utils, t_vec *v_files, ssize_t i)
 {
 	struct stat	statbuf;
-	char		input_path[MAX_FILENAME];
+	char		file[MAX_PATH];
+	char		nopathfile[MAX_FILENAME];
 
-	ft_strcpy(input_path, vec_get(v_files, i));
-	lstat(input_path, &statbuf);
-	if (S_ISDIR(statbuf.st_mode))
-		exec_flag_recurse(utils, input_path, i);
+	ft_strcpy(file, vec_get(v_files, i));
+	lstat(file, &statbuf);
+	ft_strcpy(nopathfile, no_path(file));
+	if (S_ISDIR(statbuf.st_mode) \
+	&& ft_strcmp(nopathfile, ".") && ft_strcmp(nopathfile, ".."))
+		exec_flag_recurse(utils, file, i);
 }
 
 static void	check_order(t_ls *utils, t_vec *v_files)
@@ -77,8 +80,8 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 		add_files(&v_files, utils->dirp->d_name, path, input_path);
 	}
 	sort_and_print_it(utils, &v_files, i);
-	closedir(dp);
 	check_order(utils, &v_files);
+	closedir(dp);
 	vec_free(&v_files);
 }
 

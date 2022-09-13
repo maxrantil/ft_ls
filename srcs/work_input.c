@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 06:39:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 07:17:42 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,21 @@ static void	exec_flags(t_ls *utils)
 {
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
 		flag_recurse(utils);
-	else if (is_bit_set(utils->bit_flags, L_FLAG))
-		flag_l(utils);
+	/* else if (is_bit_set(utils->bit_flags, L_FLAG))
+		flag_l(utils); */
 	else
-		flag_null(utils);
+		get_files_from_path(utils);
 }
 
 static void	no_input(t_ls *utils)
 {
-	size_t	i;
-
-	i = 0;
 	vec_push(&utils->v_input_paths, ".");
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
-		exec_flag_recurse(utils, ".", i);
-	else if (is_bit_set(utils->bit_flags, L_FLAG))
-		flag_l(utils);
+		flag_recurse(utils);
+	/* else if (is_bit_set(utils->bit_flags, L_FLAG))
+		flag_l(utils); */
 	else
-		flag_null(utils);
+		get_files_from_path(utils);
 }
 
 void	work_input(t_ls *utils, char *flags)

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 19:03:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 08:39:49 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	get_data(char *file, t_data *data)
 
 int	check_flag_a(t_ls *utils, struct dirent *dirp)
 {
-	return (!ft_strcmp(dirp->d_name, ".") || \
-	!ft_strcmp(dirp->d_name, "..") || \
-	(!is_bit_set(utils->bit_flags, A_FLAG) && \
-	dirp->d_name[0] == '.'));
+	return (!is_bit_set(utils->bit_flags, A_FLAG) && \
+	dirp->d_name[0] == '.');
 }

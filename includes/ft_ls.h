@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 06:33:46 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 07:16:22 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,10 @@ typedef struct s_printstat
 }			t_printstat;
 
 void	work_input(t_ls *utils, char *flags);
-void	flag_null(t_ls *utils);
-void	flag_l(t_ls *utils);
-void	exec_flag_l(t_ls *utils, t_vec *v_files, size_t i);
-
+//void	flag_null(t_ls *utils);
+void	get_files(t_ls *utils, t_vec *v_files, size_t i);
+void	get_files_from_path(t_ls *utils);
+void	push_file(t_ls *utils, t_vec *v_files, size_t i);
 void	flag_recurse(t_ls *utils);
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i);
 void	get_dirs_recurse(t_ls *utils, char *input_path, size_t i);
