@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 19:17:56 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 06:39:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	no_input(t_ls *utils)
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
 		exec_flag_recurse(utils, ".", i);
 	else if (is_bit_set(utils->bit_flags, L_FLAG))
-		exec_flag_l(utils, i);
+		flag_l(utils);
 	else
 		flag_null(utils);
 }
@@ -63,7 +63,7 @@ void	work_input(t_ls *utils, char *flags)
 {
 	turn_on_bit_flags(utils, flags);
 	if (utils->v_input_files.len)
-		sort_and_print_it(utils, utils->v_input_files, 0);
+		sort_and_print_it(utils, &utils->v_input_files, 0);
 	if (!utils->v_input_files.len && !utils->v_input_paths.len && \
 	!utils->v_input_errors.len)
 		no_input(utils);

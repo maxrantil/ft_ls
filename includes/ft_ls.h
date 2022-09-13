@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 19:19:15 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 06:33:46 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ typedef struct s_printstat
 void	work_input(t_ls *utils, char *flags);
 void	flag_null(t_ls *utils);
 void	flag_l(t_ls *utils);
-void	exec_flag_l(t_ls *utils, size_t i);
+void	exec_flag_l(t_ls *utils, t_vec *v_files, size_t i);
 
 void	flag_recurse(t_ls *utils);
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i);
@@ -117,7 +117,7 @@ void	print_newline_and_path(t_ls *utils, char *path, size_t i);
 void	print_error(char *path);
 void	print_files(t_ls *utils, t_vec *v_files, ssize_t i);
 void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i);
-void	sort_and_print_it(t_ls *utils, t_vec v_files, size_t i);
+void	sort_and_print_it(t_ls *utils, t_vec *v_files, size_t i);
 size_t	print_file_props1(char *file, t_data *data);
 void	print_file_props2(struct stat *statbuf, t_data *data, size_t ret);
 char	*no_path(char *file_with_path);

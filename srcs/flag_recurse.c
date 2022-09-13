@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 18:28:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 06:34:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 			continue ;
 		add_files(&v_files, utils->dirp->d_name, path, input_path);
 	}
-	sort_and_print_it(utils, v_files, i);
+	sort_and_print_it(utils, &v_files, i);
 	closedir(dp);
 	check_order(utils, &v_files);
 	vec_free(&v_files);

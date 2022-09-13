@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 19:16:19 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/13 06:41:54 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*no_path(char *file_with_path)
 
 void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 {
-	if (i != 0 || (i == 0 && (utils->v_input_files.len || \
-	utils->v_input_paths.len > 1)))
+	if (i != 0) /* || (i == 0 && (utils->v_input_files.len || \
+	utils->v_input_paths.len > 1))) */
 		ft_putchar('\n');
 	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
 	(utils->v_input_files.len && \
@@ -47,11 +47,11 @@ void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 		ft_printf("%s:\n", path);
 }
 
-void	sort_and_print_it(t_ls *utils, t_vec v_files, size_t i)
+void	sort_and_print_it(t_ls *utils, t_vec *v_files, size_t i)
 {
-	sort_it(&v_files, utils->bit_flags);
+	sort_it(v_files, utils->bit_flags);
 	if (is_bit_set(utils->bit_flags, L_FLAG))
-		print_stat(utils, &v_files, i);
+		print_stat(utils, v_files, i);
 	else
-		print_files(utils, &v_files, i);
+		print_files(utils, v_files, i);
 }
