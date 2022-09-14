@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:26:25 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 18:27:51 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,17 @@ char	*no_path(char *file_with_path)
 
 void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 {
-	if ((i != 0) || (i == 0 && utils->v_input_files.len))
+	static int	nl_check;
+
+	i = 0;
+	if (nl_check)
 		ft_putchar('\n');
-	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
-	(utils->v_input_files.len && \
-	utils->v_input_files.len == utils->input_files_stdout_c) \
-	|| (is_bit_set(utils->bit_flags, CAPITAL_R) && i != 0))
+	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 \
+	|| (utils->v_input_files.len \
+	&& utils->v_input_files.len == utils->input_files_stdout_c) \
+	|| (is_bit_set(utils->bit_flags, CAPITAL_R) && nl_check))
 		ft_printf("%s:\n", path);
+	nl_check++;
 }
 
 void	sort_and_print_it(t_ls *utils, t_vec *v_files, size_t i)

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 18:59:24 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 18:34:23 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ void	print_files(t_ls *utils, t_vec *v_files, ssize_t i)
 			i++;
 		}	
 	}
-	ft_putchar('\n');
+	if (v_files->len)
+		ft_putchar('\n');
 }
