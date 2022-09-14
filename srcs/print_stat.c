@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:14:16 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 19:25:57 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
+static t_data	padding(t_vec *v_files, t_data data)
 {
 	size_t	i;
 
@@ -22,7 +22,8 @@ static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
 		get_data((char *)vec_get(v_files, i), &data);
 		i++;
 	}
-	if (utils->v_input_files.len == utils->input_files_stdout_c)
+	// if (utils->v_input_files.len == utils->input_files_stdout_c)
+	if (v_files->len)
 		ft_printf("total %d\n", data.total);
 	return (data);
 }
@@ -61,7 +62,7 @@ void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i)
 
 	ft_bzero(printstat.path, MAX_PATH);
 	init_data(&printstat.data);
-	printstat.data = padding(utils, v_files, printstat.data);
+	printstat.data = padding(v_files, printstat.data);
 	if (is_bit_set(utils->bit_flags, R_FLAG))
 	{
 		i = v_files->len - 1;

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 17:28:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 19:56:58 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,28 @@ static char	*check_flags(char *ptr, char *flags)
 	return (flags);
 }
 
+static void	push_to_vectors(t_ls *utils, char *ptr)
+{
+	struct stat	statbuf;
+	char		link_buf[MAX_PATH];
+
+	if (lstat(ptr, &statbuf) < 0)
+		vec_push(&utils->v_input_errors, ptr);
+	else if (S_ISLNK(statbuf.st_mode))
+	{
+		readlink(ptr, link_buf, MAX_PATH);
+		if (S_ISDIR(statbuf.st_mode))
+			vec_push(&utils->v_input_paths, ptr);
+	}
+	else if (S_ISDIR(statbuf.st_mode))
+		vec_push(&utils->v_input_paths, ptr);
+	else
+		vec_push(&utils->v_input_files, ptr);
+}
+
 /* get the flags and put files/paths/errors into vectors */
 static char	*get_input(t_ls *utils, const char **argv, int argc, int i)
 {
-	struct stat	statbuf;
 	char		*ptr;
 	char		*flags;
 
@@ -73,12 +91,7 @@ static char	*get_input(t_ls *utils, const char **argv, int argc, int i)
 			continue ;
 		}
 		utils->flags_flag = 1;
-		if (lstat(ptr, &statbuf) < 0)
-			vec_push(&utils->v_input_errors, ptr);
-		else if (S_ISDIR(statbuf.st_mode))
-			vec_push(&utils->v_input_paths, ptr);
-		else
-			vec_push(&utils->v_input_files, ptr);
+		push_to_vectors(utils, ptr);
 	}
 	if (utils->v_input_errors.len)
 		print_errors(utils->v_input_errors);

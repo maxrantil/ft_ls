@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 18:27:51 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 19:35:31 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_error(char *path)
 	if (path[ft_strlen(path) - 1] == '/')
 		ft_printf("ft_ls: : ");
 	else
-		ft_printf("ft_ls: %s: ", path);
+		ft_printf("ft_ls: %s: ", no_path(path));
 	perror("");
 }
 
