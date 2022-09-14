@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:08:33 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 12:06:30 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,11 @@
 # include <pwd.h>
 # include <grp.h>
 
-/* Major/Minor Numbers */
-# ifdef __linux__
-# include <sys/sysmacros.h>		//fix for eval but save for after eval
-
-# define NANOTIME st_mtim.tv_nsec
-# endif
-
-# ifdef __APPLE__
-# define NANOTIME st_mtimespec.tv_nsec
-# endif
-
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
-/* the 8 is for getting the max strlen of a file on Mac */
-# define MAX_FILENAME 256 + 8
-# define MAX_PATH 1048
+/* plus 8 is for getting the max strlen of a file on Mac */
+# define MAX_FILENAME 255
+# define MAX_PATH 1024
 # define SIX_MONTHS_SEC 15778476
 
 typedef enum e_flags

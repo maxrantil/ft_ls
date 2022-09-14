@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 08:43:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 12:04:45 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 	t_vec	v_files;
 	DIR		*dp;
 
-	vec_new(&v_files, 0, MAX_FILENAME);
+	vec_new(&v_files, 0, MAX_PATH);
 	print_newline_and_path(utils, input_path, i);
 	dp = opendir(input_path);
 	if (!dp)

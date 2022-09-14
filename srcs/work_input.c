@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 07:17:42 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:55:50 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,12 @@ static void	turn_on_bit_flags(t_ls *utils, char *flags)
 
 static void	exec_flags(t_ls *utils)
 {
+	if (!utils->v_input_files.len && !utils->v_input_paths.len && \
+	!utils->v_input_errors.len)
+		vec_push(&utils->v_input_paths, ".");
+	sort_it(&utils->v_input_paths, utils->bit_flags);
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
 		flag_recurse(utils);
-	/* else if (is_bit_set(utils->bit_flags, L_FLAG))
-		flag_l(utils); */
-	else
-		get_files_from_path(utils);
-}
-
-static void	no_input(t_ls *utils)
-{
-	vec_push(&utils->v_input_paths, ".");
-	if (is_bit_set(utils->bit_flags, CAPITAL_R))
-		flag_recurse(utils);
-	/* else if (is_bit_set(utils->bit_flags, L_FLAG))
-		flag_l(utils); */
 	else
 		get_files_from_path(utils);
 }
@@ -61,14 +52,7 @@ void	work_input(t_ls *utils, char *flags)
 	turn_on_bit_flags(utils, flags);
 	if (utils->v_input_files.len)
 		sort_and_print_it(utils, &utils->v_input_files, 0);
-	if (!utils->v_input_files.len && !utils->v_input_paths.len && \
-	!utils->v_input_errors.len)
-		no_input(utils);
-	else if (utils->v_input_paths.len)
-	{
-		sort_it(&utils->v_input_paths, utils->bit_flags);
-		exec_flags(utils);
-	}
+	exec_flags(utils);
 	vec_free(&utils->v_input_paths);
 	vec_free(&utils->v_input_files);
 	vec_free(&utils->v_input_errors);

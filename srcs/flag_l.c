@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:06:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 12:04:20 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	get_files_from_path(t_ls *utils)
 	i = 0;
 	while (i < utils->v_input_paths.len)
 	{
-		vec_new(&v_files, 0, MAX_FILENAME);
+		vec_new(&v_files, 0, MAX_PATH);
 		get_files(utils, &v_files, i);
 		vec_free(&v_files);
 		i++;
