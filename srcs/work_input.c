@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:55:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:33:37 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static void	turn_on_bit_flags(t_ls *utils, char *flags)
+static void	convert_to_bit_flag(t_ls *utils, char *flags)
 {
 	int	i;
 
@@ -49,11 +49,9 @@ static void	exec_flags(t_ls *utils)
 
 void	work_input(t_ls *utils, char *flags)
 {
-	turn_on_bit_flags(utils, flags);
+	convert_to_bit_flag(utils, flags);
 	if (utils->v_input_files.len)
 		sort_and_print_it(utils, &utils->v_input_files, 0);
 	exec_flags(utils);
-	vec_free(&utils->v_input_paths);
-	vec_free(&utils->v_input_files);
-	vec_free(&utils->v_input_errors);
+	free_vectors(utils);
 }

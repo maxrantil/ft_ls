@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:04:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:28:41 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ static void	usage(int status)
 	exit(status);
 }
 
+/* compare input to string of valid flags in h-file */
 static char	*get_flags(char *str)
 {
-	t_flagvars	flagst;
+	t_flagvar	flagst;
 
 	init_flag_struct(&flagst, str);
 	while (flagst.i < flagst.n)
@@ -55,6 +56,7 @@ static char	*check_flags(char *ptr, char *flags)
 	return (flags);
 }
 
+/* get the flags and put files/paths/errors into vectors */
 static char	*get_input(t_ls *utils, const char **argv, int argc, int i)
 {
 	struct stat	statbuf;

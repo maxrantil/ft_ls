@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:52:50 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:03:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:39:19 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_utils(t_ls *utils)
 	utils->flags_flag = 0;
 }
 
-void	init_flag_struct(t_flagvars *flagst, char *str)
+void	init_flag_struct(t_flagvar *flagst, char *str)
 {
 	ft_memset(flagst->int_flags, 0, MAX_FLAGS);
 	flagst->ret_str = ft_strnew(MAX_FLAGS);
@@ -38,4 +38,11 @@ void	init_data(t_data *data)
 	data->group_len = 0;
 	data->major_len = 0;
 	data->size_len = 0;
+}
+
+void	free_vectors(t_ls *utils)
+{
+	vec_free(&utils->v_input_paths);
+	vec_free(&utils->v_input_files);
+	vec_free(&utils->v_input_errors);
 }

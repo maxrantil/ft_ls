@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 12:06:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 17:31:06 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,25 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "vec.h"
+/* struct dirent */
 # include <dirent.h>
+/* struct stat */
 # include <sys/stat.h>
+/* minor and major numbers */
 # include <sys/types.h>
+/* window size */
 # include <sys/ioctl.h>
+/* perror() */
 # include <stdio.h>
-# include <stdint.h>
-# include <stdlib.h>
-# include <string.h>
+/* time() & ctime() */
 # include <time.h>
+/* struct passwd */
 # include <pwd.h>
+/* struct group */
 # include <grp.h>
 
 # define LS_FLAGS "alrRt"
 # define MAX_FLAGS 5
-/* plus 8 is for getting the max strlen of a file on Mac */
 # define MAX_FILENAME 255
 # define MAX_PATH 1024
 # define SIX_MONTHS_SEC 15778476
@@ -56,7 +60,7 @@ typedef struct s_ls
 	size_t			flags_flag;
 }					t_ls;
 
-typedef struct s_flagvars
+typedef struct s_flagvar
 {
 	int		int_flags[MAX_FLAGS];
 	char	*ret_str;
@@ -64,7 +68,7 @@ typedef struct s_flagvars
 	int		j;
 	int		ret_i;
 	int		n;
-}			t_flagvars;
+}			t_flagvar;
 
 typedef struct s_data
 {
@@ -131,7 +135,8 @@ void	print_errors(t_vec error_vec);
 **	Init
 */
 void	init_utils(t_ls *utils);
-void	init_flag_struct(t_flagvars *flagst, char *str);
+void	init_flag_struct(t_flagvar *flagst, char *str);
 void	init_data(t_data *data);
+void	free_vectors(t_ls *utils);
 
 #endif
