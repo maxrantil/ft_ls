@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 19:08:17 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:14:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
 		i++;
 	}
 	if (utils->v_input_files.len == utils->input_files_stdout_c)
-		ft_printf("total: %d\n", data.total);
+		ft_printf("total %d\n", data.total);
 	return (data);
 }
 
@@ -53,16 +53,6 @@ t_vec *v_files, ssize_t i)
 		ft_printf("%s", no_path(printstat->path));
 	if_link(printstat->link, printstat->path);
 	ft_putchar('\n');
-}
-
-static void	init_data(t_data *data)
-{
-	data->total = 0;
-	data->links_len = 0;
-	data->owner_len = 0;
-	data->group_len = 0;
-	data->major_len = 0;
-	data->size_len = 0;
 }
 
 void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i)

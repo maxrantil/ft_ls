@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 06:41:54 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:26:25 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ char	*no_path(char *file_with_path)
 
 void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 {
-	if (i != 0) /* || (i == 0 && (utils->v_input_files.len || \
-	utils->v_input_paths.len > 1))) */
+	if ((i != 0) || (i == 0 && utils->v_input_files.len))
 		ft_putchar('\n');
 	if (utils->v_input_errors.len || utils->v_input_paths.len > 1 || \
 	(utils->v_input_files.len && \

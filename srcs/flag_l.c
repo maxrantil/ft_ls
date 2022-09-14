@@ -6,16 +6,16 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 07:44:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:06:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-void	push_file(t_ls *utils, t_vec *v_files, size_t i)
+static void	push_file(t_ls *utils, t_vec *v_files, size_t i)
 {
 	char	*file;
-	
+
 	file = put_path_infront_of_file(utils, i);
 	vec_push(v_files, file);
 	if (utils->v_input_paths.len)

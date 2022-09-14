@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/13 07:18:22 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/14 10:57:07 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,7 @@ H_FILES 	= 	ft_ls
 
 FILES 		= 	flag_l \
 				flag_recurse \
+				init \
 				main \
 				print_file_props1 \
 				print_file_props2 \

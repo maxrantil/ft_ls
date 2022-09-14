@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 07:16:22 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:08:33 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@
 # define MAX_FILENAME 256 + 8
 # define MAX_PATH 1048
 # define SIX_MONTHS_SEC 15778476
-# define ONE_HOUR_SEC 3600
 
 typedef enum e_flags
 {
@@ -108,7 +107,6 @@ typedef struct s_printstat
 void	work_input(t_ls *utils, char *flags);
 void	get_files(t_ls *utils, t_vec *v_files, size_t i);
 void	get_files_from_path(t_ls *utils);
-void	push_file(t_ls *utils, t_vec *v_files, size_t i);
 void	flag_recurse(t_ls *utils);
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i);
 
@@ -139,5 +137,12 @@ char	*no_path(char *file_with_path);
 */
 void	sort_it(t_vec *vec_to_sort, unsigned int bit_str);
 void	print_errors(t_vec error_vec);
+
+/*
+**	Init
+*/
+void	init_utils(t_ls *utils);
+void	init_flag_struct(t_flagvars *flagst, char *str);
+void	init_data(t_data *data);
 
 #endif

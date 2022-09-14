@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/12 19:10:30 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/14 11:29:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,10 @@ static void	print_time(struct stat *statbuf)
 	char	*mtime;
 
 	time(&current_time);
-	
-	// ft_printf("current-> %d ", current_time);
-	// ft_printf("filetime-> %d ", statbuf->st_mtime);
-	
 	mtime = ft_memalloc(ft_strlen(ctime(&statbuf->st_mtime)));
 	ft_strcpy(mtime, ctime(&statbuf->st_mtime));
 	if ((current_time - statbuf->st_mtime) >= SIX_MONTHS_SEC || \
-	statbuf->st_mtime > current_time + ONE_HOUR_SEC)
+	statbuf->st_mtime >= current_time + SIX_MONTHS_SEC)
 	{
 		ft_printf(" %.7s ", &(mtime[ft_strlen(mtime) - 21]));
 		ft_printf("%.4s ", &(mtime[ft_strlen(mtime) - 5]));
@@ -66,7 +62,7 @@ void	print_file_props2(struct stat *statbuf, t_data *data, size_t ret)
 	{
 		ft_printf("   %*ld,", ft_intlen((long)data->major_len), \
 		(long)major(statbuf->st_rdev));
-		if ((long)minor(statbuf->st_rdev) > 999)
+		if ((long)minor(statbuf->st_rdev) > 500)
 			ft_printf(" %#010lx", (long)minor(statbuf->st_rdev));
 		else
 			ft_printf("%*ld", 4, (long)minor(statbuf->st_rdev));
