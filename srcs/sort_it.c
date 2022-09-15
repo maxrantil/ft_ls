@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:00:55 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 12:01:59 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 11:01:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	print_errors(t_vec error_vec)
 	vec_sort(&error_vec, &sort_str_asc);
 	while (i < error_vec.len)
 	{
-		ft_printf("ft_ls: %s: ", vec_get(&error_vec, i++));
+		ft_printf("./ft_ls: %s: ", vec_get(&error_vec, i++));
 		perror("");
 	}	
 }

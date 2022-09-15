@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 19:25:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 16:58:55 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static t_data	padding(t_vec *v_files, t_data data)
 		get_data((char *)vec_get(v_files, i), &data);
 		i++;
 	}
-	// if (utils->v_input_files.len == utils->input_files_stdout_c)
 	if (v_files->len)
 		ft_printf("total %d\n", data.total);
 	return (data);

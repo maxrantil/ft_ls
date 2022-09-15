@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:57:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 11:29:29 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 12:28:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	print_owner(struct stat *statbuf, t_data *data)
 
 	pwd = getpwuid(statbuf->st_uid);
 	if (pwd == NULL)
-		perror("getpwuid");
+		ft_printf(" %-*d ", data->owner_len, statbuf->st_uid);
 	else
 		ft_printf(" %-*s ", data->owner_len, pwd->pw_name);
 }
@@ -29,7 +29,7 @@ static void	print_group(struct stat *statbuf, t_data *data)
 
 	grp = getgrgid(statbuf->st_gid);
 	if (grp == NULL)
-		perror("getgrgid");
+		ft_printf(" %-*d", data->group_len, statbuf->st_gid);
 	else
 		ft_printf(" %-*s", data->group_len, grp->gr_name);
 }

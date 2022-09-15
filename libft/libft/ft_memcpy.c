@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:10:27 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:07:27 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 11:24:18 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int	i;
+	unsigned char	*original;
+	unsigned char	*copy;
+	size_t			i;
 
+	original = (unsigned char *)src;
+	copy = (unsigned char *)dst;
 	i = 0;
 	if (dst == NULL && src == NULL)
 		return (NULL);
-	while (n--)
+	while (i < n)
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		copy[i] = original[i];
 		i++;
 	}
 	return (dst);

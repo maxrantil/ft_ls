@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/04 17:12:24 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 17:31:06 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 16:32:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	get_files(t_ls *utils, t_vec *v_files, size_t i);
 void	get_files_from_path(t_ls *utils);
 void	flag_recurse(t_ls *utils);
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i);
+void	get_data(char *file, t_data *data);
 
 /*
 **	Tools
@@ -116,6 +117,7 @@ int		check_flag_a(t_ls *utils, struct dirent *dirp);
 /*
 **	Tools Print
 */
+void	usage(char c, int status);
 void	print_newline_and_path(t_ls *utils, char *path, size_t i);
 void	print_error(char *path);
 void	print_files(t_ls *utils, t_vec *v_files, ssize_t i);

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/13 08:39:49 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 12:55:00 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,32 +38,6 @@ char	*put_path_infront_of_file(t_ls *u, size_t i)
 		return (file_with_path);
 	}
 	return (u->dirp->d_name);
-}
-
-void	get_data(char *file, t_data *data)
-{
-	struct stat		statbuf;
-	struct passwd	*pwd;
-	struct group	*grp;
-	size_t			pw_len;
-	size_t			gr_len;
-
-	lstat(file, &statbuf);
-	data->total += statbuf.st_blocks;
-	if (statbuf.st_nlink > data->links_len)
-		data->links_len = statbuf.st_nlink;
-	pwd = getpwuid(statbuf.st_uid);
-	pw_len = ft_strlen(pwd->pw_name);
-	if (pw_len > data->owner_len)
-		data->owner_len = pw_len;
-	grp = getgrgid(statbuf.st_gid);
-	gr_len = ft_strlen(grp->gr_name);
-	if (gr_len > data->group_len)
-		data->group_len = gr_len;
-	if (major(statbuf.st_rdev) > data->major_len)
-		data->major_len = major(statbuf.st_rdev);
-	if (statbuf.st_size > data->size_len)
-		data->size_len = statbuf.st_size;
 }
 
 int	check_flag_a(t_ls *utils, struct dirent *dirp)

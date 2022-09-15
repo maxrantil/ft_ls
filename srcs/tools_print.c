@@ -6,11 +6,18 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 19:35:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 16:31:29 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
+
+void	usage(char c, int status)
+{
+	ft_printf("./ft_ls: illegal option -- %c\n", c);
+	ft_printf("usage: %s [-Ralrt] [file ...]\n", "./ft_ls");
+	exit(status);
+}
 
 void	print_error(char *path)
 {
@@ -46,7 +53,12 @@ void	print_newline_and_path(t_ls *utils, char *path, size_t i)
 	|| (utils->v_input_files.len \
 	&& utils->v_input_files.len == utils->input_files_stdout_c) \
 	|| (is_bit_set(utils->bit_flags, CAPITAL_R) && nl_check))
-		ft_printf("%s:\n", path);
+	{
+		if (path[0] == '/' && path [1] == '/')
+			ft_printf("%s:\n", &path[1]);
+		else
+			ft_printf("%s:\n", path);
+	}
 	nl_check++;
 }
 

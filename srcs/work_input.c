@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:36 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 17:33:37 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/15 13:26:34 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ static void	convert_to_bit_flag(t_ls *utils, char *flags)
 
 static void	exec_flags(t_ls *utils)
 {
-	if (!utils->v_input_files.len && !utils->v_input_paths.len && \
-	!utils->v_input_errors.len)
+	if (!utils->v_input_files.len \
+	&& !utils->v_input_paths.len \
+	&& !utils->v_input_errors.len)
 		vec_push(&utils->v_input_paths, ".");
 	sort_it(&utils->v_input_paths, utils->bit_flags);
 	if (is_bit_set(utils->bit_flags, CAPITAL_R))
