@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/16 11:07:38 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/16 12:18:47 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,13 +42,11 @@ MAKEFLAGS	+= --no-print-directory
 NAME		=	ft_ls
 CC			=	gcc
 CFLAGS 		= 	-Wall -Wextra -Werror
-CFLAGS		+=	-Wunreachable-code -Wtype-limits
-#CFLAGS		+=	-Wpedantic(cant use 0b for defining my bits)
-#CFLAGS		+=	-O3 -flto -fPIC -shared
+#CFLAGS		+=	-Wunreachable-code -Wtype-limits
 CFLAGS		+=	-O3
 
-LEAK_CHECK	=	-g
-LEAK_CHECK	+=	-fsanitize=address
+#LEAK_CHECK	=	-g
+#LEAK_CHECK	+=	-fsanitize=address
 
 TERMCAPS	=	-ltermcap
 

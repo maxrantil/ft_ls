@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 20:09:11 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/09 18:12:40 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/16 12:19:32 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ MAKEFLAGS += --no-print-directory
 NAME		=	libft.a
 
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror -g -O3 -I$(INC_DIR)
+CFLAGS		=	-Wall -Wextra -Werror -I$(INC_DIR)
+#CFLAGS		+=	-g -O3
 
 TERMCAPS	=	-ltermcap
 
