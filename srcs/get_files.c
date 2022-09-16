@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_l.c                                           :+:      :+:    :+:   */
+/*   get_files.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/16 10:49:38 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 17:08:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,28 @@ void	get_files(t_ls *utils, t_vec *v_files, size_t i)
 void	get_files_from_path(t_ls *utils)
 {
 	t_vec	v_files;
-	size_t	i;
+	ssize_t	i;
 
-	i = 0;
-	while (i < utils->v_input_paths.len)
+	if (is_bit_set(utils->bit_flags, R_FLAG))
 	{
-		vec_new(&v_files, 0, MAX_PATHLEN);
-		get_files(utils, &v_files, i);
-		vec_free(&v_files);
-		i++;
+		i = utils->v_input_paths.len - 1;
+		while (i >= 0)
+		{
+			vec_new(&v_files, 0, MAX_PATHLEN);
+			get_files(utils, &v_files, i);
+			vec_free(&v_files);
+			i--;
+		}	
+	}
+	else
+	{
+		i = 0;
+		while ((size_t)i < utils->v_input_paths.len)
+		{
+			vec_new(&v_files, 0, MAX_PATHLEN);
+			get_files(utils, &v_files, i);
+			vec_free(&v_files);
+			i++;
+		}
 	}
 }

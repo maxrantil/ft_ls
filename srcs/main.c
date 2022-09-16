@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/01 15:09:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/16 10:54:18 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 16:48:16 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ static char	*get_flags(t_ls *utils, const char **argv, int argc, int i)
 	while (++i < argc)
 	{
 		ptr = (char *)argv[i];
-		if (!utils->flags_flag && argv[i][0] == '-' && ft_isalpha(argv[i][1]))
+		if (!utils->flags_flag && argv[i][0] == '-' && ft_isascii(argv[i][1]))
 		{
-			flags = pre_check_flags(ptr, flags);
+			if (argv[i][1] != '-')
+				flags = pre_check_flags(ptr, flags);
 			continue ;
 		}
 		utils->flags_flag = 1;
