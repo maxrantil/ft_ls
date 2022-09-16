@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 10:52:50 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/15 15:50:41 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 10:49:56 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_utils(t_ls *utils)
 {
-	vec_new(&utils->v_input_paths, 0, MAX_PATH);
-	vec_new(&utils->v_input_files, 0, MAX_PATH);
-	vec_new(&utils->v_input_errors, 0, MAX_PATH);
+	vec_new(&utils->v_input_paths, 0, MAX_PATHLEN);
+	vec_new(&utils->v_input_files, 0, MAX_PATHLEN);
+	vec_new(&utils->v_input_errors, 0, MAX_PATHLEN);
 	utils->input_files_stdout_c = 0;
 	utils->flags_flag = 0;
 }

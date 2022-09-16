@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:49:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 17:22:31 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 10:49:38 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	push_file(t_ls *utils, t_vec *v_files, size_t i)
 
 void	get_files(t_ls *utils, t_vec *v_files, size_t i)
 {
-	char	path[MAX_PATH];
+	char	path[MAX_PATHLEN];
 	DIR		*dp;
 
 	ft_strcpy(path, (const char *)vec_get(&utils->v_input_paths, i));
@@ -57,7 +57,7 @@ void	get_files_from_path(t_ls *utils)
 	i = 0;
 	while (i < utils->v_input_paths.len)
 	{
-		vec_new(&v_files, 0, MAX_PATH);
+		vec_new(&v_files, 0, MAX_PATHLEN);
 		get_files(utils, &v_files, i);
 		vec_free(&v_files);
 		i++;

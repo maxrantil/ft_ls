@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:05:08 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/15 16:58:10 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 12:08:35 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@
 // equality of the two elements passed as parameters and thus sorting
 // the array accordingly from the smallest to the largest element.
 */
-
-static void	memswap8bytes(char *a, char *b)
+static void	memswap8bytes(unsigned char *a, unsigned char *b)
 {
 	if (a == b)
 		return ;
@@ -27,7 +26,7 @@ static void	memswap8bytes(char *a, char *b)
 	*a ^= *b;
 }
 
-static void	memswap(char *a, char *b, size_t bytes)
+static void	memswap(unsigned char *a, unsigned char *b, size_t bytes)
 {
 	size_t	i;
 
@@ -41,7 +40,7 @@ static void	memswap(char *a, char *b, size_t bytes)
 	}
 }
 
-static void	vec_sort_recurse(t_vec *src, long low, long high, \
+static void	v_sort_recursive(t_vec *src, long low, long high, \
 int (*f)(void *, void *))
 {
 	long	pivot;
@@ -63,13 +62,13 @@ int (*f)(void *, void *))
 			memswap(vec_get(src, a), vec_get(src, b), src->elem_size);
 	}
 	memswap(vec_get(src, pivot), vec_get(src, b), src->elem_size);
-	vec_sort_recurse(src, low, b - 1, f);
-	vec_sort_recurse(src, b + 1, high, f);
+	v_sort_recursive(src, low, b - 1, f);
+	v_sort_recursive(src, b + 1, high, f);
 }
 
 void	vec_sort(t_vec *src, int (*f)(void *, void *))
 {
 	if (!src || !src->memory)
 		return ;
-	vec_sort_recurse(src, 0, src->len - 1, f);
+	v_sort_recursive(src, 0, src->len - 1, f);
 }

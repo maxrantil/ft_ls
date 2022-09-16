@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:04:31 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:06:57 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 12:11:21 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 // and allocate len * elem_size bytes in the buffer as well as
 // initialize its length and element size.
 */
-
 int	vec_new(t_vec *dst, size_t init_len, size_t elem_size)
 {
 	if (!dst || elem_size == 0)

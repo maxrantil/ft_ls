@@ -6,13 +6,13 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/15 16:58:55 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 11:19:47 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_ls.h"
 
-static t_data	padding(t_vec *v_files, t_data data)
+static t_data	padding(t_ls *utils, t_vec *v_files, t_data data)
 {
 	size_t	i;
 
@@ -22,19 +22,19 @@ static t_data	padding(t_vec *v_files, t_data data)
 		get_data((char *)vec_get(v_files, i), &data);
 		i++;
 	}
-	if (v_files->len)
+	if (utils->v_input_paths.len)
 		ft_printf("total %d\n", data.total);
 	return (data);
 }
 
 static void	if_link(size_t link, char *path)
 {
-	char	link_buf[MAX_PATH];
+	char	link_buf[MAX_PATHLEN];
 
 	if (link)
 	{
-		ft_bzero(link_buf, MAX_PATH);
-		if (readlink(path, link_buf, MAX_PATH) > 0)
+		ft_bzero(link_buf, MAX_PATHLEN);
+		if (readlink(path, link_buf, MAX_PATHLEN) > 0)
 			ft_printf(" -> %s", link_buf);
 	}
 }
@@ -59,9 +59,9 @@ void	print_stat(t_ls *utils, t_vec *v_files, ssize_t i)
 {
 	t_printstat	printstat;
 
-	ft_bzero(printstat.path, MAX_PATH);
+	ft_bzero(printstat.path, MAX_PATHLEN);
 	init_data(&printstat.data);
-	printstat.data = padding(v_files, printstat.data);
+	printstat.data = padding(utils, v_files, printstat.data);
 	if (is_bit_set(utils->bit_flags, R_FLAG))
 	{
 		i = v_files->len - 1;

@@ -1,2 +1,56 @@
-/.file  
+sort this = 0.2 1.1 2.4 3.3
 
+low = 0
+high = 3
+pivot = 0
+a = 0
+b = 3
+
+a++ = a=1
+a++ = a=2
+stop
+
+b-- = b=2
+b-- = b=1
+stop
+
+a < b? no
+
+swap pivot and b =
+0.1 1.2 2.4 3.3
+
+new round;
+
+low = 0
+high = b - 1 = 0
+low >= high == true
+return;
+
+new round; (go to one round above the last)
+
+low = b + 1 = 2
+high = 3
+pivot = 2
+a = 2
+b = 3
+
+a++ = a = 3
+a++ = a = 4
+a > high == false
+b > pivot == false
+a < b == false
+
+swap pivot and b
+0.1 1.2 2.3 3.4
+
+new round;
+low = 2
+high = b - 1 = 2
+low >= high == true
+return;
+
+new round;
+low = b + 1 = 4
+high = 3
+low >= high == true
+return;

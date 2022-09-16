@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:03:23 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:03:50 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 12:11:24 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // Create a function that frees the allocated
 // resources in src and zeroes its fields.
 */
-
 void	vec_free(t_vec *src)
 {
 	if (!src || src->alloc_size == 0)

@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 18:12:36 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 10:49:48 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	check_for_dirs(t_ls *utils, t_vec *v_files, ssize_t i)
 {
 	struct stat	statbuf;
-	char		file[MAX_PATH];
+	char		file[MAX_PATHLEN];
 	char		nopathfile[MAX_FILENAME];
 
 	ft_strcpy(file, vec_get(v_files, i));
@@ -58,11 +58,11 @@ static void	add_files(t_vec *v_files, char *file, char *path, char *input_path)
 
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 {
-	char	path[MAX_PATH];
+	char	path[MAX_PATHLEN];
 	t_vec	v_files;
 	DIR		*dp;
 
-	vec_new(&v_files, 0, MAX_PATH);
+	vec_new(&v_files, 0, MAX_PATHLEN);
 	print_newline_and_path(utils, input_path, i);
 	dp = opendir(input_path);
 	if (!dp)

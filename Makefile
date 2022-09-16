@@ -6,7 +6,7 @@
 #    By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/05/04 18:22:31 by mrantil           #+#    #+#              #
-#    Updated: 2022/09/15 12:57:02 by mrantil          ###   ########.fr        #
+#    Updated: 2022/09/16 11:07:38 by mrantil          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ CFLAGS 		= 	-Wall -Wextra -Werror
 CFLAGS		+=	-Wunreachable-code -Wtype-limits
 #CFLAGS		+=	-Wpedantic(cant use 0b for defining my bits)
 #CFLAGS		+=	-O3 -flto -fPIC -shared
+CFLAGS		+=	-O3
 
 LEAK_CHECK	=	-g
 LEAK_CHECK	+=	-fsanitize=address
@@ -60,9 +61,9 @@ SOURCE_COUNT = $(words $(FILES))
 
 H_FILES 	= 	ft_ls
 
-FILES 		= 	flag_l \
-				flag_recurse \
+FILES 		=	flag_recurse \
 				get_data \
+ 				get_files \
 				init_free \
 				main \
 				print_file_props1 \

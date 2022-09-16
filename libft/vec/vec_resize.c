@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:05:01 by mrantil           #+#    #+#             */
-/*   Updated: 2022/08/24 19:05:02 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 12:11:40 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 // and either shrink (destructively) or grow the vector to the target size,
 // copying the old contents over to the new allocation.
 */
-
 int	vec_resize(t_vec *src, size_t target_size)
 {
 	t_vec	dst;

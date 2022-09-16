@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 18:59:47 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/14 18:34:23 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/16 10:50:05 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_files(t_ls *utils, t_vec *v_files, ssize_t i)
 
 	print_data.len_count = 0;
 	print_data.term_len = window_size() - 50;
-	ft_bzero(print_data.file, MAX_PATH);
+	ft_bzero(print_data.file, MAX_PATHLEN);
 	if (is_bit_set(utils->bit_flags, R_FLAG))
 	{
 		i = v_files->len - 1;
