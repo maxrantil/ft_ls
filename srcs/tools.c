@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/24 19:01:02 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/15 12:55:00 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/21 18:00:52 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,16 @@ int	check_flag_a(t_ls *utils, struct dirent *dirp)
 {
 	return (!is_bit_set(utils->bit_flags, A_FLAG) && \
 	dirp->d_name[0] == '.');
+}
+
+void	flag_recurse(t_ls *utils)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < utils->v_input_paths.len)
+	{
+		exec_flag_recurse(utils, (char *)vec_get(&utils->v_input_paths, i), i);
+		i++;
+	}	
 }

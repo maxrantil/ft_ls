@@ -6,7 +6,7 @@
 /*   By: mrantil <mrantil@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/09 15:46:44 by mrantil           #+#    #+#             */
-/*   Updated: 2022/09/16 10:49:48 by mrantil          ###   ########.fr       */
+/*   Updated: 2022/09/21 18:01:13 by mrantil          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,33 @@ static void	add_files(t_vec *v_files, char *file, char *path, char *input_path)
 	vec_push(v_files, path);
 }
 
+static DIR	*open_dp(DIR *dp, char *input_path)
+{
+	dp = opendir(input_path);
+	if (!dp)
+	{
+		ft_printf("./ft_ls: %s: ", no_path(input_path));
+		if (!ft_strcmp(input_path, "/dev/fd/4"))
+			ft_putstr_fd("directory causes a cycle\n", STDERR_FILENO);
+		else
+			perror("");
+		return (NULL);
+	}
+	return (dp);
+}
+
 void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 {
 	char	path[MAX_PATHLEN];
 	t_vec	v_files;
 	DIR		*dp;
 
+	dp = NULL;
 	vec_new(&v_files, 0, MAX_PATHLEN);
 	print_newline_and_path(utils, input_path, i);
-	dp = opendir(input_path);
+	dp = open_dp(dp, input_path);
 	if (!dp)
-	{
-		perror("");
 		return ;
-	}
 	while (1)
 	{
 		utils->dirp = readdir(dp);
@@ -83,16 +96,4 @@ void	exec_flag_recurse(t_ls *utils, char *input_path, size_t i)
 	check_order(utils, &v_files);
 	closedir(dp);
 	vec_free(&v_files);
-}
-
-void	flag_recurse(t_ls *utils)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < utils->v_input_paths.len)
-	{
-		exec_flag_recurse(utils, (char *)vec_get(&utils->v_input_paths, i), i);
-		i++;
-	}	
 }
