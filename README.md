@@ -15,8 +15,6 @@ This program was built on a Mac system and runs best in that environment. Howeve
 -t: Sort the files by last modification time.
 ```
 
-<img width="965" alt="Screen Shot 2022-07-22 at 11 48 18 AM" src="https://user-images.githubusercontent.com/69106035/180401583-c7a3ca33-6981-4fd7-9a7f-b68ca581ded8.png">
-
 ## challenges
 One of the main challenges of this project was getting a good understanding of the operating system functions and data structures needed to manipulate the file system. I also had to be mindful of error handling and ensuring that the program could handle illegal options.
 
