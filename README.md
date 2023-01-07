@@ -11,6 +11,10 @@ In this project, I recreated the Unix command ls, which is used to list the file
 
 -t: Sort the files by last modification time.
 
+
+##challenges
 One of the main challenges of this project was getting a good understanding of the operating system functions and data structures needed to manipulate the file system. I also had to be mindful of error handling and ensuring that the program could handle illegal options.
 
-Overall, this was a very educational and rewarding project. I gained a deeper understanding of C programming and how it can be used to interact with the file system. I also had the opportunity to improve my libft library and add new functions that will be useful in future projects. If you have any questions or would like to see the code, feel free to check out my repository on GitHub.
+
+##conclusion
+Overall, this was a very educational and rewarding project. I gained a deeper understanding of C programming and how it can be used to interact with the file system.
